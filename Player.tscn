@@ -1,0 +1,115 @@
+[gd_scene load_steps=9 format=3 uid="uid://chh4eg6sus1x"]
+
+[ext_resource type="Script" path="res://Scripts/PlayerCar.gd" id="1_fxmo4"]
+[ext_resource type="Texture2D" uid="uid://bm1woxmr486ps" path="res://Sprites/cars.png" id="2_djg4b"]
+[ext_resource type="Texture2D" uid="uid://bq1t8xabjm18t" path="res://Sprites/arrow.png" id="3_mddtf"]
+[ext_resource type="AudioStream" uid="uid://csffgre7kycou" path="res://SFX/truck_idle.wav" id="4_52k5n"]
+
+[sub_resource type="Curve" id="Curve_f6lch"]
+min_value = 0.5
+max_value = 1.5
+_data = [Vector2(0, 0.685131), 0.0, 0.144044, 0, 0, Vector2(0.907143, 0.986842), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_57bjp"]
+min_value = -20.0
+max_value = 0.0
+_data = [Vector2(0, -6.48199), 0.0, 7.00216, 0, 0, Vector2(0.996428, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_x5o48"]
+radius = 9.0
+height = 47.5
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f0cy2"]
+size = Vector2(2165, 1486)
+
+[node name="Player" type="CharacterBody2D"]
+position = Vector2(640, 360)
+motion_mode = 1
+wall_min_slide_angle = 0.0
+script = ExtResource("1_fxmo4")
+pitch_curve = SubResource("Curve_f6lch")
+volume_curve = SubResource("Curve_57bjp")
+
+[node name="Move_collision" type="CollisionShape2D" parent="."]
+position = Vector2(-4, 3.25)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_x5o48")
+
+[node name="TitleDriver" type="Sprite2D" parent="Move_collision"]
+show_behind_parent = true
+position = Vector2(0.158443, 0.0478527)
+texture = ExtResource("2_djg4b")
+offset = Vector2(-0.297852, 0.158447)
+flip_v = true
+region_enabled = true
+region_rect = Rect2(291, 99, 28, 49)
+region_filter_clip_enabled = true
+
+[node name="arrow" type="Sprite2D" parent="."]
+modulate = Color(5.77569e-07, 0.777267, 0.399463, 1)
+z_index = 4096
+z_as_relative = false
+position = Vector2(30, 30)
+rotation = 0.71733
+texture = ExtResource("3_mddtf")
+offset = Vector2(-31, 0)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(1.05, 1.05)
+
+[node name="Spawnlimit" type="ReferenceRect" parent="."]
+offset_left = -1005.0
+offset_top = -665.0
+offset_right = 1012.0
+offset_bottom = 670.0
+mouse_filter = 2
+border_width = 5.0
+
+[node name="Viewport" type="ReferenceRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -640.0
+offset_top = -360.0
+offset_right = 640.0
+offset_bottom = 360.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+border_width = 5.0
+
+[node name="Traffic" type="Area2D" parent="."]
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Traffic"]
+position = Vector2(2.5, 4)
+shape = SubResource("RectangleShape2D_f0cy2")
+
+[node name="Motor_Sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_52k5n")
+autoplay = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 100
+
+[node name="Respawning" type="Label" parent="CanvasLayer"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 587.0
+offset_top = 318.0
+offset_right = -590.0
+offset_bottom = -379.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+text = "Respawning.."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="body_exited" from="Traffic" to="." method="_on_traffic_body_exited"]

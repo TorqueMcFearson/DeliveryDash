@@ -1,0 +1,10 @@
+[gd_resource type="StyleBoxTexture" load_steps=2 format=3 uid="uid://dcdbmbgc4sw1f"]
+
+[ext_resource type="Texture2D" uid="uid://dt3qaxqvjoxf" path="res://Sprites/arrowdown.png" id="1_xp130"]
+
+[resource]
+texture = ExtResource("1_xp130")
+expand_margin_left = 4.0
+expand_margin_right = 4.0
+expand_margin_bottom = 2.0
+modulate_color = Color(1, 1, 1, 0.364706)

@@ -1,0 +1,209 @@
+[gd_scene load_steps=9 format=3 uid="uid://caduwy08lr4s1"]
+
+[ext_resource type="Texture2D" uid="uid://cdxwxktq5bge0" path="res://Backgrounds/Title.jpg" id="1_7m5r0"]
+[ext_resource type="Texture2D" uid="uid://da6d5psli7wv2" path="res://Sprites/Title_Driver.png" id="2_086dc"]
+[ext_resource type="Script" path="res://Scripts/Title_UI.gd" id="3_4trdc"]
+[ext_resource type="FontFile" uid="uid://ydwn4indox68" path="res://Font/Bangers-Regular.ttf" id="4_g3ib7"]
+
+[sub_resource type="GDScript" id="GDScript_gxr70"]
+resource_name = "TitleParallax"
+script/source = "extends ParallaxBackground
+
+@export var scroll_speed = 400
+@onready var driver: Sprite2D = $\"../Title Driver/Driver Sprite\"
+@onready var driver_right_limit = $\"../Title Driver/RigthLimit\".position.x
+
+var driver_x_direction = 1
+var driver_x_speed = 40
+var driver_x_count = 0
+@onready var driver_x_dest = 50
+
+var driver_y_direction = 5
+var driver_y_count = 0
+const driver_y_count_max = 50
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	scroll_offset.x -= scroll_speed * delta
+	driver_x(delta,driver_x_direction,driver_x_speed)
+	
+	
+	driver.position.y += driver_y_direction * delta
+	if driver_y_count > driver_y_count_max:
+		driver_y_count = 0
+		driver_y_direction *= -1
+	driver_y_count +=1
+
+func driver_x(delta,direction,speed):
+	var velocity = direction * speed * delta
+	var driver_pos = driver.position.x
+	if is_past_limit():
+		driver_x_direction *= -1
+		direction = driver_x_direction
+		driver_x_dest = randi_range(driver.position.x,driver_right_limit * direction)
+		print(\"new dest: \",driver_x_dest)
+	driver.position.x += velocity
+	
+func is_past_limit():
+	if driver_x_dest < 0:
+		return driver.position.x < driver_x_dest
+	return driver.position.x > driver_x_dest
+
+func _on_options_pressed() -> void:
+	$\"../Title_UI/Options\".disabled = true # Replace with function body.
+	$\"../Title_UI/Options\".text = \"No options, I forgot...\"
+	create_tween().tween_property($\"../Title_UI/Options\",\"position\",Vector2(0,250),25).as_relative().set_delay(1.5)
+	
+"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3b4wt"]
+bg_color = Color(1, 1, 1, 0)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 1, 1, 0.498039)
+border_blend = true
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(1, 1, 1, 0.498039)
+shadow_size = 4
+
+[sub_resource type="FontVariation" id="FontVariation_yy0jg"]
+base_font = ExtResource("4_g3ib7")
+spacing_glyph = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_65r0a"]
+bg_color = Color(0, 0, 0, 1)
+
+[node name="Title" type="Node2D"]
+
+[node name="Background Scroll" type="ParallaxBackground" parent="."]
+script = SubResource("GDScript_gxr70")
+
+[node name="BackgroundLayer" type="ParallaxLayer" parent="Background Scroll"]
+motion_mirroring = Vector2(1280, 0)
+
+[node name="Title" type="Sprite2D" parent="Background Scroll/BackgroundLayer"]
+texture = ExtResource("1_7m5r0")
+centered = false
+
+[node name="Title Driver" type="Node2D" parent="."]
+position = Vector2(640, 360)
+
+[node name="Driver Sprite" type="Sprite2D" parent="Title Driver"]
+position = Vector2(0, -14)
+scale = Vector2(1.48276, 1.58209)
+texture = ExtResource("2_086dc")
+
+[node name="RigthLimit" type="Marker2D" parent="Title Driver"]
+position = Vector2(302, 62)
+
+[node name="Title_UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1280.0
+offset_bottom = 720.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_4trdc")
+
+[node name="Title Panel" type="Panel" parent="Title_UI"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -456.0
+offset_top = 24.0
+offset_right = 463.0
+offset_bottom = 192.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3b4wt")
+
+[node name="Title" type="Label" parent="Title_UI/Title Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = -0.015
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -5.0
+offset_top = -1.48
+offset_right = -1.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.41598, 0.41598, 0.41598, 1)
+theme_override_constants/shadow_offset_x = 5
+theme_override_constants/shadow_offset_y = 12
+theme_override_constants/outline_size = 20
+theme_override_constants/shadow_outline_size = 10
+theme_override_fonts/font = SubResource("FontVariation_yy0jg")
+theme_override_font_sizes/font_size = 160
+text = "Delivery Dash"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Start" type="Button" parent="Title_UI"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+offset_left = 200.0
+offset_top = 519.0
+offset_right = 426.0
+offset_bottom = 579.0
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 20
+text = "Start Game"
+
+[node name="Options" type="Button" parent="Title_UI"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+offset_left = 526.0
+offset_top = 519.0
+offset_right = 753.0
+offset_bottom = 579.0
+size_flags_horizontal = 3
+size_flags_vertical = 0
+focus_mode = 0
+theme_override_font_sizes/font_size = 20
+text = "Options
+"
+
+[node name="Exit" type="Button" parent="Title_UI"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+offset_left = 853.0
+offset_top = 519.0
+offset_right = 1080.0
+offset_bottom = 579.0
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 20
+text = "Exit
+"
+
+[node name="Black-Fade" type="Panel" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0)
+top_level = true
+offset_right = 1280.0
+offset_bottom = 720.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_65r0a")
+metadata/_edit_lock_ = true
+
+[connection signal="pressed" from="Title_UI/Start" to="Title_UI" method="_on_start_pressed"]
+[connection signal="pressed" from="Title_UI/Options" to="Background Scroll" method="_on_options_pressed"]
+[connection signal="pressed" from="Title_UI/Exit" to="Title_UI" method="_on_exit_pressed"]

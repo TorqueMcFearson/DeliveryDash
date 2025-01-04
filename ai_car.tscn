@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=3 uid="uid://b04e51vpscrp2"]
+
+[ext_resource type="Script" path="res://Scripts/cars.gd" id="1_5cavq"]
+[ext_resource type="Texture2D" uid="uid://bm1woxmr486ps" path="res://Sprites/cars.png" id="2_f6kbb"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_byoj2"]
+radius = 9.0
+height = 47.5
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_as5e6"]
+atlas = ExtResource("2_f6kbb")
+region = Rect2(231, 148, 29, 49)
+filter_clip = true
+
+[sub_resource type="SystemFont" id="SystemFont_0yh1v"]
+font_names = PackedStringArray("Impact")
+
+[node name="AICar" type="CharacterBody2D"]
+position = Vector2(3360, 3934)
+rotation = -1.5708
+safe_margin = 0.12
+script = ExtResource("1_5cavq")
+vehicle_name = "suv"
+
+[node name="Move_collision" type="CollisionShape2D" parent="."]
+position = Vector2(15, 1)
+shape = SubResource("CapsuleShape2D_byoj2")
+
+[node name="CarSprite" type="Sprite2D" parent="Move_collision"]
+show_behind_parent = true
+position = Vector2(0, -1)
+texture = SubResource("AtlasTexture_as5e6")
+
+[node name="Label" type="Label" parent="."]
+visible = false
+top_level = true
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_fonts/font = SubResource("SystemFont_0yh1v")
+theme_override_font_sizes/font_size = 30
+text = "test"

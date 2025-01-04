@@ -1,0 +1,912 @@
+[gd_scene load_steps=18 format=3 uid="uid://41a5bcaoeq2e"]
+
+[ext_resource type="Script" path="res://4 AM.gd" id="1_q7i08"]
+[ext_resource type="StyleBox" uid="uid://c6bnfdpsfgbph" path="res://StyleBoxes/order_entry_active.tres" id="2_b5tli"]
+[ext_resource type="Texture2D" uid="uid://dlnoinldm6hsc" path="res://Backgrounds/hotel-7188496_1280.png" id="2_w222g"]
+[ext_resource type="FontFile" uid="uid://v3swnsgchgpo" path="res://Font/BebasNeue-Regular.ttf" id="3_sf1pj"]
+[ext_resource type="FontFile" uid="uid://gs5irb036wet" path="res://Font/RobotoMono-VariableFont_wght.ttf" id="4_roe2k"]
+[ext_resource type="Texture2D" uid="uid://bcakyuvuj32h3" path="res://Sprites/star_filled.png" id="5_gdjcd"]
+[ext_resource type="AudioStream" uid="uid://b8weo5h0mausl" path="res://SFX/slidy.mp3" id="5_ux1uj"]
+[ext_resource type="FontFile" uid="uid://ydwn4indox68" path="res://Font/Bangers-Regular.ttf" id="7_34r6m"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0ceuw"]
+texture = ExtResource("2_w222g")
+modulate_color = Color(0.631373, 0.631373, 0.631373, 0.537255)
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_c2tvo"]
+color = Color(0.239216, 0.345098, 0.513726, 0.356863)
+thickness = 5
+
+[sub_resource type="FontVariation" id="FontVariation_s4i05"]
+base_font = ExtResource("3_sf1pj")
+spacing_top = 2
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2kfvt"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_deshe"]
+bg_color = Color(1, 0.1, 0.1, 0.85098)
+border_width_left = 2
+border_width_top = 3
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.162066, 0.162066, 0.162065, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+expand_margin_top = 3.0
+shadow_color = Color(0.101961, 0.101961, 0.101961, 0.682353)
+shadow_size = 1
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pk7xi"]
+bg_color = Color(1, 0, 0, 1)
+border_width_left = 2
+border_width_top = 3
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.162066, 0.162066, 0.162065, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+expand_margin_top = 3.0
+shadow_color = Color(0.101961, 0.101961, 0.101961, 0.682353)
+shadow_size = 1
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rafq5"]
+content_margin_top = 7.0
+bg_color = Color(0.97, 0, 0.0161664, 1)
+border_width_left = 2
+border_width_top = 3
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.162066, 0.162066, 0.162065, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0.101961, 0.101961, 0.101961, 0.682353)
+shadow_size = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s6nd8"]
+content_margin_top = 7.0
+bg_color = Color(0.233925, 0.233925, 0.233925, 1)
+border_width_left = 2
+border_width_top = 3
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.162066, 0.162066, 0.162065, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0.101961, 0.101961, 0.101961, 0.682353)
+shadow_size = 1
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_hq16f"]
+random_pitch = 1.2
+random_volume_offset_db = 0.79
+streams_count = 1
+stream_0/stream = ExtResource("5_ux1uj")
+stream_0/weight = 1.0
+
+[node name="4 AM" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_q7i08")
+
+[node name="Background" type="Panel" parent="."]
+layout_mode = 0
+offset_left = -30.0
+offset_top = -9.0
+offset_right = 1336.0
+offset_bottom = 774.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_0ceuw")
+
+[node name="PanelContainer" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -194.5
+offset_top = -229.0
+offset_right = 194.5
+offset_bottom = 229.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(121, 261)
+theme_override_styles/panel = ExtResource("2_b5tli")
+
+[node name="Page 1" type="Control" parent="PanelContainer"]
+anchors_preset = 0
+offset_left = 1.0
+offset_top = 3.0
+offset_right = 41.0
+offset_bottom = 43.0
+
+[node name="Orders" type="HSeparator" parent="PanelContainer/Page 1"]
+custom_minimum_size = Vector2(160, 40)
+layout_mode = 2
+offset_left = 49.0
+offset_top = 22.0
+offset_right = 338.0
+offset_bottom = 62.0
+size_flags_vertical = 0
+size_flags_stretch_ratio = 5.31
+theme_override_styles/separator = SubResource("StyleBoxLine_c2tvo")
+
+[node name="Order Total2" type="Label" parent="PanelContainer/Page 1/Orders"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -86.5
+offset_top = -26.0
+offset_right = 86.5
+offset_bottom = 26.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 2
+size_flags_vertical = 0
+size_flags_stretch_ratio = 0.85
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 4
+theme_override_fonts/font = SubResource("FontVariation_s4i05")
+theme_override_font_sizes/font_size = 40
+text = "ORDERS"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="Order Rows" type="Control" parent="PanelContainer/Page 1"]
+layout_mode = 2
+anchors_preset = 0
+offset_top = 72.0
+offset_right = 386.0
+offset_bottom = 232.0
+size_flags_horizontal = 0
+size_flags_vertical = 4
+size_flags_stretch_ratio = 2.95
+
+[node name="Orders Accepted" type="HBoxContainer" parent="PanelContainer/Page 1/Order Rows"]
+layout_mode = 2
+offset_left = 431.0
+offset_right = 655.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="PanelContainer/Page 1/Order Rows/Orders Accepted"]
+layout_mode = 2
+size_flags_horizontal = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.917647)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 1
+theme_override_fonts/font = ExtResource("4_roe2k")
+text = "Orders Accepted"
+horizontal_alignment = 1
+
+[node name="Value" type="Label" parent="PanelContainer/Page 1/Order Rows/Orders Accepted"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.38376, 0.82, 0.3526, 0.984314)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.917647)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 1
+theme_override_fonts/font = ExtResource("4_roe2k")
+text = "0"
+horizontal_alignment = 1
+
+[node name="Orders Completed" type="HBoxContainer" parent="PanelContainer/Page 1/Order Rows"]
+layout_mode = 2
+offset_left = 431.0
+offset_top = 20.0
+offset_right = 655.0
+offset_bottom = 42.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="PanelContainer/Page 1/Order Rows/Orders Completed"]
+layout_mode = 2
+size_flags_horizontal = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.917647)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 1
+theme_override_fonts/font = ExtResource("4_roe2k")
+text = "Orders Completed"
+horizontal_alignment = 1
+
+[node name="Value" type="Label" parent="PanelContainer/Page 1/Order Rows/Orders Completed"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.38376, 0.82, 0.3526, 0.984314)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.917647)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 1
+theme_override_fonts/font = ExtResource("4_roe2k")
+text = "0
+"
+horizontal_alignment = 1
+
+[node name="Orders Rejected" type="HBoxContainer" parent="PanelContainer/Page 1/Order Rows"]
+layout_mode = 2
+offset_left = 431.0
+offset_top = 49.0
+offset_right = 655.0
+offset_bottom = 71.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="PanelContainer/Page 1/Order Rows/Orders Rejected"]
+layout_mode = 2
+size_flags_horizontal = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.917647)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 1
+theme_override_fonts/font = ExtResource("4_roe2k")
+text = "Orders Rejected"
+horizontal_alignment = 1
+
+[node name="Value" type="Label" parent="PanelContainer/Page 1/Order Rows/Orders Rejected"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.929412, 0.101961, 0.101961, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.917647)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 1
+theme_override_fonts/font = ExtResource("4_roe2k")
+text = "0
+"
+horizontal_alignment = 1
+
+[node name="Orders Neglected" type="HBoxContainer" parent="PanelContainer/Page 1/Order Rows"]
+layout_mode = 2
+offset_left = 431.0
+offset_top = 69.0
+offset_right = 655.0
+offset_bottom = 91.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="PanelContainer/Page 1/Order Rows/Orders Neglected"]
+layout_mode = 2
+size_flags_horizontal = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.917647)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 1
+theme_override_fonts/font = ExtResource("4_roe2k")
+theme_override_font_sizes/font_size = 16
+text = "Orders Neglected"
+horizontal_alignment = 1
+
+[node name="Value" type="Label" parent="PanelContainer/Page 1/Order Rows/Orders Neglected"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.929412, 0.101961, 0.101961, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.917647)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 1
+theme_override_fonts/font = ExtResource("4_roe2k")
+text = "0
+"
+horizontal_alignment = 1
+
+[node name="Orders Failed" type="HBoxContainer" parent="PanelContainer/Page 1/Order Rows"]
+layout_mode = 2
+offset_left = 431.0
+offset_top = 89.0
+offset_right = 655.0
+offset_bottom = 111.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="PanelContainer/Page 1/Order Rows/Orders Failed"]
+layout_mode = 2
+size_flags_horizontal = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.917647)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 1
+theme_override_fonts/font = ExtResource("4_roe2k")
+text = "Orders Failed"
+horizontal_alignment = 1
+
+[node name="Value" type="Label" parent="PanelContainer/Page 1/Order Rows/Orders Failed"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.929412, 0.101961, 0.101961, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.917647)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 1
+theme_override_fonts/font = ExtResource("4_roe2k")
+text = "0
+"
+horizontal_alignment = 1
+
+[node name="Performance" type="HSeparator" parent="PanelContainer/Page 1"]
+layout_mode = 2
+offset_left = 49.0
+offset_top = 247.0
+offset_right = 338.0
+offset_bottom = 251.0
+size_flags_vertical = 0
+size_flags_stretch_ratio = 2.67
+theme_override_styles/separator = SubResource("StyleBoxLine_c2tvo")
+
+[node name="Performance Header" type="Label" parent="PanelContainer/Page 1/Performance"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -59.0
+offset_top = -24.0
+offset_right = 59.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 4
+theme_override_fonts/font = SubResource("FontVariation_s4i05")
+theme_override_font_sizes/font_size = 40
+text = "Performance"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="Performance Rows" type="Control" parent="PanelContainer/Page 1"]
+layout_mode = 2
+anchors_preset = 0
+offset_top = 275.0
+offset_right = 386.0
+offset_bottom = 435.0
+size_flags_horizontal = 0
+size_flags_vertical = 4
+size_flags_stretch_ratio = 2.95
+
+[node name="Cars Hit" type="HBoxContainer" parent="PanelContainer/Page 1/Performance Rows"]
+layout_mode = 2
+offset_left = 431.0
+offset_right = 655.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="PanelContainer/Page 1/Performance Rows/Cars Hit"]
+layout_mode = 2
+size_flags_horizontal = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.917647)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 1
+theme_override_fonts/font = ExtResource("4_roe2k")
+text = "Cars Hit"
+horizontal_alignment = 1
+
+[node name="Value" type="Label" parent="PanelContainer/Page 1/Performance Rows/Cars Hit"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.917647)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 1
+theme_override_fonts/font = ExtResource("4_roe2k")
+text = "0
+"
+horizontal_alignment = 1
+
+[node name="Mistakes Made" type="HBoxContainer" parent="PanelContainer/Page 1/Performance Rows"]
+layout_mode = 2
+offset_left = 431.0
+offset_top = 20.0
+offset_right = 655.0
+offset_bottom = 42.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="PanelContainer/Page 1/Performance Rows/Mistakes Made"]
+layout_mode = 2
+size_flags_horizontal = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.917647)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 1
+theme_override_fonts/font = ExtResource("4_roe2k")
+text = "Mistakes Made"
+horizontal_alignment = 1
+
+[node name="Value" type="Label" parent="PanelContainer/Page 1/Performance Rows/Mistakes Made"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.917647)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 1
+theme_override_fonts/font = ExtResource("4_roe2k")
+text = "0
+"
+horizontal_alignment = 1
+
+[node name="Cash" type="HBoxContainer" parent="PanelContainer/Page 1/Performance Rows"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.205959
+anchor_top = 0.25625
+anchor_right = 0.205959
+anchor_bottom = 0.25625
+offset_left = 351.0
+offset_right = 575.0
+offset_bottom = 22.0
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="PanelContainer/Page 1/Performance Rows/Cash"]
+layout_mode = 2
+size_flags_horizontal = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.917647)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 1
+theme_override_fonts/font = ExtResource("4_roe2k")
+text = "Pay Earned"
+horizontal_alignment = 1
+
+[node name="Cash" type="Label" parent="PanelContainer/Page 1/Performance Rows/Cash"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.824, 0.04, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.917647)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 1
+theme_override_fonts/font = ExtResource("4_roe2k")
+text = "$  0
+"
+horizontal_alignment = 1
+
+[node name="Rating Earned" type="Control" parent="PanelContainer/Page 1/Performance Rows"]
+layout_mode = 2
+anchors_preset = 0
+offset_left = 431.0
+offset_top = 60.0
+offset_right = 655.0
+offset_bottom = 82.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="PanelContainer/Page 1/Performance Rows/Rating Earned"]
+layout_mode = 2
+offset_right = 125.0
+offset_bottom = 22.0
+size_flags_horizontal = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.917647)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 1
+theme_override_fonts/font = ExtResource("4_roe2k")
+text = "Rating Earned"
+horizontal_alignment = 1
+
+[node name="STAR_BAR" type="Panel" parent="PanelContainer/Page 1/Performance Rows/Rating Earned"]
+clip_contents = true
+layout_mode = 2
+offset_left = 224.0
+offset_top = 3.0
+offset_right = 224.0
+offset_bottom = 25.0
+scale = Vector2(-1, 1)
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.58
+theme_override_styles/panel = SubResource("StyleBoxEmpty_2kfvt")
+
+[node name="STAR1" type="TextureRect" parent="PanelContainer/Page 1/Performance Rows/Rating Earned/STAR_BAR"]
+layout_mode = 2
+offset_right = 15.0
+offset_bottom = 15.0
+texture = ExtResource("5_gdjcd")
+expand_mode = 1
+
+[node name="STAR2" type="TextureRect" parent="PanelContainer/Page 1/Performance Rows/Rating Earned/STAR_BAR"]
+layout_mode = 2
+offset_left = 17.0
+offset_right = 32.0
+offset_bottom = 15.0
+texture = ExtResource("5_gdjcd")
+expand_mode = 1
+
+[node name="STAR3" type="TextureRect" parent="PanelContainer/Page 1/Performance Rows/Rating Earned/STAR_BAR"]
+layout_mode = 2
+offset_left = 34.0
+offset_right = 49.0
+offset_bottom = 15.0
+texture = ExtResource("5_gdjcd")
+expand_mode = 1
+
+[node name="STAR4" type="TextureRect" parent="PanelContainer/Page 1/Performance Rows/Rating Earned/STAR_BAR"]
+layout_mode = 2
+offset_left = 51.0
+offset_right = 66.0
+offset_bottom = 15.0
+texture = ExtResource("5_gdjcd")
+expand_mode = 1
+
+[node name="STAR5" type="TextureRect" parent="PanelContainer/Page 1/Performance Rows/Rating Earned/STAR_BAR"]
+layout_mode = 2
+offset_left = 68.0
+offset_right = 83.0
+offset_bottom = 15.0
+texture = ExtResource("5_gdjcd")
+expand_mode = 1
+
+[node name="Orders Total" type="HBoxContainer" parent="PanelContainer/Page 1"]
+layout_mode = 2
+offset_left = 445.5
+offset_top = 192.0
+offset_right = 669.5
+offset_bottom = 216.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="PanelContainer/Page 1/Orders Total"]
+layout_mode = 2
+size_flags_horizontal = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.917647)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 1
+theme_override_fonts/font = ExtResource("4_roe2k")
+theme_override_font_sizes/font_size = 18
+text = "Total Orders"
+horizontal_alignment = 1
+
+[node name="Value" type="Label" parent="PanelContainer/Page 1/Orders Total"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.917647)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 1
+theme_override_fonts/font = ExtResource("4_roe2k")
+theme_override_font_sizes/font_size = 18
+text = "0
+"
+horizontal_alignment = 1
+
+[node name="Page 2" type="Control" parent="PanelContainer"]
+anchors_preset = 0
+offset_top = 3.0
+offset_right = 40.0
+offset_bottom = 43.0
+
+[node name="Orders" type="HSeparator" parent="PanelContainer/Page 2"]
+custom_minimum_size = Vector2(160, 40)
+layout_mode = 2
+offset_left = 2.5
+offset_top = -49.0
+offset_right = 388.5
+offset_bottom = -9.0
+size_flags_vertical = 0
+size_flags_stretch_ratio = 5.31
+theme_override_styles/separator = SubResource("StyleBoxLine_c2tvo")
+
+[node name="Order Total2" type="Label" parent="PanelContainer/Page 2/Orders"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -86.5
+offset_top = -26.0
+offset_right = 86.5
+offset_bottom = 26.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 2
+size_flags_vertical = 0
+size_flags_stretch_ratio = 0.85
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 4
+theme_override_fonts/font = SubResource("FontVariation_s4i05")
+theme_override_font_sizes/font_size = 40
+text = "Expenses"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="Label" type="Label" parent="PanelContainer/Page 2/Orders"]
+layout_mode = 0
+offset_left = 1175.5
+offset_top = 8.0
+offset_right = 1235.5
+offset_bottom = 31.0
+text = "dummy"
+
+[node name="Order Rows" type="Control" parent="PanelContainer/Page 2"]
+layout_mode = 2
+anchors_preset = 0
+offset_left = 1.5
+offset_top = 72.0
+offset_right = 387.5
+offset_bottom = 232.0
+size_flags_horizontal = 0
+size_flags_vertical = 4
+size_flags_stretch_ratio = 2.95
+
+[node name="Cash_Pocket" type="HBoxContainer" parent="PanelContainer/Page 2/Order Rows"]
+layout_mode = 2
+offset_left = 453.0
+offset_top = 1.0
+offset_right = 676.0
+offset_bottom = 23.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="PanelContainer/Page 2/Order Rows/Cash_Pocket"]
+layout_mode = 2
+size_flags_horizontal = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.917647)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 1
+theme_override_fonts/font = ExtResource("4_roe2k")
+text = "Cash in Pocket"
+horizontal_alignment = 1
+
+[node name="Cash" type="Label" parent="PanelContainer/Page 2/Order Rows/Cash_Pocket"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.1023, 0.93, 0.32302, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.917647)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 1
+theme_override_fonts/font = ExtResource("4_roe2k")
+text = "$  0
+"
+horizontal_alignment = 2
+
+[node name="Total Expenses" type="HBoxContainer" parent="PanelContainer/Page 2/Order Rows"]
+layout_mode = 2
+offset_left = 452.0
+offset_top = 25.0
+offset_right = 676.0
+offset_bottom = 47.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="PanelContainer/Page 2/Order Rows/Total Expenses"]
+layout_mode = 2
+size_flags_horizontal = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.917647)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 1
+theme_override_fonts/font = ExtResource("4_roe2k")
+text = "Total Expenses"
+
+[node name="Cash" type="Label" parent="PanelContainer/Page 2/Order Rows/Total Expenses"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.929412, 0.101961, 0.101961, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.917647)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 1
+theme_override_fonts/font = ExtResource("4_roe2k")
+text = "$  0
+"
+horizontal_alignment = 2
+
+[node name="Rent" type="HBoxContainer" parent="PanelContainer/Page 2/Order Rows"]
+layout_mode = 2
+offset_left = 452.0
+offset_top = 46.0
+offset_right = 592.905
+offset_bottom = 68.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="PanelContainer/Page 2/Order Rows/Rent"]
+modulate = Color(1, 1, 1, 0.564706)
+layout_mode = 2
+size_flags_horizontal = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.917647)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 1
+theme_override_fonts/font = ExtResource("4_roe2k")
+text = "  Rent"
+horizontal_alignment = 1
+
+[node name="Cash" type="Label" parent="PanelContainer/Page 2/Order Rows/Rent"]
+modulate = Color(1, 1, 1, 0.564706)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.929412, 0.101961, 0.101961, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.917647)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 1
+theme_override_fonts/font = ExtResource("4_roe2k")
+text = "$  0
+"
+horizontal_alignment = 2
+
+[node name="Food" type="HBoxContainer" parent="PanelContainer/Page 2/Order Rows"]
+layout_mode = 2
+offset_left = 452.0
+offset_top = 66.0
+offset_right = 592.905
+offset_bottom = 88.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="PanelContainer/Page 2/Order Rows/Food"]
+modulate = Color(1, 1, 1, 0.564706)
+layout_mode = 2
+size_flags_horizontal = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.917647)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 1
+theme_override_fonts/font = ExtResource("4_roe2k")
+theme_override_font_sizes/font_size = 16
+text = "  Food"
+horizontal_alignment = 1
+
+[node name="Cash" type="Label" parent="PanelContainer/Page 2/Order Rows/Food"]
+modulate = Color(1, 1, 1, 0.564706)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.929412, 0.101961, 0.101961, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.917647)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 1
+theme_override_fonts/font = ExtResource("4_roe2k")
+text = "$  0
+"
+horizontal_alignment = 2
+
+[node name="Electric" type="HBoxContainer" parent="PanelContainer/Page 2/Order Rows"]
+layout_mode = 2
+offset_left = 452.495
+offset_top = 86.0
+offset_right = 593.4
+offset_bottom = 108.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="PanelContainer/Page 2/Order Rows/Electric"]
+modulate = Color(1, 1, 1, 0.564706)
+layout_mode = 2
+size_flags_horizontal = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.917647)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 1
+theme_override_fonts/font = ExtResource("4_roe2k")
+text = "  Electric"
+horizontal_alignment = 1
+
+[node name="Cash" type="Label" parent="PanelContainer/Page 2/Order Rows/Electric"]
+modulate = Color(1, 1, 1, 0.564706)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.929412, 0.101961, 0.101961, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.917647)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 1
+theme_override_fonts/font = ExtResource("4_roe2k")
+text = "$  0
+"
+horizontal_alignment = 2
+
+[node name="Total Cash" type="HBoxContainer" parent="PanelContainer/Page 2/Order Rows"]
+layout_mode = 2
+offset_left = 452.0
+offset_top = 112.0
+offset_right = 677.0
+offset_bottom = 136.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="PanelContainer/Page 2/Order Rows/Total Cash"]
+layout_mode = 2
+size_flags_horizontal = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.917647)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 1
+theme_override_fonts/font = ExtResource("4_roe2k")
+theme_override_font_sizes/font_size = 18
+text = "Total Cash Left"
+horizontal_alignment = 1
+
+[node name="Cash" type="Label" parent="PanelContainer/Page 2/Order Rows/Total Cash"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.1023, 0.93, 0.32302, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.917647)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 1
+theme_override_fonts/font = ExtResource("4_roe2k")
+theme_override_font_sizes/font_size = 18
+text = "$  0
+"
+horizontal_alignment = 1
+
+[node name="Next Screen" type="Button" parent="PanelContainer"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -78.5
+offset_top = -66.0
+offset_right = 78.5
+offset_bottom = -17.0
+grow_horizontal = 2
+grow_vertical = 0
+focus_mode = 0
+theme_override_colors/font_color = Color(0.899258, 0.899258, 0.899258, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(0.977937, 0.977937, 0.977937, 1)
+theme_override_colors/font_disabled_color = Color(0.288518, 0.288518, 0.288518, 1)
+theme_override_colors/font_outline_color = Color(0.233925, 0.233925, 0.233925, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("7_34r6m")
+theme_override_font_sizes/font_size = 35
+theme_override_styles/normal = SubResource("StyleBoxFlat_deshe")
+theme_override_styles/hover = SubResource("StyleBoxFlat_pk7xi")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_rafq5")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_s6nd8")
+text = "Pay Bills"
+
+[node name="Markers" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 471.0
+offset_top = 162.0
+offset_right = 471.0
+offset_bottom = 162.0
+
+[node name="Offscreen" type="Marker2D" parent="Markers"]
+position = Vector2(412, 0)
+gizmo_extents = 0.0
+
+[node name="Onscreen" type="Marker2D" parent="Markers"]
+position = Vector2(80, 0)
+gizmo_extents = 0.0
+
+[node name="Slide_SFX" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_hq16f")
+
+[node name="Day" type="Label" parent="."]
+self_modulate = Color(1, 1, 1, 0.709804)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -28.0
+offset_top = -263.0
+offset_right = 21.0
+offset_bottom = -232.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.341176)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_fonts/font = ExtResource("3_sf1pj")
+theme_override_font_sizes/font_size = 30
+text = "Day 0"
+
+[connection signal="pressed" from="PanelContainer/Next Screen" to="." method="_pay_bills_button"]

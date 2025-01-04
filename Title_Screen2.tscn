@@ -1,0 +1,187 @@
+[gd_scene load_steps=9 format=3 uid="uid://cy4swkj2kaw1t"]
+
+[ext_resource type="Texture2D" uid="uid://cdxwxktq5bge0" path="res://Backgrounds/Title.jpg" id="1_ieecl"]
+[ext_resource type="Texture2D" uid="uid://da6d5psli7wv2" path="res://Sprites/Title_Driver.png" id="2_qlupc"]
+[ext_resource type="FontFile" uid="uid://ydwn4indox68" path="res://Font/Bangers-Regular.ttf" id="4_cj1ex"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5p8vt"]
+bg_color = Color(0.133333, 0.133333, 0.133333, 0)
+border_color = Color(1, 1, 1, 0.498039)
+border_blend = true
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0.00784314, 0.00784314, 0.00784314, 0.262745)
+shadow_size = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3b4wt"]
+bg_color = Color(1, 1, 1, 0.705882)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 1, 1, 0.498039)
+border_blend = true
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(1, 1, 1, 0.458824)
+shadow_size = 4
+
+[sub_resource type="FontVariation" id="FontVariation_yy0jg"]
+base_font = ExtResource("4_cj1ex")
+spacing_glyph = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_65r0a"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_qy6a2"]
+color = Color(1, 1, 1, 1)
+thickness = 5
+
+[node name="ReferenceRect" type="ReferenceRect"]
+clip_contents = true
+offset_left = 178.0
+offset_right = 1085.0
+offset_bottom = 720.0
+border_width = 5.0
+
+[node name="Title" type="Node2D" parent="."]
+
+[node name="Title" type="Sprite2D" parent="Title"]
+position = Vector2(-406, 0)
+texture = ExtResource("1_ieecl")
+centered = false
+
+[node name="Title2" type="Sprite2D" parent="Title"]
+position = Vector2(2144, 0)
+scale = Vector2(-1, 1)
+texture = ExtResource("1_ieecl")
+centered = false
+
+[node name="Title_UI" type="Control" parent="Title"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -199.0
+offset_top = -3.0
+offset_right = 1081.0
+offset_bottom = 717.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="Title/Title_UI"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -543.0
+offset_top = 630.0
+offset_right = 657.0
+offset_bottom = 646.0
+grow_horizontal = 2
+rotation = -0.281073
+pivot_offset = Vector2(585.159, 77.1319)
+theme_override_styles/panel = SubResource("StyleBoxFlat_5p8vt")
+
+[node name="Title Panel" type="Panel" parent="Title/Title_UI"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -585.0
+offset_top = 465.0
+offset_right = 615.0
+offset_bottom = 633.0
+grow_horizontal = 2
+rotation = -0.281073
+pivot_offset = Vector2(585.159, 77.1319)
+theme_override_styles/panel = SubResource("StyleBoxFlat_3b4wt")
+
+[node name="Title" type="Label" parent="Title/Title_UI/Title Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = -0.015
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -5.0
+offset_top = -1.48
+offset_right = -1.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.41598, 0.41598, 0.41598, 1)
+theme_override_constants/shadow_offset_x = 5
+theme_override_constants/shadow_offset_y = 12
+theme_override_constants/outline_size = 20
+theme_override_constants/shadow_outline_size = 10
+theme_override_fonts/font = SubResource("FontVariation_yy0jg")
+theme_override_font_sizes/font_size = 160
+text = "Delivery Dash"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Black-Fade" type="Panel" parent="Title"]
+visible = false
+modulate = Color(1, 1, 1, 0)
+top_level = true
+offset_right = 1280.0
+offset_bottom = 720.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_65r0a")
+metadata/_edit_lock_ = true
+
+[node name="Title Driver" type="Node2D" parent="Title"]
+position = Vector2(526, 339)
+rotation = -0.261799
+scale = Vector2(1.60423, 1.60423)
+
+[node name="Control" type="Control" parent="Title/Title Driver"]
+modulate = Color(1, 1, 1, 0.372549)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Line" type="Panel" parent="Title/Title Driver/Control"]
+layout_mode = 0
+offset_left = -278.518
+offset_top = -122.884
+offset_right = -101.518
+offset_bottom = -32.8839
+rotation = -0.0114965
+pivot_offset = Vector2(293.263, 1.89465)
+theme_override_styles/panel = SubResource("StyleBoxLine_qy6a2")
+
+[node name="Line3" type="Panel" parent="Title/Title Driver/Control"]
+layout_mode = 0
+offset_left = -311.361
+offset_top = -58.1151
+offset_right = -134.361
+offset_bottom = 31.8849
+rotation = -0.0114965
+pivot_offset = Vector2(293.263, 1.89465)
+theme_override_styles/panel = SubResource("StyleBoxLine_qy6a2")
+
+[node name="Line2" type="Panel" parent="Title/Title Driver/Control"]
+layout_mode = 0
+offset_left = -327.495
+offset_top = 2.09619
+offset_right = -133.495
+offset_bottom = 92.0962
+rotation = -0.0114965
+pivot_offset = Vector2(293.263, 1.89465)
+theme_override_styles/panel = SubResource("StyleBoxLine_qy6a2")
+
+[node name="Driver Sprite" type="Sprite2D" parent="Title/Title Driver"]
+position = Vector2(4.80842, -25.1706)
+scale = Vector2(1.48276, 1.58209)
+texture = ExtResource("2_qlupc")
+
+[node name="RigthLimit" type="Marker2D" parent="Title/Title Driver"]
+position = Vector2(302, 62)

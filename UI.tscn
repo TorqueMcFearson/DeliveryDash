@@ -1,0 +1,582 @@
+[gd_scene load_steps=25 format=3 uid="uid://bin3hjdhs5ls8"]
+
+[ext_resource type="Texture2D" uid="uid://bmlasb071pto3" path="res://Sprites/Cash.png" id="1_5daqs"]
+[ext_resource type="Script" path="res://Scripts/UI.gd" id="1_fpkyk"]
+[ext_resource type="Script" path="res://Scripts/Tutorial.gd" id="2_fgfmj"]
+[ext_resource type="FontFile" uid="uid://v3swnsgchgpo" path="res://Font/BebasNeue-Regular.ttf" id="3_mq77v"]
+[ext_resource type="Texture2D" uid="uid://b5pcg5whmd1nc" path="res://Sprites/star_outline.png" id="4_l7i0m"]
+[ext_resource type="PackedScene" uid="uid://b13o5dmyfe7mr" path="res://phone.tscn" id="5_jiinu"]
+[ext_resource type="Texture2D" uid="uid://bcakyuvuj32h3" path="res://Sprites/star_filled.png" id="5_l8fxf"]
+[ext_resource type="AudioStream" uid="uid://b6b8ilef1rrv0" path="res://SFX/phone_chime.mp3" id="7_fng2h"]
+[ext_resource type="Texture2D" uid="uid://ctr552nuextj0" path="res://Sprites/musicBtn.png" id="8_3lvg3"]
+[ext_resource type="AudioStream" uid="uid://cnfpqxlqna1lc" path="res://SFX/Click_01.wav" id="8_ajle4"]
+[ext_resource type="AudioStream" uid="uid://c2p05p0v3iem7" path="res://SFX/Complete_02.wav" id="9_me23b"]
+[ext_resource type="AudioStream" uid="uid://bv5mjdf70yxtp" path="res://SFX/echo-flux-258965.mp3" id="10_ntywh"]
+[ext_resource type="Texture2D" uid="uid://bkc1f67x1dho5" path="res://Sprites/arrow - Copy.png" id="12_mslnn"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qg3eo"]
+bg_color = Color(0.1479, 0.17, 0.164843, 0.847059)
+
+[sub_resource type="FontVariation" id="FontVariation_swb0f"]
+base_font = ExtResource("3_mq77v")
+spacing_glyph = -1
+spacing_space = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nw17m"]
+content_margin_left = 18.0
+content_margin_top = 10.0
+content_margin_right = 18.0
+content_margin_bottom = 10.0
+bg_color = Color(0, 0, 0, 0.623529)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_color = Color(0, 0, 0, 0.313726)
+shadow_size = 8
+shadow_offset = Vector2(3, 3)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tn7f2"]
+bg_color = Color(0.211765, 0.203922, 0.258824, 0.647059)
+border_width_bottom = 4
+border_color = Color(0.098016, 0.0976375, 0.119702, 1)
+
+[sub_resource type="Shader" id="Shader_icnsr"]
+code = "shader_type canvas_item;
+
+uniform vec4 color : source_color = vec4(1.0);
+uniform float width : hint_range(0, 50) = 1.0;
+uniform int pattern : hint_range(0, 2) = 0; // diamond, circle, square
+uniform bool inside = false;
+uniform bool add_margins = true; // only useful when inside is false
+
+void vertex() {
+	if (add_margins) {
+		VERTEX += (UV * 2.0 - 1.0) * width;
+	}
+}
+
+bool hasContraryNeighbour(vec2 uv, vec2 texture_pixel_size, sampler2D texture) {
+	for (float i = -ceil(width); i <= ceil(width); i++) {
+		float x = abs(i) > width ? width * sign(i) : i;
+		float offset;
+		
+		if (pattern == 0) {
+			offset = width - abs(x);
+		} else if (pattern == 1) {
+			offset = floor(sqrt(pow(width + 0.5, 2) - x * x));
+		} else if (pattern == 2) {
+			offset = width;
+		}
+		
+		for (float j = -ceil(offset); j <= ceil(offset); j++) {
+			float y = abs(j) > offset ? offset * sign(j) : j;
+			vec2 xy = uv + texture_pixel_size * vec2(x, y);
+			
+			if ((xy != clamp(xy, vec2(0.0), vec2(1.0)) || texture(texture, xy).a <= 0.0) == inside) {
+				return true;
+			}
+		}
+	}
+	
+	return false;
+}
+
+void fragment() {
+	vec2 uv = UV;
+	
+	if (add_margins) {
+		vec2 texture_pixel_size = vec2(1.0) / (vec2(1.0) / TEXTURE_PIXEL_SIZE + vec2(width * 2.0));
+		
+		uv = (uv - texture_pixel_size * width) * TEXTURE_PIXEL_SIZE / texture_pixel_size;
+		
+		if (uv != clamp(uv, vec2(0.0), vec2(1.0))) {
+			COLOR.a = 0.0;
+		} else {
+			COLOR = texture(TEXTURE, uv);
+		}
+	} else {
+		COLOR = texture(TEXTURE, uv);
+	}
+	
+	if ((COLOR.a > 0.0) == inside && hasContraryNeighbour(uv, TEXTURE_PIXEL_SIZE, TEXTURE)) {
+		COLOR.rgb = inside ? mix(COLOR.rgb, color.rgb, color.a) : color.rgb;
+		COLOR.a += (1.0 - COLOR.a) * color.a;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gjgpg"]
+shader = SubResource("Shader_icnsr")
+shader_parameter/color = Color(0.411765, 1, 0.431373, 0.772549)
+shader_parameter/width = 0.607
+shader_parameter/pattern = 1
+shader_parameter/inside = true
+shader_parameter/add_margins = false
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_he736"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_i0elr"]
+texture = ExtResource("8_3lvg3")
+modulate_color = Color(1, 1, 1, 0.670588)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kggtr"]
+texture = ExtResource("8_3lvg3")
+modulate_color = Color(1, 1, 1, 0.513726)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rucqe"]
+texture = ExtResource("8_3lvg3")
+modulate_color = Color(1, 1, 1, 0.301961)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s7aor"]
+bg_color = Color(0, 0, 0, 1)
+
+[node name="UI_Layer" type="CanvasLayer"]
+script = ExtResource("1_fpkyk")
+
+[node name="Tutorial" type="Control" parent="."]
+process_mode = 2
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_fgfmj")
+
+[node name="Panel" type="Panel" parent="Tutorial"]
+layout_mode = 0
+offset_right = 1294.0
+offset_bottom = 731.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_qg3eo")
+
+[node name="Time" type="Label" parent="Tutorial"]
+layout_mode = 0
+offset_left = 517.0
+offset_top = 82.0
+offset_right = 784.0
+offset_bottom = 151.0
+theme_override_constants/line_spacing = -5
+theme_override_fonts/font = SubResource("FontVariation_swb0f")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxFlat_nw17m")
+text = "Your shift is from 4:00-8:00 pm.
+You have 4 hours to earn a living."
+autowrap_mode = 3
+
+[node name="Arrow-Copy" type="Sprite2D" parent="Tutorial/Time"]
+self_modulate = Color(0, 0, 0, 0.627451)
+position = Vector2(116, -18)
+rotation = -1.57079
+scale = Vector2(0.694836, 0.977872)
+texture = ExtResource("12_mslnn")
+region_enabled = true
+region_rect = Rect2(8.70999, 0, 53.29, 38)
+region_filter_clip_enabled = true
+
+[node name="Time2" type="Label" parent="Tutorial"]
+layout_mode = 0
+offset_left = 1025.0
+offset_top = 83.0
+offset_right = 1270.0
+offset_bottom = 218.0
+theme_override_constants/line_spacing = -5
+theme_override_fonts/font = SubResource("FontVariation_swb0f")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxFlat_nw17m")
+text = "The higher your     rating, 
+the more $ you get tipped!
+
+Just don't mess up or forget orders, and keep on delivering!"
+autowrap_mode = 3
+
+[node name="Arrow-Copy" type="Sprite2D" parent="Tutorial/Time2"]
+self_modulate = Color(0, 0, 0, 0.627451)
+position = Vector2(168, -18)
+rotation = -1.57079
+scale = Vector2(0.694836, 0.977872)
+texture = ExtResource("12_mslnn")
+region_enabled = true
+region_rect = Rect2(8.70999, 0, 53.29, 38)
+region_filter_clip_enabled = true
+
+[node name="TextureRect" type="TextureRect" parent="Tutorial/Time2"]
+layout_mode = 0
+offset_left = 127.0
+offset_top = 12.0
+offset_right = 146.0
+offset_bottom = 31.0
+texture = ExtResource("5_l8fxf")
+expand_mode = 1
+
+[node name="Time3" type="Label" parent="Tutorial"]
+layout_mode = 0
+offset_left = 37.0
+offset_top = 80.0
+offset_right = 314.0
+offset_bottom = 196.0
+theme_override_constants/line_spacing = -5
+theme_override_fonts/font = SubResource("FontVariation_swb0f")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxFlat_nw17m")
+text = "Earn    money by delivering orders!
+
+Hurry if you want to afford rent and food at the end of the day!"
+autowrap_mode = 3
+
+[node name="Arrow-Copy" type="Sprite2D" parent="Tutorial/Time3"]
+self_modulate = Color(0, 0, 0, 0.627451)
+position = Vector2(35, -18)
+rotation = -1.57079
+scale = Vector2(0.694836, 0.977872)
+texture = ExtResource("12_mslnn")
+region_enabled = true
+region_rect = Rect2(8.70999, 0, 53.29, 38)
+region_filter_clip_enabled = true
+
+[node name="L_Cash" type="Label" parent="Tutorial/Time3"]
+layout_mode = 0
+offset_left = 55.0
+offset_top = 8.0
+offset_right = 207.0
+offset_bottom = 168.0
+scale = Vector2(0.25, 0.25)
+theme_override_colors/font_color = Color(1, 0.978132, 0.263246, 0.996078)
+theme_override_colors/font_shadow_color = Color(0.223529, 0.219608, 0.258824, 0.666667)
+theme_override_constants/shadow_outline_size = 30
+theme_override_fonts/font = ExtResource("3_mq77v")
+theme_override_font_sizes/font_size = 100
+text = "$"
+
+[node name="Time5" type="Label" parent="Tutorial"]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 484.0
+offset_right = 290.0
+offset_bottom = 706.0
+theme_override_constants/line_spacing = -2
+theme_override_fonts/font = SubResource("FontVariation_swb0f")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxFlat_nw17m")
+text = "                 Controls:
+Drive                            W/A/S/D
+click Stuff                   Left Click
+scroll orders          mouse wheel
+put phone away           Right click
+enter building         E / left click
+pause game                          esc
+Emergency reset                      r"
+autowrap_mode = 3
+
+[node name="Time4" type="Label" parent="Tutorial"]
+layout_mode = 0
+offset_left = 516.0
+offset_top = 485.0
+offset_right = 1034.0
+offset_bottom = 708.0
+theme_override_constants/line_spacing = -5
+theme_override_fonts/font = SubResource("FontVariation_swb0f")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxFlat_nw17m")
+text = "Welcome to the DeliveryDash APP!
+
+when driving, it's your best friend. Use it to scroll through your deliveries and update their status. 
+
+Your unseen employer is always watching... So don't forget to respond to orders and follow procedures so you don't lose any precious stars!
+
+Quick tip! it's always better to reject an order than negelect it."
+autowrap_mode = 3
+
+[node name="Arrow-Copy" type="Sprite2D" parent="Tutorial/Time4"]
+self_modulate = Color(0, 0, 0, 0.627451)
+position = Vector2(535, 147)
+scale = Vector2(0.694836, 0.977872)
+texture = ExtResource("12_mslnn")
+region_enabled = true
+region_rect = Rect2(8.70999, 0, 53.29, 38)
+region_filter_clip_enabled = true
+
+[node name="Label" type="Label" parent="Tutorial"]
+layout_mode = 0
+offset_left = 560.0
+offset_top = 311.0
+offset_right = 742.0
+offset_bottom = 334.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.639216)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 5
+text = "Click to Continue"
+horizontal_alignment = 1
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+mouse_filter = 2
+
+[node name="Panel" type="Panel" parent="UI"]
+layout_mode = 0
+offset_right = 1281.0
+offset_bottom = 41.0
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_tn7f2")
+
+[node name="Cash" type="Sprite2D" parent="UI/Panel"]
+material = SubResource("ShaderMaterial_gjgpg")
+position = Vector2(34.5, 19.5882)
+scale = Vector2(2.9375, 2.07353)
+texture = ExtResource("1_5daqs")
+
+[node name="L_Cash" type="Label" parent="UI/Panel/Cash"]
+offset_left = 9.0
+offset_top = -7.0
+offset_right = 89.0
+offset_bottom = 113.0
+scale = Vector2(0.125, 0.125)
+theme_override_colors/font_color = Color(1, 0.978132, 0.263246, 0.996078)
+theme_override_colors/font_shadow_color = Color(0.223529, 0.219608, 0.258824, 0.666667)
+theme_override_constants/shadow_outline_size = 30
+theme_override_fonts/font = ExtResource("3_mq77v")
+theme_override_font_sizes/font_size = 100
+text = "$0"
+
+[node name="Add_Cash" type="Label" parent="UI/Panel/Cash"]
+offset_left = 31.1489
+offset_top = -67.8014
+offset_right = 151.149
+offset_bottom = 52.1986
+scale = Vector2(0.125, 0.125)
+theme_override_colors/font_color = Color(1, 0.992333, 0.77, 0.996078)
+theme_override_colors/font_shadow_color = Color(0.223529, 0.219608, 0.258824, 0.666667)
+theme_override_constants/shadow_outline_size = 30
+theme_override_fonts/font = ExtResource("3_mq77v")
+theme_override_font_sizes/font_size = 100
+text = "+$0"
+
+[node name="Add_Tip" type="Label" parent="UI/Panel/Cash/Add_Cash"]
+layout_mode = 0
+offset_left = 217.872
+offset_right = 447.872
+offset_bottom = 120.0
+theme_override_colors/font_color = Color(0.77, 1, 0.777667, 0.996078)
+theme_override_colors/font_shadow_color = Color(0.223529, 0.219608, 0.258824, 0.666667)
+theme_override_constants/shadow_outline_size = 30
+theme_override_fonts/font = ExtResource("3_mq77v")
+theme_override_font_sizes/font_size = 100
+text = "+$0 TIP"
+
+[node name="Time" type="Label" parent="UI/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_right = 3839.0
+offset_bottom = 138.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.25, 0.25)
+theme_override_colors/font_color = Color(1, 0.976471, 1, 0.996078)
+theme_override_colors/font_shadow_color = Color(0.223529, 0.219608, 0.258824, 0.666667)
+theme_override_constants/shadow_outline_size = 30
+theme_override_fonts/font = ExtResource("3_mq77v")
+theme_override_font_sizes/font_size = 140
+text = "4:00 pm"
+horizontal_alignment = 1
+metadata/_edit_lock_ = true
+
+[node name="Rating" type="Label" parent="UI/Panel"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+offset_left = 1044.0
+offset_top = 4.0
+offset_right = 1107.0
+offset_bottom = 39.0
+size_flags_horizontal = 8
+size_flags_stretch_ratio = 6.07
+theme_override_colors/font_color = Color(1, 0.978132, 0.263246, 0.996078)
+theme_override_colors/font_shadow_color = Color(0.223529, 0.219608, 0.258824, 0.666667)
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 15
+theme_override_fonts/font = ExtResource("3_mq77v")
+theme_override_font_sizes/font_size = 28
+text = "Rating "
+vertical_alignment = 1
+
+[node name="empty stars" type="Control" parent="UI/Panel"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="UI/Panel/empty stars"]
+layout_mode = 2
+offset_left = 1110.0
+offset_top = 3.0
+offset_right = 1141.0
+offset_bottom = 34.0
+texture = ExtResource("4_l7i0m")
+expand_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="UI/Panel/empty stars"]
+layout_mode = 2
+offset_left = 1144.0
+offset_top = 3.0
+offset_right = 1175.0
+offset_bottom = 34.0
+texture = ExtResource("4_l7i0m")
+expand_mode = 3
+
+[node name="TextureRect3" type="TextureRect" parent="UI/Panel/empty stars"]
+layout_mode = 2
+offset_left = 1178.0
+offset_top = 3.0
+offset_right = 1209.0
+offset_bottom = 34.0
+texture = ExtResource("4_l7i0m")
+expand_mode = 2
+
+[node name="TextureRect4" type="TextureRect" parent="UI/Panel/empty stars"]
+layout_mode = 2
+offset_left = 1212.0
+offset_top = 3.0
+offset_right = 1243.0
+offset_bottom = 34.0
+texture = ExtResource("4_l7i0m")
+expand_mode = 2
+
+[node name="TextureRect5" type="TextureRect" parent="UI/Panel/empty stars"]
+layout_mode = 2
+offset_left = 1246.0
+offset_top = 3.0
+offset_right = 1277.0
+offset_bottom = 34.0
+texture = ExtResource("4_l7i0m")
+expand_mode = 2
+
+[node name="STAR_BAR" type="Panel" parent="UI/Panel"]
+clip_contents = true
+layout_mode = 0
+offset_left = 1279.0
+offset_right = 1280.0
+offset_bottom = 40.0
+scale = Vector2(-1, 1)
+theme_override_styles/panel = SubResource("StyleBoxEmpty_he736")
+
+[node name="STAR1" type="TextureRect" parent="UI/Panel/STAR_BAR"]
+layout_mode = 2
+offset_left = 2.0
+offset_top = 3.0
+offset_right = 33.0
+offset_bottom = 34.0
+texture = ExtResource("5_l8fxf")
+expand_mode = 2
+
+[node name="STAR2" type="TextureRect" parent="UI/Panel/STAR_BAR"]
+layout_mode = 2
+offset_left = 36.0
+offset_top = 3.0
+offset_right = 67.0
+offset_bottom = 34.0
+texture = ExtResource("5_l8fxf")
+expand_mode = 3
+
+[node name="STAR3" type="TextureRect" parent="UI/Panel/STAR_BAR"]
+layout_mode = 2
+offset_left = 70.0
+offset_top = 3.0
+offset_right = 101.0
+offset_bottom = 34.0
+texture = ExtResource("5_l8fxf")
+expand_mode = 2
+
+[node name="STAR4" type="TextureRect" parent="UI/Panel/STAR_BAR"]
+layout_mode = 2
+offset_left = 104.0
+offset_top = 3.0
+offset_right = 135.0
+offset_bottom = 34.0
+texture = ExtResource("5_l8fxf")
+expand_mode = 2
+
+[node name="STAR5" type="TextureRect" parent="UI/Panel/STAR_BAR"]
+layout_mode = 2
+offset_left = 138.0
+offset_top = 3.0
+offset_right = 169.0
+offset_bottom = 34.0
+texture = ExtResource("5_l8fxf")
+expand_mode = 2
+
+[node name="TextureButton" type="Button" parent="UI"]
+layout_mode = 0
+offset_left = 1226.0
+offset_top = 669.0
+offset_right = 1266.0
+offset_bottom = 709.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxTexture_i0elr")
+theme_override_styles/hover = SubResource("StyleBoxTexture_kggtr")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_rucqe")
+toggle_mode = true
+
+[node name="Phone" parent="." instance=ExtResource("5_jiinu")]
+
+[node name="FlyingStar" type="TextureRect" parent="."]
+offset_left = 1223.0
+offset_top = -170.0
+offset_right = 1254.0
+offset_bottom = -139.0
+texture = ExtResource("5_l8fxf")
+expand_mode = 2
+
+[node name="star_label" type="Label" parent="FlyingStar"]
+layout_mode = 0
+offset_left = -16.0
+offset_top = -3.0
+offset_right = 24.0
+offset_bottom = 20.0
+scale = Vector2(1.75156, 1.75156)
+text = "+"
+
+[node name="Fader" type="Panel" parent="."]
+visible = false
+offset_left = -15.0
+offset_top = -12.0
+offset_right = 1291.0
+offset_bottom = 728.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_s7aor")
+
+[node name="ClockTick" type="Timer" parent="."]
+
+[node name="Order_Update" type="Timer" parent="."]
+
+[node name="New_Order_Timer" type="Timer" parent="."]
+
+[node name="Phone Ding" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_fng2h")
+volume_db = -1.0
+pitch_scale = 1.17
+
+[node name="Cash_Noise" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_ajle4")
+pitch_scale = 0.8
+max_polyphony = 3
+
+[node name="StarGain" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_me23b")
+pitch_scale = 0.8
+max_polyphony = 3
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_ntywh")
+volume_db = -14.0
+autoplay = true
+
+[connection signal="toggled" from="UI/TextureButton" to="." method="_on_texture_button_toggled"]
+[connection signal="timeout" from="ClockTick" to="." method="_on_clock_tick"]
+[connection signal="timeout" from="Order_Update" to="." method="_on_order_update_timeout"]
+[connection signal="timeout" from="New_Order_Timer" to="." method="order_timer_timeout"]
