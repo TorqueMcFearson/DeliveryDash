@@ -413,11 +413,11 @@ func reset():
 	"Rating Change" : 0, 
 	} 
 
-func _on_texture_button_toggled(toggled_on: bool) -> void:
-	if toggled_on:
-		$Music.volume_db = -14 # Replace with function body.
+func _on_texture_button_toggled(toggled_off: bool) -> void:
+	if toggled_off:
+		$Music.volume_db = -80 # Replace with function body.
 	else:
-		$Music.volume_db = -80
+		$Music.volume_db = -14
 
 func set_cash(value):
 	cash = value

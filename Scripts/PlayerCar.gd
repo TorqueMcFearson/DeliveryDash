@@ -5,9 +5,10 @@ extends CharacterBody2D
 ####################
 @onready var tilemap: TileMap = $"../TileMap"
 @onready var sprite: Sprite2D = $Move_collision/TitleDriver
-@onready var arrow: Sprite2D = $arrow
+@onready var arrow: Sprite2D = $CanvasLayer2/arrow
 @export var pitch_curve:Curve
 @export var volume_curve:Curve
+@onready var arrow_safezone: Rect2 = $Viewport.get_rect()
 
 ########################################
 ## Constants & Enums
@@ -52,7 +53,8 @@ func _unhandled_key_input(event: InputEvent) -> void:
 	
 func _physics_process(delta: float) -> void:
 	render_arrow()
-	
+	if not tilemap:
+		return
 	var road_dir :int = get_road_direction()
 	var x_direction = Input.get_axis("Left", "Right")
 	var y_direction = Input.get_axis("Up", "Down")
@@ -133,14 +135,13 @@ func render_arrow():
 	if not dest:
 		arrow.hide()
 		return
-	if not arrow.visible and arrow.global_position.distance_squared_to(dest) > arrow_on_min:
+	if not arrow.visible and global_position.distance_squared_to(dest) > arrow_on_min:
 		arrow.show()
-	elif arrow.global_position.distance_squared_to(dest) < arrow_off_min:
+	elif global_position.distance_squared_to(dest) < arrow_off_min:
 		arrow.hide()
 		return
 	arrow.global_position = lerp(global_position,dest,.35) 
-	var vp = get_viewport_rect()
-	arrow.position = arrow.position.clamp(-vp.end/2.8,vp.end/2.8)
+	arrow.position = arrow.global_position.clamp(global_position+arrow_safezone.position,global_position+arrow_safezone.end) #global_position-vp.end/2.8,global_position+vp.end/2.8)
 	arrow.rotation = position.direction_to(dest).angle()
 
 func process_motor():

@@ -30,6 +30,12 @@ window/size/viewport_height=720
 window/size/resizable=false
 window/stretch/mode="viewport"
 
+[editor]
+
+movie_writer/mjpeg_quality=0.25
+movie_writer/movie_file="C:/Users/Cowboy/Desktop/Godot/Records/Delivery-Dash Record.avi"
+movie_writer/disable_vsync=true
+
 [input]
 
 Up={
