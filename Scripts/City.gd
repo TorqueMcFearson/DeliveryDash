@@ -10,6 +10,7 @@ preload("res://Sprites/house6.png"),
 const AI_CAR = preload("res://ai_car.tscn")
 const MAX_CARS : int= 25
 const GLOW = preload("res://Glow.tres")
+const BLINK_SPEED = 8
 var HOUSE = load("res://house.tscn")
 var RESTURANT = load("res://resturant_scene.tscn")
 @onready var tilemap: TileMap = %TileMap
@@ -20,6 +21,7 @@ var target_queue = []
 var current_target : Sprite2D
 var at_destination :bool = false
 var mouse_inside:bool=false
+var time_passed = 0.0
 
 
 func _ready() -> void:
@@ -28,7 +30,6 @@ func _ready() -> void:
 	player.position = UI.player_map_position
 	UI.show_UI()
 	randomize_houses()
-	UI.unpause_timers()
 	if UI.tutorial:
 		await UI.fade_in(1) # Replace with function body.
 		print("FADE IN COMPLETE")
@@ -44,7 +45,22 @@ func _ready() -> void:
 		mark_target(UI.active_order)
 	else:
 		UI.order_timer_start()
+	UI.unpause_timers()
 
+func _process(delta: float) -> void:
+	if current_target:
+		#time_passed += delta
+		#var new_alpha = .8 + .2 * sin(time_passed * BLINK_SPEED)  
+		#new_alpha = pow(new_alpha,2)
+		#var color = current_target.material.get_shader_parameter("color")
+		#color.a = new_alpha  # Update alpha
+		#current_target.material.set_shader_parameter("color", color)
+		
+		time_passed += delta
+		var width = 2 + .2 * sin(time_passed * BLINK_SPEED)  
+		width = pow(width,2)
+
+		current_target.material.set_shader_parameter("width", width)
 
 
 func mark_target(order :Order):
@@ -116,6 +132,8 @@ func _on_car_check_timeout() -> void:
 		add_cars(MAX_CARS-count) # Replace with function body.
 
 func go_to_building():
+	if UI.day_over:return
+	if UI.tween.is_valid():return
 	UI.player_map_position = player.position
 	UI.location = current_target.name
 	if current_target.get_parent().name == "Stores":

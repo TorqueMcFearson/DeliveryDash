@@ -23,8 +23,9 @@ spacing_top = 2
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2kfvt"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_deshe"]
-bg_color = Color(1, 0.1, 0.1, 0.85098)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s6nd8"]
+content_margin_top = 7.0
+bg_color = Color(0.233925, 0.233925, 0.233925, 1)
 border_width_left = 2
 border_width_top = 3
 border_width_right = 2
@@ -34,10 +35,8 @@ corner_radius_top_left = 12
 corner_radius_top_right = 12
 corner_radius_bottom_right = 12
 corner_radius_bottom_left = 12
-expand_margin_top = 3.0
 shadow_color = Color(0.101961, 0.101961, 0.101961, 0.682353)
 shadow_size = 1
-shadow_offset = Vector2(2, 2)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pk7xi"]
 bg_color = Color(1, 0, 0, 1)
@@ -70,9 +69,8 @@ corner_radius_bottom_left = 12
 shadow_color = Color(0.101961, 0.101961, 0.101961, 0.682353)
 shadow_size = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s6nd8"]
-content_margin_top = 7.0
-bg_color = Color(0.233925, 0.233925, 0.233925, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_deshe"]
+bg_color = Color(1, 0.1, 0.1, 0.85098)
 border_width_left = 2
 border_width_top = 3
 border_width_right = 2
@@ -82,15 +80,16 @@ corner_radius_top_left = 12
 corner_radius_top_right = 12
 corner_radius_bottom_right = 12
 corner_radius_bottom_left = 12
+expand_margin_top = 3.0
 shadow_color = Color(0.101961, 0.101961, 0.101961, 0.682353)
 shadow_size = 1
+shadow_offset = Vector2(2, 2)
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_hq16f"]
 random_pitch = 1.2
 random_volume_offset_db = 0.79
 streams_count = 1
 stream_0/stream = ExtResource("5_ux1uj")
-stream_0/weight = 1.0
 
 [node name="4 AM" type="Control"]
 layout_mode = 3
@@ -856,18 +855,18 @@ offset_bottom = -17.0
 grow_horizontal = 2
 grow_vertical = 0
 focus_mode = 0
-theme_override_colors/font_color = Color(0.899258, 0.899258, 0.899258, 1)
-theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
-theme_override_colors/font_hover_color = Color(0.977937, 0.977937, 0.977937, 1)
 theme_override_colors/font_disabled_color = Color(0.288518, 0.288518, 0.288518, 1)
+theme_override_colors/font_hover_color = Color(0.977937, 0.977937, 0.977937, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(0.899258, 0.899258, 0.899258, 1)
 theme_override_colors/font_outline_color = Color(0.233925, 0.233925, 0.233925, 1)
 theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("7_34r6m")
 theme_override_font_sizes/font_size = 35
-theme_override_styles/normal = SubResource("StyleBoxFlat_deshe")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_s6nd8")
 theme_override_styles/hover = SubResource("StyleBoxFlat_pk7xi")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_rafq5")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_s6nd8")
+theme_override_styles/normal = SubResource("StyleBoxFlat_deshe")
 text = "Pay Bills"
 
 [node name="Markers" type="Control" parent="."]

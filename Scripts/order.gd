@@ -9,8 +9,31 @@ class Bag:
 		self.receipt = receipt
 		self.correct = correct
 
+@onready var progress_button: Button = $HBoxContainer2/VBoxContainer/Progress
+@onready var until_order_expires: Label = $"HBoxContainer2/Order_Expand/TimeLeftBox/Until Order Expires"
 @onready var order_expand: MarginContainer = $HBoxContainer2/Order_Expand
 @onready var expand_content: VBoxContainer = $HBoxContainer2/Order_Expand/More_Details
+@onready var target: Label = $Hbox/Target
+@onready var arrow: Sprite2D = $HBoxContainer/Arrowbox/Arrow
+
+@onready var basket: TextureRect = $Hbox/Basket
+
+
+const STATUS_COLORS = {NEW : Color(0.067, 0.75, 0.181),
+					TO_STORE:Color(0.085, 0.503, 0.95),
+					TO_HOUSE:Color(1, 0.609, 0.13, 0.992),
+					DELIVERED:Color(1, 0.867, 0)}
+const STATUS_TEXT = {NEW : "New!",
+					TO_STORE:"Picking up...",
+					TO_HOUSE:"Delivering...",
+					DELIVERED:"Order Complete!"}
+const STYLE_BOXES = {TO_HOUSE:{ "normal":"res://StyleBoxes/Progress-pickup-normal.tres",
+								"hover":"res://StyleBoxes/Progress-pickup-hover.tres",
+								"pressed": "res://StyleBoxes/Progress-pickup-press.tres"},
+					DELIVERED:{ "normal":"res://StyleBoxes/progress-accept~complete-normal.tres",
+								"hover":"res://StyleBoxes/progress-accept~complete-hover.tres",
+								"pressed": "res://StyleBoxes/progress-accept~complete-pressed.tres"}}
+					
 static var order_next :int = 1
 signal bag_cleared
 signal scrollposition(pos:Vector2)
@@ -87,6 +110,7 @@ func progress_order():# NEW,TO_STORE,TO_HOUSE,DELIVERED
 				return
 		DELIVERED:
 				complete_order()
+				return
 	state = (state + 1)
 	
 func complete_order():
@@ -95,47 +119,38 @@ func complete_order():
 	queue_free()
 	
 func update_state(): #Called whenever the state changes
+	var dist = get_distance()
+	$Status.modulate=STATUS_COLORS[state]
+	$Status.text = STATUS_TEXT[state]
 	match state: # NEW,TO_STORE,TO_HOUSE,DELIVERED
 		NEW:
-			$HBoxContainer/Basket.hide()
-			$HBoxContainer/House.hide()
-			$Status.text = "New!"
-			$Target.text = "#"+str(order_num)+" | " + resturant
-			$Status.modulate=Color(0, 0.086, 1)
+			target.text = resturant 
 			$HBoxContainer2/VBoxContainer/Accept.show()
 			$HBoxContainer2/VBoxContainer/Reject.show()
-			$HBoxContainer2/Order_Expand/More_Details/HBoxContainer/Resturant.text = resturant
-			$HBoxContainer2/Order_Expand/More_Details/HBoxContainer2/OrderNum.text = "Order #" + str(order_num)
-			$HBoxContainer2/Order_Expand/More_Details/HBoxContainer3/Customer.text = customer
-			$HBoxContainer2/Order_Expand/More_Details/HBoxContainer4/Address.text = address
+			#$HBoxContainer2/Order_Expand/More_Details/HBoxContainer/Resturant.text = resturant
+			#$HBoxContainer2/Order_Expand/More_Details/HBoxContainer2/OrderNum.text = "Order #" + str(order_num)
+			#$HBoxContainer2/Order_Expand/More_Details/HBoxContainer3/Customer.text = customer
+			#$HBoxContainer2/Order_Expand/More_Details/HBoxContainer4/Address.text = address
 		TO_STORE:
 			$Reward.text = ""
-			$HBoxContainer/Basket.show()
-			$HBoxContainer/House.hide()
-			$Status.text = "Picking up..."
-			$Target.text = "#"+str(order_num)+" | " + resturant
-			$Status.modulate=Color(1, 0.65, 0.199)
-			$"HBoxContainer2/VBoxContainer/Progress".show()
-			$"HBoxContainer2/VBoxContainer/Progress".text = "mark as picked up"
-			$"HBoxContainer2/Order_Expand/TimeLeftBox/Until Order Expires".text = "Complete delivery in:"
+			target.text = resturant 
+			progress_button.show()
+			progress_button.text = "mark as picked up"
+			until_order_expires.text = "Complete delivery in:"
 		TO_HOUSE:
-			$HBoxContainer/Basket.hide()
-			$HBoxContainer/House.show()
-			$Status.text = "Delivering..."
-			$Target.text = "#"+str(order_num)+" | " +address
-			$Status.modulate=Color(1, 0.915, 0.15)
-			$"HBoxContainer2/VBoxContainer/Progress".text = "Mark as Delivered"
+			update_button()
+			target.text = address 
+			progress_button.text = "Mark as Delivered"
 		DELIVERED: 
-			$HBoxContainer/Basket.hide()
-			$HBoxContainer/House.hide()
 			$HBoxContainer2/Order_Expand/TimeLeftBox.hide()
-			$Target.text = "Order Complete!"
+			$HBoxContainer/Arrowbox.hide()
+			update_button()
+			target.text = STATUS_TEXT[state]
 			var tip = reward * UI.rating * .015
 			$Status.text = "$%d + $%d TIP = $%d" % [reward, tip,reward+tip] 
-			$Status.modulate=Color(1, 0.867, 0)
-			$"HBoxContainer2/VBoxContainer/Progress".text = "Collect Pay"
+			progress_button.text = "Collect Pay"
 			
-	var dist = get_distance()
+	
 	if state == NEW: 
 		if not reward:
 				reward = int(randi_range(2,12) + dist/2)
@@ -156,7 +171,7 @@ func activate():
 		order.deactivate()
 	active = true
 	add_theme_stylebox_override("panel",load("res://StyleBoxes/order_entry_active.tres"))
-	$HBoxContainer2/VBoxContainer/Progress.show()
+	progress_button.show()
 	#$HBoxContainer2/VBoxContainer/Set_Active.hide() TEST
 	new_active.emit(self)
 
@@ -164,7 +179,7 @@ func deactivate():
 	add_theme_stylebox_override("panel",load("res://StyleBoxes/order_entry.tres"))
 	if state != NEW:
 		active = false
-		$HBoxContainer2/VBoxContainer/Progress.hide()
+		progress_button.hide()
 		#$HBoxContainer2/VBoxContainer/Set_Active.show()
 
 func get_distance():
@@ -200,8 +215,10 @@ func get_distance_from_player(target :Vector2):
 	if root and root.name == "City":
 		var player : CharacterBody2D = root.find_child("Player",false)
 		dist = player.global_position.distance_to(target)
+		arrow.rotation = player.global_position.angle_to_point(target)
 	else:
 		dist = UI.player_map_position.distance_to(target)
+		arrow.rotation = UI.player_map_position.angle_to_point(target)
 	dist = int(dist/100)
 	return dist
 
@@ -250,9 +267,12 @@ func clear_bag():
 
 func take_bag():
 	food_status = FOOD.PICKED_UP
+	basket.show()
+	
 	
 func drop_bag():
 	food_status = FOOD.DELIVERED
+	basket.hide()
 	
 func _on_reject_pressed() -> void:
 	UI.round_stats["Orders Rejected"] += 1
@@ -298,3 +318,8 @@ func can_become_active(): #{NEW,TO_STORE,TO_HOUSE,DELIVERED}
 func _on_select_order_header() -> void:
 	if can_become_active():
 		activate() # Replace with function body.
+
+func update_button():
+	for boxtype in ["normal","hover","pressed"]:
+		progress_button.add_theme_stylebox_override(boxtype,load(STYLE_BOXES[state][boxtype]))
+	

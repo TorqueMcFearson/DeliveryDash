@@ -115,10 +115,6 @@ shader_parameter/add_margins = false
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_he736"]
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_i0elr"]
-texture = ExtResource("8_3lvg3")
-modulate_color = Color(1, 1, 1, 0.670588)
-
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kggtr"]
 texture = ExtResource("8_3lvg3")
 modulate_color = Color(1, 1, 1, 0.513726)
@@ -126,6 +122,10 @@ modulate_color = Color(1, 1, 1, 0.513726)
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rucqe"]
 texture = ExtResource("8_3lvg3")
 modulate_color = Color(1, 1, 1, 0.301961)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_i0elr"]
+texture = ExtResource("8_3lvg3")
+modulate_color = Color(1, 1, 1, 0.670588)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s7aor"]
 bg_color = Color(0, 0, 0, 1)
@@ -517,9 +517,9 @@ offset_top = 669.0
 offset_right = 1266.0
 offset_bottom = 709.0
 focus_mode = 0
-theme_override_styles/normal = SubResource("StyleBoxTexture_i0elr")
 theme_override_styles/hover = SubResource("StyleBoxTexture_kggtr")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_rucqe")
+theme_override_styles/normal = SubResource("StyleBoxTexture_i0elr")
 toggle_mode = true
 
 [node name="Phone" parent="." instance=ExtResource("5_jiinu")]
@@ -551,10 +551,13 @@ mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_s7aor")
 
 [node name="ClockTick" type="Timer" parent="."]
+autostart = true
 
 [node name="Order_Update" type="Timer" parent="."]
+autostart = true
 
 [node name="New_Order_Timer" type="Timer" parent="."]
+autostart = true
 
 [node name="Phone Ding" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_fng2h")

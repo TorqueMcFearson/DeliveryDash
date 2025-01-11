@@ -14,6 +14,7 @@ filter_clip = true
 
 [sub_resource type="SystemFont" id="SystemFont_0yh1v"]
 font_names = PackedStringArray("Impact")
+subpixel_positioning = 0
 
 [node name="AICar" type="CharacterBody2D"]
 position = Vector2(3360, 3934)

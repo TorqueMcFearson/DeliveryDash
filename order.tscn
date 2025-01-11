@@ -4,22 +4,26 @@
 [ext_resource type="FontFile" uid="uid://v3swnsgchgpo" path="res://Font/BebasNeue-Regular.ttf" id="1_r6uv7"]
 [ext_resource type="Script" path="res://Scripts/order.gd" id="2_veeqs"]
 [ext_resource type="FontFile" uid="uid://gs5irb036wet" path="res://Font/RobotoMono-VariableFont_wght.ttf" id="2_wynid"]
+[ext_resource type="StyleBox" uid="uid://1x6sw54qrhb8" path="res://StyleBoxes/progress-accept~complete-hover.tres" id="4_8sq50"]
 [ext_resource type="Texture2D" uid="uid://cmqgjpv80ci62" path="res://Sprites/Basket.png" id="4_jfnvb"]
 [ext_resource type="FontFile" uid="uid://ydwn4indox68" path="res://Font/Bangers-Regular.ttf" id="5_5qf0o"]
 [ext_resource type="Texture2D" uid="uid://dt3qaxqvjoxf" path="res://Sprites/arrowdown.png" id="5_17f3l"]
 [ext_resource type="StyleBox" uid="uid://dcdbmbgc4sw1f" path="res://StyleBoxes/downarrow.tres" id="5_khxwy"]
-[ext_resource type="Texture2D" uid="uid://benvw2ntywhrh" path="res://Sprites/Home.png" id="5_nmnjs"]
+[ext_resource type="StyleBox" uid="uid://bfk44tl2r47xv" path="res://StyleBoxes/progress-accept~complete-pressed.tres" id="5_ultlv"]
+[ext_resource type="StyleBox" uid="uid://13y5j3phgal2" path="res://StyleBoxes/progress-accept~complete-normal.tres" id="6_t82dr"]
 [ext_resource type="AudioStream" uid="uid://dby1rof5s3mqv" path="res://SFX/Phone click.wav" id="9_262f1"]
+[ext_resource type="Texture2D" uid="uid://bkc1f67x1dho5" path="res://Sprites/arrow - Copy.png" id="12_dxy2q"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3ft6k"]
-bg_color = Color(0.878431, 1, 1, 0.054902)
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
-expand_margin_left = 12.0
-expand_margin_top = 8.0
-expand_margin_right = 12.0
+[sub_resource type="FontVariation" id="FontVariation_n351m"]
+base_font = ExtResource("1_r6uv7")
+spacing_glyph = 1
+spacing_bottom = -5
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_t4w22"]
+content_margin_top = 41.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qg8if"]
+content_margin_top = 41.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b4cqa"]
 bg_color = Color(0.878431, 1, 1, 0.188235)
@@ -31,63 +35,18 @@ expand_margin_left = 12.0
 expand_margin_top = 8.0
 expand_margin_right = 12.0
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3ft6k"]
+bg_color = Color(0.878431, 1, 1, 0.054902)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+expand_margin_left = 12.0
+expand_margin_top = 8.0
+expand_margin_right = 12.0
+
 [sub_resource type="FontVariation" id="FontVariation_dgcob"]
 base_font = ExtResource("1_r6uv7")
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yg1lw"]
-content_margin_left = 5.0
-content_margin_top = 3.0
-content_margin_right = 5.0
-content_margin_bottom = 3.0
-bg_color = Color(0, 0.560784, 0, 0.776471)
-corner_radius_top_left = 7
-corner_radius_top_right = 7
-corner_radius_bottom_right = 7
-corner_radius_bottom_left = 7
-shadow_color = Color(0.0417541, 0.355469, 0.0236053, 1)
-shadow_size = 2
-shadow_offset = Vector2(2, 2)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7bbxk"]
-content_margin_left = 5.0
-content_margin_top = 3.0
-content_margin_right = 5.0
-content_margin_bottom = 3.0
-bg_color = Color(0, 0.662728, 1.54018e-06, 0.913725)
-corner_radius_top_left = 7
-corner_radius_top_right = 7
-corner_radius_bottom_right = 7
-corner_radius_bottom_left = 7
-shadow_color = Color(0.0629212, 0.450797, 0.0374766, 1)
-shadow_size = 2
-shadow_offset = Vector2(2, 2)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yvvsl"]
-content_margin_left = 5.0
-content_margin_top = 5.0
-content_margin_right = 5.0
-content_margin_bottom = 0.0
-bg_color = Color(0, 0.662728, 1.54018e-06, 0.913725)
-border_width_top = 3
-border_color = Color(0.8, 0.8, 0.8, 0)
-corner_radius_top_left = 7
-corner_radius_top_right = 7
-corner_radius_bottom_right = 7
-corner_radius_bottom_left = 7
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rdf86"]
-content_margin_left = 5.0
-content_margin_top = 3.0
-content_margin_right = 5.0
-content_margin_bottom = 3.0
-bg_color = Color(0.85, 0, 0, 0.776471)
-corner_radius_top_left = 7
-corner_radius_top_right = 7
-corner_radius_bottom_right = 7
-corner_radius_bottom_left = 7
-shadow_color = Color(0.36, 0.0252, 0.0252, 1)
-shadow_size = 2
-shadow_offset = Vector2(2, 2)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g74o0"]
 content_margin_left = 5.0
@@ -116,46 +75,60 @@ corner_radius_top_right = 7
 corner_radius_bottom_right = 7
 corner_radius_bottom_left = 7
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_106t4"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rdf86"]
 content_margin_left = 5.0
 content_margin_top = 3.0
 content_margin_right = 5.0
 content_margin_bottom = 3.0
-bg_color = Color(0.56, 0.56, 0.56, 0.776471)
+bg_color = Color(0.85, 0, 0, 0.776471)
 corner_radius_top_left = 7
 corner_radius_top_right = 7
 corner_radius_bottom_right = 7
 corner_radius_bottom_left = 7
-shadow_color = Color(0.36, 0.36, 0.36, 1)
+shadow_color = Color(0.36, 0.0252, 0.0252, 1)
 shadow_size = 2
 shadow_offset = Vector2(2, 2)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_utoq6"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8o1mh"]
 content_margin_left = 5.0
 content_margin_top = 3.0
 content_margin_right = 5.0
 content_margin_bottom = 3.0
-bg_color = Color(0.66, 0.66, 0.66, 0.913725)
+bg_color = Color(0, 0.275, 0.66, 0.913725)
 corner_radius_top_left = 7
 corner_radius_top_right = 7
 corner_radius_bottom_right = 7
 corner_radius_bottom_left = 7
-shadow_color = Color(0.45, 0.45, 0.45, 1)
+shadow_color = Color(0.036, 0.2085, 0.45, 1)
 shadow_size = 2
 shadow_offset = Vector2(2, 2)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_32dfo"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_blddb"]
 content_margin_left = 5.0
 content_margin_top = 5.0
 content_margin_right = 5.0
 content_margin_bottom = 0.0
-bg_color = Color(0.791999, 0.791999, 0.791999, 0.913725)
+bg_color = Color(0, 0.275, 0.66, 0.913725)
 border_width_top = 3
 border_color = Color(0.8, 0.8, 0.8, 0)
 corner_radius_top_left = 7
 corner_radius_top_right = 7
 corner_radius_bottom_right = 7
 corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7fqse"]
+content_margin_left = 5.0
+content_margin_top = 3.0
+content_margin_right = 5.0
+content_margin_bottom = 3.0
+bg_color = Color(0.035553, 0.397693, 0.910156, 0.776471)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+shadow_color = Color(0.0217, 0.141825, 0.31, 1)
+shadow_size = 2
+shadow_offset = Vector2(2, 2)
 
 [sub_resource type="FontVariation" id="FontVariation_w4oyp"]
 base_font = ExtResource("2_wynid")
@@ -185,17 +158,6 @@ expand_margin_right = 4.0
 expand_margin_bottom = 2.0
 modulate_color = Color(1, 1, 1, 0.301961)
 
-[sub_resource type="FontVariation" id="FontVariation_n351m"]
-base_font = ExtResource("1_r6uv7")
-spacing_glyph = 1
-spacing_bottom = -5
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_t4w22"]
-content_margin_top = 41.0
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qg8if"]
-content_margin_top = 41.0
-
 [sub_resource type="FontVariation" id="FontVariation_olg6b"]
 base_font = ExtResource("2_wynid")
 spacing_space = -11
@@ -208,15 +170,76 @@ size_flags_vertical = 8
 theme_override_styles/panel = ExtResource("1_jbhjt")
 script = ExtResource("2_veeqs")
 
+[node name="Status" type="Label" parent="."]
+modulate = Color(1, 0.915, 0.15, 1)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_colors/font_shadow_color = Color(0.783523, 0.783523, 0.783523, 0.4)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_outline_size = 5
+theme_override_fonts/font = SubResource("FontVariation_n351m")
+theme_override_font_sizes/font_size = 35
+theme_override_styles/normal = SubResource("StyleBoxEmpty_t4w22")
+text = "Delivering..."
+vertical_alignment = 2
+
+[node name="Reward" type="Label" parent="."]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme_override_colors/font_shadow_color = Color(1, 1, 1, 0.435294)
+theme_override_constants/shadow_outline_size = 3
+theme_override_fonts/font = ExtResource("2_wynid")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxEmpty_qg8if")
+text = "$42"
+horizontal_alignment = 2
+clip_text = true
+text_overrun_behavior = 1
+
+[node name="Hbox" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="Basket" type="TextureRect" parent="Hbox"]
+visible = false
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 0
+size_flags_stretch_ratio = 0.0
+texture = ExtResource("4_jfnvb")
+expand_mode = 4
+stretch_mode = 4
+
+[node name="Target" type="Label" parent="Hbox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0.783523, 0.783523, 0.783523, 0.4)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_outline_size = 5
+theme_override_fonts/font = ExtResource("1_r6uv7")
+theme_override_font_sizes/font_size = 40
+text = "Taco hutt"
+vertical_alignment = 3
+text_overrun_behavior = 3
+
 [node name="HBoxContainer2" type="VBoxContainer" parent="."]
 layout_mode = 2
 
 [node name="order_select" type="Button" parent="HBoxContainer2"]
 custom_minimum_size = Vector2(0, 84)
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_3ft6k")
-theme_override_styles/hover = SubResource("StyleBoxFlat_b4cqa")
+focus_mode = 0
 theme_override_styles/focus = SubResource("StyleBoxFlat_b4cqa")
+theme_override_styles/hover = SubResource("StyleBoxFlat_b4cqa")
+theme_override_styles/normal = SubResource("StyleBoxFlat_3ft6k")
 
 [node name="VBoxContainer" type="HBoxContainer" parent="HBoxContainer2"]
 custom_minimum_size = Vector2(346.44, 0)
@@ -225,58 +248,45 @@ size_flags_vertical = 3
 theme_override_constants/separation = 10
 
 [node name="Accept" type="Button" parent="HBoxContainer2/VBoxContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 10
 focus_mode = 0
 theme_override_fonts/font = SubResource("FontVariation_dgcob")
 theme_override_font_sizes/font_size = 28
-theme_override_styles/normal = SubResource("StyleBoxFlat_yg1lw")
-theme_override_styles/hover = SubResource("StyleBoxFlat_7bbxk")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_yvvsl")
-theme_override_styles/focus = SubResource("StyleBoxFlat_7bbxk")
+theme_override_styles/hover = ExtResource("4_8sq50")
+theme_override_styles/pressed = ExtResource("5_ultlv")
+theme_override_styles/normal = ExtResource("6_t82dr")
 text = "ACCEPT"
 
 [node name="Reject" type="Button" parent="HBoxContainer2/VBoxContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 10
 focus_mode = 0
 theme_override_fonts/font = SubResource("FontVariation_dgcob")
 theme_override_font_sizes/font_size = 28
-theme_override_styles/normal = SubResource("StyleBoxFlat_rdf86")
+theme_override_styles/focus = SubResource("StyleBoxFlat_g74o0")
 theme_override_styles/hover = SubResource("StyleBoxFlat_g74o0")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_3n5fx")
-theme_override_styles/focus = SubResource("StyleBoxFlat_g74o0")
+theme_override_styles/normal = SubResource("StyleBoxFlat_rdf86")
 text = "Reject"
 
 [node name="Progress" type="Button" parent="HBoxContainer2/VBoxContainer"]
 visible = false
+custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 6
 size_flags_vertical = 10
 focus_mode = 0
 theme_override_fonts/font = SubResource("FontVariation_dgcob")
 theme_override_font_sizes/font_size = 30
-theme_override_styles/normal = SubResource("StyleBoxFlat_yg1lw")
-theme_override_styles/hover = SubResource("StyleBoxFlat_7bbxk")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_yvvsl")
-theme_override_styles/focus = SubResource("StyleBoxFlat_7bbxk")
-text = "mark order as picked up"
-
-[node name="Set_Active" type="Button" parent="HBoxContainer2/VBoxContainer"]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 10
-focus_mode = 0
-theme_override_fonts/font = SubResource("FontVariation_dgcob")
-theme_override_font_sizes/font_size = 30
-theme_override_styles/normal = SubResource("StyleBoxFlat_106t4")
-theme_override_styles/hover = SubResource("StyleBoxFlat_utoq6")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_32dfo")
-theme_override_styles/focus = SubResource("StyleBoxFlat_utoq6")
-text = "Set as Active Order"
+theme_override_styles/hover = SubResource("StyleBoxFlat_8o1mh")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_blddb")
+theme_override_styles/normal = SubResource("StyleBoxFlat_7fqse")
+text = "mark as picked up"
 
 [node name="Order_Expand" type="MarginContainer" parent="HBoxContainer2"]
 layout_mode = 2
@@ -471,54 +481,10 @@ custom_minimum_size = Vector2(0, 15)
 layout_mode = 2
 size_flags_vertical = 3
 focus_mode = 0
-theme_override_styles/normal = ExtResource("5_khxwy")
+theme_override_styles/focus = ExtResource("5_khxwy")
 theme_override_styles/hover = SubResource("StyleBoxTexture_40dig")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_ovl5l")
-theme_override_styles/focus = ExtResource("5_khxwy")
-
-[node name="Status" type="Label" parent="."]
-modulate = Color(1, 0.915, 0.15, 1)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-theme_override_colors/font_shadow_color = Color(0.783523, 0.783523, 0.783523, 0.4)
-theme_override_constants/shadow_offset_x = 2
-theme_override_constants/shadow_outline_size = 5
-theme_override_fonts/font = SubResource("FontVariation_n351m")
-theme_override_font_sizes/font_size = 35
-theme_override_styles/normal = SubResource("StyleBoxEmpty_t4w22")
-text = "Delivering..."
-vertical_alignment = 2
-
-[node name="Target" type="Label" parent="."]
-custom_minimum_size = Vector2(250, 0)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_shadow_color = Color(0.783523, 0.783523, 0.783523, 0.4)
-theme_override_constants/shadow_offset_x = 2
-theme_override_constants/shadow_outline_size = 5
-theme_override_fonts/font = ExtResource("1_r6uv7")
-theme_override_font_sizes/font_size = 40
-text = "#3|Taco hutt"
-clip_text = true
-text_overrun_behavior = 3
-
-[node name="Reward" type="Label" parent="."]
-custom_minimum_size = Vector2(250, 0)
-layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 0
-theme_override_colors/font_shadow_color = Color(1, 1, 1, 0.435294)
-theme_override_constants/shadow_outline_size = 3
-theme_override_fonts/font = ExtResource("2_wynid")
-theme_override_font_sizes/font_size = 25
-theme_override_styles/normal = SubResource("StyleBoxEmpty_qg8if")
-text = "$42"
-horizontal_alignment = 2
-clip_text = true
-text_overrun_behavior = 1
+theme_override_styles/normal = ExtResource("5_khxwy")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
@@ -537,24 +503,14 @@ theme_override_font_sizes/font_size = 27
 text = "12 mi"
 horizontal_alignment = 2
 
-[node name="Basket" type="TextureRect" parent="HBoxContainer"]
-custom_minimum_size = Vector2(25, 0)
+[node name="Arrowbox" type="MarginContainer" parent="HBoxContainer"]
+custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
-size_flags_vertical = 4
-size_flags_stretch_ratio = 7.38
-texture = ExtResource("4_jfnvb")
-expand_mode = 4
-stretch_mode = 4
 
-[node name="House" type="TextureRect" parent="HBoxContainer"]
-visible = false
-custom_minimum_size = Vector2(30, 25)
-layout_mode = 2
-size_flags_vertical = 4
-size_flags_stretch_ratio = 7.38
-texture = ExtResource("5_nmnjs")
-expand_mode = 2
-stretch_mode = 4
+[node name="Arrow" type="Sprite2D" parent="HBoxContainer/Arrowbox"]
+position = Vector2(16, 20)
+scale = Vector2(0.421371, 0.538902)
+texture = ExtResource("12_dxy2q")
 
 [node name="Phone Click" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("9_262f1")
@@ -562,15 +518,13 @@ volume_db = -10.0
 pitch_scale = 1.27
 
 [connection signal="tree_exited" from="." to="." method="_on_tree_exited"]
-[connection signal="pressed" from="HBoxContainer2/order_select" to="." method="_button_pressed"]
 [connection signal="pressed" from="HBoxContainer2/order_select" to="." method="_on_select_order_header"]
+[connection signal="pressed" from="HBoxContainer2/order_select" to="." method="_button_pressed"]
 [connection signal="pressed" from="HBoxContainer2/VBoxContainer/Accept" to="." method="_on_accept_pressed"]
 [connection signal="pressed" from="HBoxContainer2/VBoxContainer/Accept" to="." method="_button_pressed"]
-[connection signal="pressed" from="HBoxContainer2/VBoxContainer/Reject" to="." method="_on_reject_pressed"]
 [connection signal="pressed" from="HBoxContainer2/VBoxContainer/Reject" to="." method="_button_pressed"]
-[connection signal="pressed" from="HBoxContainer2/VBoxContainer/Progress" to="." method="_button_pressed"]
+[connection signal="pressed" from="HBoxContainer2/VBoxContainer/Reject" to="." method="_on_reject_pressed"]
 [connection signal="pressed" from="HBoxContainer2/VBoxContainer/Progress" to="." method="_on_progress_order_pressed"]
-[connection signal="pressed" from="HBoxContainer2/VBoxContainer/Set_Active" to="." method="_button_pressed"]
-[connection signal="pressed" from="HBoxContainer2/VBoxContainer/Set_Active" to="." method="_on_picked_up_pressed"]
+[connection signal="pressed" from="HBoxContainer2/VBoxContainer/Progress" to="." method="_button_pressed"]
 [connection signal="pressed" from="HBoxContainer2/Expand_Details" to="." method="_button_pressed"]
 [connection signal="pressed" from="HBoxContainer2/Expand_Details" to="." method="_on_order_select_pressed"]

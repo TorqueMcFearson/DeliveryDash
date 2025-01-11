@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://be4525saj2ydg"]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+
+[node name="PopupPanel" type="PopupPanel" parent="."]
+mode = 3
+title = "Test"
+initial_position = 1
+size = Vector2i(500, 500)
+visible = true
+
+[node name="Control" type="Control" parent="PopupPanel"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="PopupPanel/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "asdfsdafsdfsdfsdafasdffs"

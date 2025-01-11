@@ -61,9 +61,9 @@ corner_radius_bottom_left = 10
 base_font = ExtResource("2_e7bua")
 variation_embolden = -0.25
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_u3tqw"]
-texture = ExtResource("5_70ljt")
-modulate_color = Color(0.886275, 0.886275, 0.886275, 1)
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dhba8"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0bp3c"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lmqvn"]
 texture = ExtResource("5_70ljt")
@@ -71,9 +71,9 @@ texture = ExtResource("5_70ljt")
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bfdas"]
 texture = ExtResource("4_5g2d6")
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0bp3c"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dhba8"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_u3tqw"]
+texture = ExtResource("5_70ljt")
+modulate_color = Color(0.886275, 0.886275, 0.886275, 1)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_13gf4"]
 texture = ExtResource("7_tv1ot")
@@ -124,11 +124,11 @@ pivot_offset = Vector2(215.557, 23.8314)
 theme_override_colors/font_color = Color(1, 0, 0, 1)
 theme_override_colors/font_shadow_color = Color(0.309804, 0.0745098, 0.0745098, 0.552941)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 0.584314)
+theme_override_constants/line_spacing = -2
 theme_override_constants/shadow_offset_x = 0
 theme_override_constants/shadow_offset_y = 0
 theme_override_constants/outline_size = 2
 theme_override_constants/shadow_outline_size = 7
-theme_override_constants/line_spacing = -2
 theme_override_fonts/font = SubResource("FontVariation_f0o50")
 theme_override_font_sizes/font_size = 36
 text = "You forgot to pickup the order!"
@@ -143,11 +143,11 @@ offset_right = 182.0
 offset_bottom = 294.521
 scale = Vector2(0.125, 0.125)
 focus_mode = 0
-theme_override_styles/normal = SubResource("StyleBoxTexture_u3tqw")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_dhba8")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_0bp3c")
 theme_override_styles/hover = SubResource("StyleBoxTexture_lmqvn")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_bfdas")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_0bp3c")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_dhba8")
+theme_override_styles/normal = SubResource("StyleBoxTexture_u3tqw")
 
 [node name="Blackout" type="Button" parent="."]
 visible = false
@@ -158,10 +158,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
-theme_override_styles/normal = ExtResource("6_g2qqh")
+theme_override_styles/disabled = ExtResource("8_5ewob")
 theme_override_styles/hover = SubResource("StyleBoxTexture_13gf4")
 theme_override_styles/pressed = ExtResource("8_5ewob")
-theme_override_styles/disabled = ExtResource("8_5ewob")
+theme_override_styles/normal = ExtResource("6_g2qqh")
 toggle_mode = true
 
 [node name="Marker2D" type="Marker2D" parent="."]

@@ -124,7 +124,7 @@ func _page2_button():
 	tween.tween_property($Music,"volume_db",-50,1)
 	tween.tween_callback(func(): music_player.stream = load("res://SFX/echo-flux-258965.mp3");music_player.play())
 	tween.tween_property($Music,"volume_db",-14,1)
-	
+	UI.day_over = false
 	if broke:
 		UI.reset()
 		UI.fade_out(.35,get_tree().change_scene_to_packed.bind(TITLE_SCENE))

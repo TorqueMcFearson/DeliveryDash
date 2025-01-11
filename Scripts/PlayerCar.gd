@@ -46,7 +46,7 @@ func _ready() -> void:
 func _unhandled_key_input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("Respawn") and state != STATE.RESPAWNING:
 		$CanvasLayer/Respawning.show()
-		await UI.fade_out(.25,UI.fade_in.bind(.25),.2)
+		await UI.fade_out(.25,UI.fade_in.bind(.25),.3)
 		$CanvasLayer/Respawning.hide()
 		respawn()
 			

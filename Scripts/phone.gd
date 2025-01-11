@@ -43,7 +43,7 @@ func _phone_on() -> void:
 	tween.parallel().tween_property(self,"position",PHONE_ON_POS,.25).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 	tween.parallel().tween_property($Blackout,"modulate",Color(1,1,1,0),.2)
 	
-func _phone_off() -> void:
+func _phone_off():
 	$Blackout.set_disabled(false)
 	$Blackout.button_pressed = false
 	var tween = create_tween()
@@ -54,6 +54,7 @@ func _phone_off() -> void:
 	tween.parallel().tween_property($Blackout,"modulate",Color(1,1,1,1),.2)
 	tween.tween_callback(_phone_off_callback)
 	$ActiveOrderTimer.show()
+	return tween.finished
 
 func _phone_off_callback():
 	$Blackout.mouse_filter = 0

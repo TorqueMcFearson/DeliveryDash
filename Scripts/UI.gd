@@ -99,20 +99,24 @@ var location :String
 var player_inventory :Array[Order]
 var tutorial = true
 var day = 1
-
+var tween :Tween = Tween.new()
+var day_over:bool = false
 
 func _ready() -> void:
 	$Tutorial.hide()
-
 	$Fader.show()
+	pause_timers()
 	$UI/Panel/STAR_BAR.size.x = (rating/MAX_RATING) * STAR_BAR_WIDTH
 	$UI/Panel/Time.text = clock.get_time()
 	fade_in() # Replace with function body.
 	get_tree().create_timer(1).timeout.connect(test_UI_functions)
 	
+	
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause") and get_tree().current_scene.name != "Title":
-		if phone.state: phone._phone_off()
+		if phone.state: 
+			await phone._phone_off()
+		
 		get_tree().paused=true
 		show_tutorial()
 		
@@ -127,13 +131,13 @@ func test_UI_functions():
 	pass
 
 func fade_in(duration=1,callback=null,delay=.25):
-	var tween = create_tween()
+	tween = create_tween()
 	tween.tween_property($Fader,"modulate",Color(1,1,1,0),duration)
 	if callback:tween.tween_callback(callback).set_delay(delay)
 	return tween.finished
 	
 func fade_out(duration=.5,callback=null,delay=.25):
-	var tween = create_tween()
+	tween = create_tween()
 	tween.tween_property($Fader,"modulate",Color(1,1,1,1),duration)
 	if callback:tween.tween_callback(callback).set_delay(delay)
 	return tween.finished
@@ -156,25 +160,30 @@ func _on_clock_tick() -> void:
 	clock.tick()
 	update_clock()
 	update_order_timers()
-
-func unpause_timers():
-	$New_Order_Timer.paused = false
-	$Order_Update.paused = false
-	$ClockTick.paused = false
 	
+	
+func unpause_timers():
+	for timer in [$ClockTick, $Order_Update, $New_Order_Timer]:
+		timer.paused = false
+		
+func pause_timers():
+	for timer in [$ClockTick, $Order_Update, $New_Order_Timer]:
+		timer.paused = true
+		
 func end_day():
+	day_over = true
 	phone._phone_off()
-	$New_Order_Timer.paused = true
-	$Order_Update.paused = true
-	$ClockTick.paused = true
-	var tween = create_tween()
-	tween.tween_property($Music,"volume_db",-50,1.8)
-	tween.tween_callback(func():$Music.stream = load("res://SFX/lofi-boy-night-waves-lofi-relax-instrumental-278248.mp3");$Music.play())
-	tween.tween_property($Music,"volume_db",-14,.75)
+	pause_timers()
+	if tween: tween.kill()
+	var tween2 = create_tween()
+	tween2.tween_property($Music,"volume_db",-50,1.8)
+	tween2.tween_callback(func():$Music.stream = load("res://SFX/lofi-boy-night-waves-lofi-relax-instrumental-278248.mp3");$Music.play())
+	tween2.tween_property($Music,"volume_db",-14,.75)
 	
 	for order in order_list.get_children():
 		order.queue_free()
 	fade_out(2,get_tree().change_scene_to_packed.bind(_4_AM))
+	
 func generate_customer():
 	return first_names.pick_random() + ' ' + last_names.pick_random()
 	
