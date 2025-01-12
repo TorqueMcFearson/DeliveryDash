@@ -3,7 +3,8 @@ extends CharacterBody2D
 ########################################
 ## Node Variables
 ####################
-@onready var tilemap: TileMap = $"../TileMap"
+@onready var roads: TileMapLayer = $"../TileMap/Roads"
+@onready var yellowroads: TileMapLayer = $"../TileMap/YellowRoad"
 @onready var sprite: Sprite2D = $Move_collision/TitleDriver
 @onready var arrow: Sprite2D = $CanvasLayer2/arrow
 @export var pitch_curve:Curve
@@ -15,14 +16,16 @@ extends CharacterBody2D
 ####################
 enum {HORZ,VERT,BOTH}
 enum STATE {DEACTIVE, ACTIVE, RESPAWNING}
-const ACCEL = 50.0
+const ACCEL = 30.0
 const DECELL = 30.0
-const MAX_SPEED_DEFAULT = 450.0
-var MAX_SPEED = MAX_SPEED_DEFAULT
-const BUMP_SPEED = 280.0
+const BUMP_DAMPING := .6
 const ROAD_DIR = ["Horz","Vert","Both"]
 const arrow_off_min = 160**2
 const arrow_on_min = 200**2
+	
+	##Preset Variables
+@export_range(0,2000,10.0) var MAX_SPEED_DEFAULT :float #450
+@onready var MAX_SPEED :float = MAX_SPEED_DEFAULT
 ########################################
 ## Variables & Enums
 ####################
@@ -53,9 +56,10 @@ func _unhandled_key_input(event: InputEvent) -> void:
 	
 func _physics_process(delta: float) -> void:
 	render_arrow()
-	if not tilemap:
+	if not roads:
 		return
 	var road_dir :int = get_road_direction()
+	var yellow_road_speed:float = get_yellow_road()
 	var x_direction = Input.get_axis("Left", "Right")
 	var y_direction = Input.get_axis("Up", "Down")
 	var input_vector = Vector2(x_direction,y_direction)
@@ -73,11 +77,11 @@ func _physics_process(delta: float) -> void:
 				set_sprite_vert(y_direction)
 			set_sprite_free(input_vector)
 			
-		
+	get_road_direction()
 	var speed = input_vector.length()
 	if speed > 0:
 		if speed > 1:input_vector = input_vector.normalized()
-		velocity = velocity.move_toward(input_vector * MAX_SPEED, ACCEL)
+		velocity = velocity.move_toward(input_vector * (MAX_SPEED * yellow_road_speed), ACCEL)
 	else:
 		# Decelerate to stop
 		velocity = velocity.move_toward(Vector2.ZERO, DECELL )
@@ -91,7 +95,7 @@ func _physics_process(delta: float) -> void:
 				UI.round_stats["Cars Hit"] += 1
 				if not bumped:
 					bumped = true
-					MAX_SPEED = BUMP_SPEED
+					MAX_SPEED = MAX_SPEED_DEFAULT*BUMP_DAMPING
 					restore_speed()
 				print("I collided with ", collision.get_collider().name," speed was ", collision.get_collider_velocity() + velocity)
 				just_collided = true
@@ -107,16 +111,21 @@ func respawn():
 	velocity = Vector2(0,0)
 	get_tree().create_timer(1).timeout.connect(func():state = STATE.ACTIVE)
 	global_position = UI.PLAYER_HOME_SPAWN
-	#tilemap.get_surrounding_cells()
+	#roads.get_surrounding_cells()
 	
 func get_current_tilemap():
-	var pos = tilemap.to_local(global_position)
-	return tilemap.local_to_map(pos)
+	var pos = roads.to_local(global_position)
+	return roads.local_to_map(pos)
 	
 func get_road_direction():
 	var coords = get_current_tilemap()
-	var data: TileData = tilemap.get_cell_tile_data(0, coords)
+	var data: TileData = roads.get_cell_tile_data(coords)
 	return data.get_custom_data("Direction")
+	
+func get_yellow_road():
+	var coords = get_current_tilemap()
+	var data: TileData = yellowroads.get_cell_tile_data(coords)
+	return 1.2 if data else 1.0
 	
 func set_sprite_horz(x_direction):
 	if x_direction:

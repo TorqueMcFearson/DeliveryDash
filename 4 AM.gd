@@ -33,25 +33,7 @@ func _ready() -> void:
 	$"PanelContainer/Next Screen".disabled = true
 	await UI.fade_in(1.5) # Replace with function body.
 	init_stats()
-		
-#func scene_root_ready():
-	#UI.round_stats = {
-	#"Orders Accepted" : 12,
-	#"Orders Completed" : 5,
-	#"Orders Rejected" : 3,
-	#"Orders Neglected" : 2,
-	#"Orders Failed" : 1,
-	#"Cars Hit" : 8,
-	#"Mistakes Made" : 9,
-	#"Cash Earned" : 120,
-	#"Rating Change" : 30, 
-	#} 
-	#UI.rating = 30
-	#UI.cash = 120
-	#expenses["Pocket_Cash"] = 120
-	
-	
-	
+
 func init_stats():
 	var o_rows = rows.get_children()
 	var p_rows = perf_rows.get_children()

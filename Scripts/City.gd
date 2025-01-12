@@ -13,7 +13,7 @@ const GLOW = preload("res://Glow.tres")
 const BLINK_SPEED = 8
 var HOUSE = load("res://house.tscn")
 var RESTURANT = load("res://resturant_scene.tscn")
-@onready var tilemap: TileMap = %TileMap
+@onready var tilemap: TileMapLayer = %Roads
 @onready var player: CharacterBody2D = $Player
 @onready var spawnlimit: ReferenceRect = $Player/Spawnlimit
 @onready var viewport: ReferenceRect = $Player/Viewport
@@ -48,19 +48,18 @@ func _ready() -> void:
 	UI.unpause_timers()
 
 func _process(delta: float) -> void:
-	if current_target:
-		#time_passed += delta
-		#var new_alpha = .8 + .2 * sin(time_passed * BLINK_SPEED)  
-		#new_alpha = pow(new_alpha,2)
-		#var color = current_target.material.get_shader_parameter("color")
-		#color.a = new_alpha  # Update alpha
-		#current_target.material.set_shader_parameter("color", color)
-		
-		time_passed += delta
-		var width = 2 + .2 * sin(time_passed * BLINK_SPEED)  
-		width = pow(width,2)
+	var target:Sprite2D
+	if $"Building_Entrance/Store Template".visible:
+		target = $"Building_Entrance/Store Template"
+	elif $"Building_Entrance/House Template".visible:
+		target = $"Building_Entrance/House Template"
+	else:
+		return
+	time_passed += delta
+	var width = 2 + .2 * sin(time_passed * BLINK_SPEED)  
+	width = pow(width,2)
 
-		current_target.material.set_shader_parameter("width", width)
+	target.material.set_shader_parameter("width", width)
 
 
 func mark_target(order :Order):
@@ -72,18 +71,25 @@ func mark_target(order :Order):
 			order.NEW:
 				target = null
 				print("AN UNACCEPTED ORDER AS TARGET?? IMPOSSIBLE!")
+				$"Building_Entrance/Store Template".hide()
+				$"Building_Entrance/House Template".hide()
 			order.TO_STORE:
 				target = $Stores.get_child(order.resturant_idx)
+				$"Building_Entrance/Store Template".show()
+				$"Building_Entrance/House Template".hide()
 			order.TO_HOUSE:
 				target = $Houses.get_child(order.house_idx)
+				$"Building_Entrance/Store Template".hide()
+				$"Building_Entrance/House Template".show()
 			order.DELIVERED:
 				target = null
+				$"Building_Entrance/Store Template".hide()
+				$"Building_Entrance/House Template".hide()
 	
 	demark_target(current_target)
 	current_target = target
 	if current_target:
 		player.dest = current_target.position
-		current_target.material = GLOW
 		$Building_Entrance.position = current_target.position
 	else:
 		player.dest = Vector2(0,0)
@@ -123,7 +129,7 @@ func add_cars(n = MAX_CARS):
 	for i in range(count):
 		var new_car = AI_CAR.instantiate()
 		new_car.global_position = usable_markers.pop_back().global_position
-		new_car.tilemap = %TileMap
+		new_car.tilemap = tilemap
 		$Cars.add_child(new_car)
 
 func _on_car_check_timeout() -> void:

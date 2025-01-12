@@ -42,14 +42,14 @@ const MAX_SPEED = 200
 const V_MAX_SPEED = Vector2(MAX_SPEED,MAX_SPEED)
 
 var stopped : bool = false
-var tilemap: TileMap
+var tilemap: TileMapLayer
 @onready var sprite: Sprite2D = $Move_collision/CarSprite
 @onready var move_collision: CollisionShape2D = $Move_collision
 enum STATE {DRIVING,TURNING}
 enum {UP=0,RIGHT=1,DOWN=2,LEFT=3}
 enum {HORZ,VERT,BOTH}
 const V_DIR = [Vector2.UP,Vector2.RIGHT,Vector2.DOWN,Vector2.LEFT]
-const ROAD_DIR = ["Horz","Vert","Both"]
+const ROAD_DIR = ["Horz","Vert","Both","OffRoad"]
 var direction :int
 var v_direction:Vector2
 var state
@@ -92,6 +92,7 @@ func _physics_process(delta: float) -> void:
 		
 	match state:
 		STATE.TURNING:
+			$Label.text = "%s - %s" % ["Both","Turning" if state == STATE.TURNING else "Driving"]
 			var temp = rotation_degrees
 			if temp < 0: temp += 360
 			if temp > direction*90-1 and temp < direction*90+1:
@@ -106,7 +107,14 @@ func _physics_process(delta: float) -> void:
 
 		STATE.DRIVING:
 			var road_dir :int = get_road_direction(global_position)
-			$Label.text = "%s - %s" % [ROAD_DIR[road_dir],"Turning" if state else "Driving"]
+			if road_dir == 4: return queue_free()
+			if road_dir == 0 and direction not in [LEFT,RIGHT]: 
+				direction = [LEFT,RIGHT].pick_random()
+				rotation=deg_to_rad(direction*90)
+			if road_dir == 1 and direction not in [UP,DOWN]: 
+				direction = [UP,DOWN].pick_random()
+				rotation=deg_to_rad(direction*90)
+			$Label.text = "%s - %s - %s" % [ROAD_DIR[road_dir],"Turning" if state == STATE.TURNING else "Driving", ["UP","RIGHT","DOWN","LEFT"][direction]]
 			var mod:int
 			if direction == LEFT or direction == RIGHT:
 				mod = (int(position.x) % 64)
@@ -114,7 +122,7 @@ func _physics_process(delta: float) -> void:
 			else:
 				mod = (int(position.y) % 64)
 				lock_x_32()
-			if not turning_progress and road_dir == BOTH and 30 < mod and mod < 35:
+			if not turning_progress and road_dir == BOTH and 28 < mod and mod < 33:
 				if direction == LEFT or direction == RIGHT:
 					lock_x_32()
 				else:
@@ -128,15 +136,16 @@ func _physics_process(delta: float) -> void:
 	var temp_pos = position
 	var collide = move_and_collide(velocity*delta)
 	if collide:
-		if collide.get_collider() is TileMap:
-			new_direction(-v_direction)
-			rotate(deg_to_rad(180))
-			position += v_direction*SPEED/2
+		if collide.get_collider() is TileMapLayer:
+			if state != STATE.TURNING:
+				new_direction(-v_direction)
+				rotate(deg_to_rad(180))
+				position += v_direction*SPEED/2
 		else:
 			position = temp_pos
 			velocity = Vector2.ZERO
 			stopped = true
-			var timer = get_tree().create_timer(1).timeout.connect(func():stopped = false)
+			var timer = get_tree().create_timer(randf_range(.75,1.5)).timeout.connect(end_collision)
 		
 	$Label.position = position + Vector2(-20,20)
 	
@@ -169,11 +178,13 @@ func new_direction(new_dir):
 func get_road_direction(g_pos):
 	var pos = tilemap.to_local(g_pos)
 	var coords = tilemap.local_to_map(pos)
-	var data: TileData = tilemap.get_cell_tile_data(0, coords) 	# 0 == layer index
+	var data: TileData = tilemap.get_cell_tile_data(coords) 	# 0 == layer index
 	return data.get_custom_data("Direction")
 	
-func chose_turn():
-	pass
+func end_collision():
+	stopped = false
+	collision_mask = 1
+	get_tree().create_timer(.5).timeout.connect(func():collision_mask  = 3)
 	
 func set_sprite_horz(x_direction):
 	if x_direction:

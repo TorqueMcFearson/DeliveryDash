@@ -99,11 +99,14 @@ size = Vector2(2165, 1486)
 
 [node name="Player" type="CharacterBody2D"]
 position = Vector2(640, 360)
+collision_layer = 2
+collision_mask = 3
 motion_mode = 1
 wall_min_slide_angle = 0.0
 script = ExtResource("1_fxmo4")
 pitch_curve = SubResource("Curve_f6lch")
 volume_curve = SubResource("Curve_57bjp")
+MAX_SPEED_DEFAULT = 420.0
 
 [node name="Move_collision" type="CollisionShape2D" parent="."]
 position = Vector2(-4, 3.25)
@@ -160,6 +163,7 @@ mouse_filter = 2
 border_width = 1.7
 
 [node name="Traffic" type="Area2D" parent="."]
+collision_mask = 3
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Traffic"]

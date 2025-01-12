@@ -5,7 +5,7 @@
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_byoj2"]
 radius = 9.0
-height = 47.5
+height = 42.0001
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_as5e6"]
 atlas = ExtResource("2_f6kbb")
@@ -17,19 +17,21 @@ font_names = PackedStringArray("Impact")
 subpixel_positioning = 0
 
 [node name="AICar" type="CharacterBody2D"]
-position = Vector2(3360, 3934)
+position = Vector2(0, 1)
 rotation = -1.5708
+collision_layer = 2
+collision_mask = 3
 safe_margin = 0.12
 script = ExtResource("1_5cavq")
 vehicle_name = "suv"
 
 [node name="Move_collision" type="CollisionShape2D" parent="."]
-position = Vector2(15, 1)
+position = Vector2(15, 0)
 shape = SubResource("CapsuleShape2D_byoj2")
 
 [node name="CarSprite" type="Sprite2D" parent="Move_collision"]
 show_behind_parent = true
-position = Vector2(0, -1)
+position = Vector2(-3.8147e-06, -4.37112e-08)
 texture = SubResource("AtlasTexture_as5e6")
 
 [node name="Label" type="Label" parent="."]

@@ -39,7 +39,7 @@ func _on_exit_arrow_pressed() -> void: # button is EXIT
 func make_bag(order:Order):
 	var receipet
 	var correct
-	# TODO Getting rid of messed up orders for now
+	
 	if true: #randi_range(0,3): # if 1,2,3 bag correct, if 0 bag incorrect goto else
 		receipet = [order.resturant,order.order_num,order.customer,order.address]
 		correct = true
@@ -119,7 +119,6 @@ func _on_check_receipt() -> void:
 		var tween = create_tween()
 		tween.tween_property($Receipt,"scale",Vector2(1,1),.18)
 		tween.parallel().tween_property($Receipt,"rotation_degrees",0,.18)
-		#tween.tween_callback($Receipt/Wrong_Order.show) # TODO undoing for now, no bad orders.
 
 func _on_take_bag() -> void:
 	bagged_order.take_bag()

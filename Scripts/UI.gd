@@ -398,6 +398,7 @@ func new_day():
 	"Cash Earned" : 0,
 	"Rating Change" : 0, 
 	} 
+	phone._phone_off()
 	
 func reset():
 	day = 1
@@ -421,6 +422,7 @@ func reset():
 	"Cash Earned" : 0,
 	"Rating Change" : 0, 
 	} 
+	phone._phone_off()
 
 func _on_texture_button_toggled(toggled_off: bool) -> void:
 	if toggled_off:

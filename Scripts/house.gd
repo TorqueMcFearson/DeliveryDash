@@ -19,6 +19,8 @@ func drop_bag():
 	UI.active_order.drop_bag()
 
 func _on_exit_pressed() -> void:
+	if UI.day_over:return
+	if UI.tween.is_valid():return
 	UI.location = ""
 	get_tree().create_timer(4).timeout.connect(UI.check_forgot)
 	UI.fade_out(.35,get_tree().change_scene_to_packed.bind(CITY),.25) # Replace with function body.

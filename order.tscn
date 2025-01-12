@@ -25,6 +25,10 @@ content_margin_top = 41.0
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qg8if"]
 content_margin_top = 41.0
 
+[sub_resource type="FontVariation" id="FontVariation_olg6b"]
+base_font = ExtResource("2_wynid")
+spacing_space = -11
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b4cqa"]
 bg_color = Color(0.878431, 1, 1, 0.188235)
 corner_radius_top_left = 15
@@ -158,10 +162,6 @@ expand_margin_right = 4.0
 expand_margin_bottom = 2.0
 modulate_color = Color(1, 1, 1, 0.301961)
 
-[sub_resource type="FontVariation" id="FontVariation_olg6b"]
-base_font = ExtResource("2_wynid")
-spacing_space = -11
-
 [node name="Order" type="PanelContainer"]
 custom_minimum_size = Vector2(120, 1)
 offset_right = 373.0
@@ -229,6 +229,32 @@ theme_override_font_sizes/font_size = 40
 text = "Taco hutt"
 vertical_alignment = 3
 text_overrun_behavior = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme_override_constants/separation = 3
+
+[node name="Distance" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+theme_override_colors/font_shadow_color = Color(1, 1, 1, 0.435294)
+theme_override_constants/shadow_outline_size = 3
+theme_override_fonts/font = SubResource("FontVariation_olg6b")
+theme_override_font_sizes/font_size = 27
+text = "12 mi"
+horizontal_alignment = 2
+
+[node name="Arrowbox" type="MarginContainer" parent="HBoxContainer"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+
+[node name="Arrow" type="Sprite2D" parent="HBoxContainer/Arrowbox"]
+position = Vector2(16, 20)
+scale = Vector2(0.421371, 0.538902)
+texture = ExtResource("12_dxy2q")
 
 [node name="HBoxContainer2" type="VBoxContainer" parent="."]
 layout_mode = 2
@@ -486,45 +512,19 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_40dig")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_ovl5l")
 theme_override_styles/normal = ExtResource("5_khxwy")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
-layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 0
-theme_override_constants/separation = 3
-
-[node name="Distance" type="Label" parent="HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 8
-theme_override_colors/font_shadow_color = Color(1, 1, 1, 0.435294)
-theme_override_constants/shadow_outline_size = 3
-theme_override_fonts/font = SubResource("FontVariation_olg6b")
-theme_override_font_sizes/font_size = 27
-text = "12 mi"
-horizontal_alignment = 2
-
-[node name="Arrowbox" type="MarginContainer" parent="HBoxContainer"]
-custom_minimum_size = Vector2(30, 0)
-layout_mode = 2
-
-[node name="Arrow" type="Sprite2D" parent="HBoxContainer/Arrowbox"]
-position = Vector2(16, 20)
-scale = Vector2(0.421371, 0.538902)
-texture = ExtResource("12_dxy2q")
-
 [node name="Phone Click" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("9_262f1")
 volume_db = -10.0
 pitch_scale = 1.27
 
 [connection signal="tree_exited" from="." to="." method="_on_tree_exited"]
-[connection signal="pressed" from="HBoxContainer2/order_select" to="." method="_on_select_order_header"]
 [connection signal="pressed" from="HBoxContainer2/order_select" to="." method="_button_pressed"]
+[connection signal="pressed" from="HBoxContainer2/order_select" to="." method="_on_select_order_header"]
 [connection signal="pressed" from="HBoxContainer2/VBoxContainer/Accept" to="." method="_on_accept_pressed"]
 [connection signal="pressed" from="HBoxContainer2/VBoxContainer/Accept" to="." method="_button_pressed"]
-[connection signal="pressed" from="HBoxContainer2/VBoxContainer/Reject" to="." method="_button_pressed"]
 [connection signal="pressed" from="HBoxContainer2/VBoxContainer/Reject" to="." method="_on_reject_pressed"]
+[connection signal="pressed" from="HBoxContainer2/VBoxContainer/Reject" to="." method="_button_pressed"]
 [connection signal="pressed" from="HBoxContainer2/VBoxContainer/Progress" to="." method="_on_progress_order_pressed"]
 [connection signal="pressed" from="HBoxContainer2/VBoxContainer/Progress" to="." method="_button_pressed"]
-[connection signal="pressed" from="HBoxContainer2/Expand_Details" to="." method="_button_pressed"]
 [connection signal="pressed" from="HBoxContainer2/Expand_Details" to="." method="_on_order_select_pressed"]
+[connection signal="pressed" from="HBoxContainer2/Expand_Details" to="." method="_button_pressed"]
