@@ -47,7 +47,6 @@ func driver_x(delta,direction,speed):
 		driver_x_direction *= -1
 		direction = driver_x_direction
 		driver_x_dest = randi_range(driver.position.x,driver_right_limit * direction)
-		print(\"new dest: \",driver_x_dest)
 	driver.position.x += velocity
 	
 func is_past_limit():

@@ -5,6 +5,9 @@ const _4_AM = preload("res://4_am.tscn")
 @onready var order_list: VBoxContainer = $Phone/Screen/Scrollbox/Order_List
 @onready var add_cash_pos = $UI/Panel/Cash/Add_Cash.position
 @onready var phone: Panel = $Phone
+@onready var gas_level: TextureProgressBar = $"UI/Gas Can/Gas Box/Gas Level"
+@onready var gas_can: TextureRect = $"UI/Gas Can"
+
 
 signal new_active_order_set(order:Order)
 signal tween_complete
@@ -50,6 +53,7 @@ class Building:
 		self.idx = idx
 		self.type = type
 
+## Play State ######################
 var rating : float = 20.0
 var cash :int = 10
 var cash_to_add :int = 0
@@ -66,6 +70,8 @@ const MAX_ORDERS = 3
 const ORDER_MIN_TIME = 7
 const ORDER_MAX_TIME = 13
 const FORGOT_MARK_PICKUP_PVALUE = 6
+
+
 var round_stats : Dictionary = {
 	"Orders Accepted" : 0,
 	"Orders Completed" : 0,
@@ -76,8 +82,8 @@ var round_stats : Dictionary = {
 	"Mistakes Made" : 0,
 	"Cash Earned" : 0,
 	"Rating Change" : 0, 
-	} 
-
+	}
+## Order Generation ######################
 const first_names = [
 	"James", "Mary", "John", "Patricia", "Robert", "Jennifer", "Michael", "Linda",
 	"William", "Elizabeth", "David", "Barbara", "Richard", "Susan", "Joseph", "Jessica",
@@ -94,6 +100,7 @@ const street_names = [
 	"Cherry", "Magnolia", "Hawthorn", "Sycamore", "Chestnut", "Walnut", "Aspen", "Cottonwood", "Bay", "Juniper"]
 const street_types = ["St", "Ave", "Rd", "Blvd", "Dr", "Ln", "Way", "Ct", "Pl", "Terr"]
 
+## Game Dynamics ######################
 var active_order :Order
 var location :String
 var player_inventory :Array[Order]
@@ -101,8 +108,30 @@ var tutorial = true
 var day = 1
 var tween :Tween = Tween.new()
 var day_over:bool = false
+var time_passed := 0.0
+
+## Gas Variables ######################
+const GAS_COST = .5
+const FUEL_WARNING_LEVEL = 25
+var gas_inflation = 0.05
+var gas_tween:Tween
+var max_fuel := 50.0:
+	set(value):
+		max_fuel = value
+		set_gas_level()
+var gas := 45.0:
+	set(value):
+		gas = clampf(value,0,max_fuel)
+		gas_level.value = gas
+		if gas == 0:
+			out_of_gas()
+var fuel_rate:=1
+
+
 
 func _ready() -> void:
+	gas_level.value = gas
+	set_gas_level()
 	$Tutorial.hide()
 	$Fader.show()
 	pause_timers()
@@ -113,12 +142,27 @@ func _ready() -> void:
 	
 	
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("pause") and get_tree().current_scene.name != "Title":
+	if event.is_action_pressed("pause") and not get_tree().current_scene.name in ["Title","4 AM"]:
+		
 		if phone.state: 
 			await phone._phone_off()
 		
 		get_tree().paused=true
 		show_tutorial()
+
+func _process(delta: float) -> void:
+	if gas == 0:
+		$"UI/Gas Can".modulate = Color(0.753, 0.843, 1)
+	elif gas < FUEL_WARNING_LEVEL:
+		time_passed += delta
+		var blink = .5 + .5 * sin(time_passed * 12) 
+		var color = $"UI/Gas Can".modulate
+		color.b = blink
+		color.g = blink
+		color.r = 1.0
+		$"UI/Gas Can".modulate = color
+	else:
+		$"UI/Gas Can".modulate = Color(1, 1, 1)
 		
 func show_tutorial():
 	$Tutorial.show()
@@ -361,6 +405,11 @@ func cash_noise(to_add):
 	$Cash_Noise.volume_db += 2/to_add
 	$Cash_Noise.pitch_scale += .01
 	$Cash_Noise.play()
+
+func cash_decrease(to_sub):
+	cash -= to_sub
+	$Cash_Noise.play()
+	$UI/Panel/Cash/L_Cash.text = "$"+str(cash)
 	
 func complete_order(order):
 	var reward = order.reward
@@ -438,3 +487,52 @@ func set_rating(value):
 	rating = value
 	var ratio = (float(rating)/MAX_RATING)
 	$UI/Panel/STAR_BAR.size.x =  STAR_BAR_WIDTH * ratio
+
+
+func consume_gas(delta):
+	gas -= fuel_rate*delta
+
+func out_of_gas():
+	var player = get_tree().current_scene.find_child("Player")
+	if player: player.out_of_gas()
+	
+		
+	
+	
+func get_gas():
+	if gas_tween: gas_tween.kill()
+	get_tree().current_scene.find_child("Player").restore_speed_no_gas()
+	gas_tween = create_tween()
+	gas_tween.tween_property(gas_can,"position",$"UI/Gas Focus".position,.25)
+
+func get_gas_tick(gas_added):
+	var cost = get_cost(gas_added)
+	print("cost: ",cost)
+	%"Gas Cost".text = "-$"+str(cost)
+	
+func stop_gas(gas_added):
+	if gas_tween: gas_tween.kill()
+	gas_tween = create_tween()
+	gas_tween.tween_property(gas_can,"position",$"UI/Gas Unfocus".position,.25)
+	if gas_added:
+		
+		var gpos = %"Gas Cost".global_position
+		%"Gas Cost".set_as_top_level(true)
+		var tween2 := create_tween() 
+		tween2.tween_property(%"Gas Cost","global_position",$Tutorial/Time3/L_Cash.position,.42).from(gpos)
+		await tween2.finished
+		cash_decrease(get_cost(gas_added))
+		%"Gas Cost".set_as_top_level(false)
+		%"Gas Cost".position = Vector2(-14,-151)
+	%"Gas Cost".text = ""
+
+func money_for_gas(gas_added,gas_add_rate):
+	return get_cost(gas_added+gas_add_rate) <= cash
+
+func get_cost(gas_added):
+	print(gas_added * (GAS_COST + day*gas_inflation))
+	return gas_added * (GAS_COST + day*gas_inflation)
+	
+func set_gas_level():
+	gas_level.custom_minimum_size = Vector2(gas_level.custom_minimum_size.x,max_fuel)
+	gas_level.max_value = max_fuel

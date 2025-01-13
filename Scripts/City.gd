@@ -159,6 +159,16 @@ func _on_building_entrance_body_exited(body: Node2D) -> void:
 		at_destination = false
 	pass # Replace with function body.
 
-
+func get_nearest_gas_station():
+	var dist : float = INF
+	var vector : Vector2
+	for station in $"Gas_Stations/Gas Enterances".get_children():
+		if station is CollisionShape2D:
+			var temp_dist = player.global_position.distance_to(station.global_position)
+			if temp_dist < dist:
+				dist = temp_dist
+				vector = station.global_position
+	return vector
+	
 func _on_building_entrance_mouse_entered() -> void: mouse_inside = true
 func _on_building_entrance_mouse_exited() -> void:  mouse_inside = false 

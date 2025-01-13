@@ -1,6 +1,6 @@
 [gd_scene load_steps=18 format=3 uid="uid://41a5bcaoeq2e"]
 
-[ext_resource type="Script" path="res://4 AM.gd" id="1_q7i08"]
+[ext_resource type="Script" path="res://Scripts/4 AM.gd" id="1_q7i08"]
 [ext_resource type="StyleBox" uid="uid://c6bnfdpsfgbph" path="res://StyleBoxes/order_entry_active.tres" id="2_b5tli"]
 [ext_resource type="Texture2D" uid="uid://dlnoinldm6hsc" path="res://Backgrounds/hotel-7188496_1280.png" id="2_w222g"]
 [ext_resource type="FontFile" uid="uid://v3swnsgchgpo" path="res://Font/BebasNeue-Regular.ttf" id="3_sf1pj"]

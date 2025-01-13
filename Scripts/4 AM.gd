@@ -64,7 +64,6 @@ func animate_stats_in(node,i:int,val):
 	tween.tween_callback(animate_stats_value.bind(node,val)).set_delay(.2)
 	
 func animate_stats_value(node,val):
-	print(node,val)
 	if node == $"PanelContainer/Page 1/Performance Rows/Rating Earned":
 		animate_stars_value(node,val)
 		return
@@ -75,7 +74,6 @@ func animate_stats_value(node,val):
 func animate_stars_value(node,val):
 	var value_label = node.get_child(VALUE)
 	var final_size = Vector2((float(val)/UI.MAX_RATING) * UI.STAR_BAR_WIDTH,value_label.size.y)
-	print(value_label,final_size)
 	create_tween().tween_property(value_label,"size",final_size,1)
 	
 func update_value(node):
@@ -109,11 +107,11 @@ func _page2_button():
 	UI.day_over = false
 	if broke:
 		UI.reset()
-		UI.fade_out(.35,get_tree().change_scene_to_packed.bind(TITLE_SCENE))
+		UI.fade_out(1,get_tree().change_scene_to_packed.bind(TITLE_SCENE))
 	else:
 		UI.player_map_position = UI.PLAYER_HOME_SPAWN
 		UI.new_day()
-		UI.fade_out(.35,get_tree().change_scene_to_packed.bind(CITY_SCENE))
+		UI.fade_out(1.5,get_tree().change_scene_to_packed.bind(CITY_SCENE))
 		
 func animate_stats_out(node):
 		var tween = create_tween()

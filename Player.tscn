@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bm1woxmr486ps" path="res://Sprites/cars.png" id="2_djg4b"]
 [ext_resource type="Texture2D" uid="uid://bq1t8xabjm18t" path="res://Sprites/arrow.png" id="3_mddtf"]
 [ext_resource type="AudioStream" uid="uid://csffgre7kycou" path="res://SFX/truck_idle.wav" id="4_52k5n"]
-[ext_resource type="Script" path="res://arrow.gd" id="4_jvi78"]
+[ext_resource type="Script" path="res://Scripts/arrow.gd" id="4_jvi78"]
 
 [sub_resource type="Curve" id="Curve_f6lch"]
 min_value = 0.5
@@ -193,4 +193,7 @@ text = "Respawning.."
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="OutOfGas" type="Timer" parent="."]
+
 [connection signal="body_exited" from="Traffic" to="." method="_on_traffic_body_exited"]
+[connection signal="timeout" from="OutOfGas" to="." method="_on_out_of_gas_timeout"]

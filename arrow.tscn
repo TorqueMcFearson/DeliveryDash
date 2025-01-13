@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://c6mtwdh1lugis"]
 
 [ext_resource type="Texture2D" uid="uid://bq1t8xabjm18t" path="res://Sprites/arrow.png" id="1_oup2u"]
-[ext_resource type="Script" path="res://arrow.gd" id="2_yv7yu"]
+[ext_resource type="Script" path="res://Scripts/arrow.gd" id="2_yv7yu"]
 
 [sub_resource type="Shader" id="Shader_7geke"]
 code = "shader_type canvas_item;

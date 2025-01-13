@@ -107,7 +107,7 @@ func _physics_process(delta: float) -> void:
 
 		STATE.DRIVING:
 			var road_dir :int = get_road_direction(global_position)
-			if road_dir == 4: return queue_free()
+			if road_dir == 3: return queue_free()
 			if road_dir == 0 and direction not in [LEFT,RIGHT]: 
 				direction = [LEFT,RIGHT].pick_random()
 				rotation=deg_to_rad(direction*90)
@@ -122,7 +122,7 @@ func _physics_process(delta: float) -> void:
 			else:
 				mod = (int(position.y) % 64)
 				lock_x_32()
-			if not turning_progress and road_dir == BOTH and 28 < mod and mod < 33:
+			if not turning_progress and road_dir == BOTH and 30 < mod and mod < 34:
 				if direction == LEFT or direction == RIGHT:
 					lock_x_32()
 				else:
@@ -159,7 +159,7 @@ func random_turn():
 	var directions = []
 	for dir:Vector2 in V_DIR:
 		var check_pos = global_position + dir*64
-		if dir != -v_direction and get_road_direction(check_pos) != -1:
+		if dir != -v_direction and get_road_direction(check_pos) != 3:
 			directions.append(dir)
 	return directions.pick_random()
 		

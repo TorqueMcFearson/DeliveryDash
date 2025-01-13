@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://bin3hjdhs5ls8"]
+[gd_scene load_steps=33 format=3 uid="uid://bin3hjdhs5ls8"]
 
 [ext_resource type="Texture2D" uid="uid://bmlasb071pto3" path="res://Sprites/Cash.png" id="1_5daqs"]
 [ext_resource type="Script" path="res://Scripts/UI.gd" id="1_fpkyk"]
@@ -13,6 +13,7 @@
 [ext_resource type="AudioStream" uid="uid://c2p05p0v3iem7" path="res://SFX/Complete_02.wav" id="9_me23b"]
 [ext_resource type="AudioStream" uid="uid://bv5mjdf70yxtp" path="res://SFX/echo-flux-258965.mp3" id="10_ntywh"]
 [ext_resource type="Texture2D" uid="uid://bkc1f67x1dho5" path="res://Sprites/arrow - Copy.png" id="12_mslnn"]
+[ext_resource type="Texture2D" uid="uid://blkm81wkqu1lq" path="res://Sprites/gas can.png" id="14_yytrt"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qg3eo"]
 bg_color = Color(0.1479, 0.17, 0.164843, 0.847059)
@@ -36,8 +37,8 @@ shadow_color = Color(0, 0, 0, 0.313726)
 shadow_size = 8
 shadow_offset = Vector2(3, 3)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tn7f2"]
-bg_color = Color(0.211765, 0.203922, 0.258824, 0.647059)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bntjs"]
+bg_color = Color(0.21359, 0.2054, 0.26, 0.733333)
 border_width_bottom = 4
 border_color = Color(0.098016, 0.0976375, 0.119702, 1)
 
@@ -126,6 +127,66 @@ modulate_color = Color(1, 1, 1, 0.301961)
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_i0elr"]
 texture = ExtResource("8_3lvg3")
 modulate_color = Color(1, 1, 1, 0.670588)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wtqt1"]
+content_margin_top = 12.0
+content_margin_bottom = 53.0
+bg_color = Color(0.21359, 0.2054, 0.26, 0.803922)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.09876, 0.0984, 0.12, 0.862745)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="Gradient" id="Gradient_kug5j"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0.0026738)
+colors = PackedColorArray(0.199219, 0.195717, 0.185211, 0.780392)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_a8kkt"]
+gradient = SubResource("Gradient_kug5j")
+width = 26
+height = 50
+fill_from = Vector2(0.164366, 0.0897436)
+
+[sub_resource type="Gradient" id="Gradient_umqmy"]
+offsets = PackedFloat32Array(0.0026738, 0.491979, 0.941176)
+colors = PackedColorArray(0.29, 0.2175, 0, 1, 0.601563, 0.452934, 0.00704956, 1, 0.3042, 0.22823, 0.000321294, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_bqkha"]
+gradient = SubResource("Gradient_umqmy")
+width = 26
+height = 50
+fill_from = Vector2(0.131492, 0.700855)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_skoft"]
+bg_color = Color(0.0406, 0.08036, 0.14, 0)
+draw_center = false
+border_width_left = 3
+border_width_top = 3
+border_width_right = 4
+border_width_bottom = 3
+border_color = Color(0.0261078, 0.0609772, 0.113281, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+shadow_color = Color(0.46, 0.345, 0, 0.0627451)
+
+[sub_resource type="LabelSettings" id="LabelSettings_7viq1"]
+font = ExtResource("3_mq77v")
+font_size = 30
+font_color = Color(0.824219, 0.12974, 0.016098, 1)
+shadow_size = 2
+shadow_color = Color(0, 0, 0, 0.505882)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s7aor"]
 bg_color = Color(0, 0, 0, 1)
@@ -247,10 +308,10 @@ text = "$"
 
 [node name="Time5" type="Label" parent="Tutorial"]
 layout_mode = 0
-offset_left = 19.0
-offset_top = 484.0
-offset_right = 290.0
-offset_bottom = 706.0
+offset_left = 43.0
+offset_top = 236.0
+offset_right = 314.0
+offset_bottom = 458.0
 theme_override_constants/line_spacing = -2
 theme_override_fonts/font = SubResource("FontVariation_swb0f")
 theme_override_font_sizes/font_size = 22
@@ -264,6 +325,41 @@ enter building         E / left click
 pause game                          esc
 Emergency reset                      r"
 autowrap_mode = 3
+
+[node name="Gas Text" type="Label" parent="Tutorial"]
+layout_mode = 0
+offset_left = 98.0
+offset_top = 558.0
+offset_right = 411.0
+offset_bottom = 680.0
+theme_override_constants/line_spacing = -2
+theme_override_fonts/font = SubResource("FontVariation_swb0f")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxFlat_nw17m")
+text = "Make sure to Keep      gas in your tank. Those towing fees can be quite Expensive!
+
+(Hint: Gas stations are on yellow roads)"
+autowrap_mode = 3
+
+[node name="Gas Can" type="TextureRect" parent="Tutorial/Gas Text"]
+modulate = Color(0.925781, 0.925781, 0.925781, 1)
+layout_mode = 0
+offset_left = 140.0
+offset_top = 10.0
+offset_right = 164.0
+offset_bottom = 34.0
+texture = ExtResource("14_yytrt")
+expand_mode = 2
+
+[node name="Arrow-Copy" type="Sprite2D" parent="Tutorial/Gas Text"]
+self_modulate = Color(0, 0, 0, 0.627451)
+position = Vector2(-18, 64)
+rotation = 3.14159
+scale = Vector2(0.694836, 0.977872)
+texture = ExtResource("12_mslnn")
+region_enabled = true
+region_rect = Rect2(8.70999, 0, 53.29, 38)
+region_filter_clip_enabled = true
 
 [node name="Time4" type="Label" parent="Tutorial"]
 layout_mode = 0
@@ -286,7 +382,7 @@ autowrap_mode = 3
 
 [node name="Arrow-Copy" type="Sprite2D" parent="Tutorial/Time4"]
 self_modulate = Color(0, 0, 0, 0.627451)
-position = Vector2(535, 147)
+position = Vector2(536, 147)
 scale = Vector2(0.694836, 0.977872)
 texture = ExtResource("12_mslnn")
 region_enabled = true
@@ -322,7 +418,7 @@ layout_mode = 0
 offset_right = 1281.0
 offset_bottom = 41.0
 mouse_filter = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_tn7f2")
+theme_override_styles/panel = SubResource("StyleBoxFlat_bntjs")
 
 [node name="Cash" type="Sprite2D" parent="UI/Panel"]
 material = SubResource("ShaderMaterial_gjgpg")
@@ -341,7 +437,7 @@ theme_override_colors/font_shadow_color = Color(0.223529, 0.219608, 0.258824, 0.
 theme_override_constants/shadow_outline_size = 30
 theme_override_fonts/font = ExtResource("3_mq77v")
 theme_override_font_sizes/font_size = 100
-text = "$0"
+text = "$10"
 
 [node name="Add_Cash" type="Label" parent="UI/Panel/Cash"]
 offset_left = 31.1489
@@ -521,6 +617,67 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_kggtr")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_rucqe")
 theme_override_styles/normal = SubResource("StyleBoxTexture_i0elr")
 toggle_mode = true
+
+[node name="Gas Can" type="TextureRect" parent="UI"]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 666.0
+offset_right = 54.0
+offset_bottom = 706.0
+texture = ExtResource("14_yytrt")
+
+[node name="Gas Box" type="PanelContainer" parent="UI/Gas Can"]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.103
+anchor_bottom = 1.215
+offset_left = -2.0
+offset_top = -67.0
+offset_right = 4.88
+offset_bottom = -0.600002
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_wtqt1")
+
+[node name="Gas Level" type="TextureProgressBar" parent="UI/Gas Can/Gas Box"]
+custom_minimum_size = Vector2(25, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+max_value = 50.0
+value = 45.0
+fill_mode = 3
+nine_patch_stretch = true
+texture_under = SubResource("GradientTexture2D_a8kkt")
+texture_progress = SubResource("GradientTexture2D_bqkha")
+tint_under = Color(0.64, 0.57344, 0.1408, 1)
+tint_progress = Color(0.985667, 1, 0.57, 0.768627)
+
+[node name="Panel" type="Panel" parent="UI/Gas Can/Gas Box/Gas Level"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_skoft")
+
+[node name="Gas Cost" type="Label" parent="UI/Gas Can"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = -14.0
+offset_top = -151.0
+offset_right = 56.0
+offset_bottom = -115.0
+label_settings = SubResource("LabelSettings_7viq1")
+horizontal_alignment = 1
+
+[node name="Gas Focus" type="Marker2D" parent="UI"]
+position = Vector2(538, 356)
+
+[node name="Gas Unfocus" type="Marker2D" parent="UI"]
+position = Vector2(14, 666)
 
 [node name="Phone" parent="." instance=ExtResource("5_jiinu")]
 
