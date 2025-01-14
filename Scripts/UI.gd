@@ -11,6 +11,7 @@ const _4_AM = preload("res://4_am.tscn")
 
 signal new_active_order_set(order:Order)
 signal tween_complete
+
 class ClockTime:
 	var hour: int
 	var minute :int
@@ -39,8 +40,11 @@ class ClockTime:
 		else: t_hour = str(hour)
 		var t_minute = minute
 		return "%s:%02d %s" % [t_hour,t_minute,_get_ampm()]
+		
 	func is_time_up():
 		return hour == time_up[0] and minute == time_up[1]
+	func almost_time():
+		return hour == 19 and minute > 29
 class Building:
 	var name:String
 	var global_position:Vector2
@@ -151,16 +155,36 @@ func _unhandled_input(event: InputEvent) -> void:
 		show_tutorial()
 
 func _process(delta: float) -> void:
-	if gas == 0:
-		$"UI/Gas Can".modulate = Color(0.753, 0.843, 1)
-	elif gas < FUEL_WARNING_LEVEL:
+	gas_can_effects(delta)
+	clock_effects(delta)
+
+func gas_can_effects(delta):
+	$"UI/Gas Can".scale = Vector2(1,1)
+	if gas > FUEL_WARNING_LEVEL:
+		$"UI/Gas Can".modulate = Color(1, 1, 1)
+	elif gas > 0:
 		time_passed += delta
-		var blink = .5 + .5 * sin(time_passed * 12) 
+		var blink = .5 + .5 * sin(time_passed * 9) 
 		var color = $"UI/Gas Can".modulate
 		color.b = blink
 		color.g = blink
 		color.r = 1.0
 		$"UI/Gas Can".modulate = color
+		if gas < FUEL_WARNING_LEVEL *0.5 and not gas_tween:
+			var n_scale = 1 + .1 * sin(time_passed * 9) 
+			$"UI/Gas Can".scale = Vector2(n_scale,n_scale)
+	else:
+		$"UI/Gas Can".modulate = Color(0.753, 0.843, 1,0.75)
+
+func clock_effects(delta):
+	if clock.almost_time():
+		time_passed += delta
+		var blink = .65 + .35 * sin(time_passed * 6) 
+		var color = $UI/Panel/Time.modulate
+		color.b = blink
+		color.g = blink
+		color.r = 1.0
+		$UI/Panel/Time.modulate = color
 	else:
 		$"UI/Gas Can".modulate = Color(1, 1, 1)
 		
@@ -445,7 +469,7 @@ func new_day():
 	"Cars Hit" : 0,
 	"Mistakes Made" : 0,
 	"Cash Earned" : 0,
-	"Rating Change" : 0, 
+	"Rating Change" : 0,
 	} 
 	phone._phone_off()
 	
@@ -514,6 +538,7 @@ func stop_gas(gas_added):
 	if gas_tween: gas_tween.kill()
 	gas_tween = create_tween()
 	gas_tween.tween_property(gas_can,"position",$"UI/Gas Unfocus".position,.25)
+	gas_tween.tween_callback(func():gas_tween = null)
 	if gas_added:
 		
 		var gpos = %"Gas Cost".global_position

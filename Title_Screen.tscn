@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://caduwy08lr4s1"]
+[gd_scene load_steps=10 format=3 uid="uid://caduwy08lr4s1"]
 
 [ext_resource type="Texture2D" uid="uid://cdxwxktq5bge0" path="res://Backgrounds/Title.jpg" id="1_7m5r0"]
 [ext_resource type="Texture2D" uid="uid://da6d5psli7wv2" path="res://Sprites/Title_Driver.png" id="2_086dc"]
@@ -13,7 +13,7 @@ script/source = "extends ParallaxBackground
 @onready var driver: Sprite2D = $\"../Title Driver/Driver Sprite\"
 @onready var driver_right_limit = $\"../Title Driver/RigthLimit\".position.x
 
-var driver_x_direction = 1
+var driver_x_direction = -1
 var driver_x_speed = 40
 var driver_x_count = 0
 @onready var driver_x_dest = 50
@@ -25,6 +25,12 @@ const driver_y_count_max = 50
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	#set_process(false)
+	driver.position.x = -1200
+	var tween = create_tween()
+	tween.tween_property(driver,\"position\",Vector2(-111,driver.position.y),2).set_trans(Tween.TRANS_BACK).set_delay(.6)
+	
+	#tween.parallel().tween_callback(set_process.bind(true)).set_delay(.5)
 	pass # Replace with function body.
 
 
@@ -60,6 +66,12 @@ func _on_options_pressed() -> void:
 	create_tween().tween_property($\"../Title_UI/Options\",\"position\",Vector2(0,250),25).as_relative().set_delay(1.5)
 	
 "
+
+[sub_resource type="Curve2D" id="Curve2D_4l1nt"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 8, -159, -16.9897, -19.8214, 16.9897, 19.8214, 573, 134, -16.9897, 3.7755, 16.9897, -3.7755, 632, 145, 0, 0, 0, 0, 682, 107, 0, 0, 0, 0, 736, 147, 0, 0, 0, 0, 817, 150)
+}
+point_count = 6
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3b4wt"]
 bg_color = Color(1, 1, 1, 0)
@@ -99,9 +111,10 @@ centered = false
 position = Vector2(640, 360)
 
 [node name="Driver Sprite" type="Sprite2D" parent="Title Driver"]
-position = Vector2(0, -14)
+position = Vector2(-111, 38)
 scale = Vector2(1.48276, 1.58209)
 texture = ExtResource("2_086dc")
+offset = Vector2(74.8604, -32.8679)
 
 [node name="RigthLimit" type="Marker2D" parent="Title Driver"]
 position = Vector2(302, 62)
@@ -117,19 +130,26 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("3_4trdc")
 
-[node name="Title Panel" type="Panel" parent="Title_UI"]
-layout_mode = 1
+[node name="Path2D" type="Path2D" parent="Title_UI"]
+position = Vector2(-91, -34)
+curve = SubResource("Curve2D_4l1nt")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Title_UI/Path2D"]
+position = Vector2(8, -159)
+rotates = false
+
+[node name="Title Panel" type="Panel" parent="Title_UI/Path2D/PathFollow2D"]
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -456.0
-offset_top = 24.0
-offset_right = 463.0
-offset_bottom = 192.0
+offset_left = -540.0
+offset_top = -102.0
+offset_right = 379.0
+offset_bottom = 66.0
 grow_horizontal = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_3b4wt")
 
-[node name="Title" type="Label" parent="Title_UI/Title Panel"]
+[node name="Title" type="Label" parent="Title_UI/Path2D/PathFollow2D/Title Panel"]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = -0.015
@@ -154,25 +174,31 @@ text = "Delivery Dash"
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="Start" type="Button" parent="Title_UI"]
+[node name="Buttons" type="Control" parent="Title_UI"]
+anchors_preset = 0
+offset_left = -1207.0
+offset_right = -1167.0
+offset_bottom = 40.0
+
+[node name="Start" type="Button" parent="Title_UI/Buttons"]
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
-offset_left = 200.0
-offset_top = 519.0
-offset_right = 426.0
-offset_bottom = 579.0
+offset_left = 202.0
+offset_top = 561.0
+offset_right = 428.0
+offset_bottom = 621.0
 size_flags_horizontal = 3
 size_flags_vertical = 0
 theme_override_font_sizes/font_size = 20
 text = "Start Game"
 
-[node name="Options" type="Button" parent="Title_UI"]
+[node name="Options" type="Button" parent="Title_UI/Buttons"]
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
-offset_left = 526.0
-offset_top = 519.0
-offset_right = 753.0
-offset_bottom = 579.0
+offset_left = 528.0
+offset_top = 561.0
+offset_right = 755.0
+offset_bottom = 621.0
 size_flags_horizontal = 3
 size_flags_vertical = 0
 focus_mode = 0
@@ -180,13 +206,13 @@ theme_override_font_sizes/font_size = 20
 text = "Options
 "
 
-[node name="Exit" type="Button" parent="Title_UI"]
+[node name="Exit" type="Button" parent="Title_UI/Buttons"]
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
-offset_left = 853.0
-offset_top = 519.0
-offset_right = 1080.0
-offset_bottom = 579.0
+offset_left = 855.0
+offset_top = 561.0
+offset_right = 1082.0
+offset_bottom = 621.0
 size_flags_horizontal = 3
 size_flags_vertical = 0
 theme_override_font_sizes/font_size = 20
@@ -203,6 +229,6 @@ mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_65r0a")
 metadata/_edit_lock_ = true
 
-[connection signal="pressed" from="Title_UI/Start" to="Title_UI" method="_on_start_pressed"]
-[connection signal="pressed" from="Title_UI/Options" to="Background Scroll" method="_on_options_pressed"]
-[connection signal="pressed" from="Title_UI/Exit" to="Title_UI" method="_on_exit_pressed"]
+[connection signal="pressed" from="Title_UI/Buttons/Start" to="Title_UI" method="_on_start_pressed"]
+[connection signal="pressed" from="Title_UI/Buttons/Options" to="Background Scroll" method="_on_options_pressed"]
+[connection signal="pressed" from="Title_UI/Buttons/Exit" to="Title_UI" method="_on_exit_pressed"]

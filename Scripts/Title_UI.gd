@@ -5,6 +5,13 @@ const CITY = preload("res://CityMain.tscn")
 func _ready() -> void:
 	UI.hide_UI()
 	UI.fade_in()
+	$Path2D/PathFollow2D.progress_ratio = 0
+	create_tween().tween_property($Path2D/PathFollow2D,"progress_ratio",1,.75).set_trans(Tween.TRANS_CUBIC)
+	var delay = .50
+	var distance = -$Buttons.position
+	for button in [$Buttons/Exit, $Buttons/Options, $Buttons/Start]:
+		create_tween().tween_property(button,"position",distance,.45).as_relative().set_delay(delay).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
+		delay += .25
 	pass # Replace with function body.
 
 
@@ -14,7 +21,7 @@ func _process(delta: float) -> void:
 
 
 func _on_start_pressed() -> void:
-	for button in [$Start, $Options, $Exit]:
+	for button in [$Buttons/Start, $Buttons/Options, $Buttons/Exit,]:
 		button.disabled = true
 	if UI.day_over:return
 	UI.fade_out(1,get_tree().change_scene_to_packed.bind(CITY),.25)

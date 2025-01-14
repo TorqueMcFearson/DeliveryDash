@@ -39,7 +39,7 @@ var collisions = []
 var state : STATE = STATE.ACTIVE
 var sound_velocity :float = 0
 var bumped:bool=false
-var fuel_rate:= .5
+var fuel_rate:= .4
 
 ########################################
 ## Functions
