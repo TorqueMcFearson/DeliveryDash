@@ -12,14 +12,15 @@ var page2 = false
 @onready var expenses :Dictionary = {
 	"Pocket_Cash" : UI.cash,
 	"Total Expenses" : 0,
-	"Rent" : randi_range(10,40)+8*UI.day,
-	"Food" :  randi_range(0,20)+7*UI.day,
-	"Electric" :  randi_range(-5,10)+6*UI.day,
+	"Rent" : randi_range(10,40)+9*UI.day,
+	"Food" :  randi_range(0,20)+8*UI.day,
+	"Electric" :  randi_range(-5,10)+7*UI.day,
 	"Total Cash": 0}
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	
 	UI.hide_UI()
 	$Day.text = "Day %d" % UI.day
 	$PanelContainer.clip_contents = true
@@ -33,6 +34,8 @@ func _ready() -> void:
 	$"PanelContainer/Next Screen".disabled = true
 	await UI.fade_in(1.5) # Replace with function body.
 	init_stats()
+	write_stats_to_file()
+	
 
 func init_stats():
 	var o_rows = rows.get_children()
@@ -134,4 +137,19 @@ func animate_page_2(): #400 difference
 		var val = expenses[keys[i]]
 		animate_stats_in(node,i,val)
 		i +=1
+	
+func write_stats_to_file():
+	var f = FileAccess.open("res://log.txt",FileAccess.READ_WRITE)
+	f.seek_end()
+	var string = ""
+	if UI.day ==1: 
+		string = "\n\n" + Time.get_datetime_string_from_system() + "\n"
+	string += "DAY " + str(UI.day) + " || "
+	string += "Cash Earned: " + str(UI.round_stats["Cash Earned"]) + " , "
+	for key in ["Pocket_Cash","Total Expenses","Total Cash"]:
+		string += key + ": " + str(expenses[key]) + " , "
+	for key in UI.debug_dictionary:
+		string += key + ": " + str(UI.debug_dictionary[key]) + "\n"
+	f.store_string(string)
+	f.close()
 	

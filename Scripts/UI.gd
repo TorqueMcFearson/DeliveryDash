@@ -130,6 +130,7 @@ var gas := 45.0:
 		if gas == 0:
 			out_of_gas()
 var fuel_rate:=1
+var debug_dictionary := {"Fuel Spend": 0,}
 
 
 
@@ -186,7 +187,7 @@ func clock_effects(delta):
 		color.r = 1.0
 		$UI/Panel/Time.modulate = color
 	else:
-		$"UI/Gas Can".modulate = Color(1, 1, 1)
+		$UI/Panel/Time.modulate = Color(1, 1, 1)
 		
 func show_tutorial():
 	$Tutorial.show()
@@ -432,6 +433,7 @@ func cash_noise(to_add):
 
 func cash_decrease(to_sub):
 	cash -= to_sub
+	debug_dictionary["Fuel Spend"] += to_sub
 	$Cash_Noise.play()
 	$UI/Panel/Cash/L_Cash.text = "$"+str(cash)
 	
@@ -471,6 +473,7 @@ func new_day():
 	"Cash Earned" : 0,
 	"Rating Change" : 0,
 	} 
+	debug_dictionary["Fuel Spend"] = 0
 	phone._phone_off()
 	
 func reset():
