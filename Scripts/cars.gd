@@ -87,23 +87,21 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
 	if stopped:
+		$Label.text = "%s - %s" % ["stopped"]
 		return
 		
-		
+#Direction Logic
 	match state:
 		STATE.TURNING:
-			$Label.text = "%s - %s" % ["Both","Turning" if state == STATE.TURNING else "Driving"]
-			var temp = rotation_degrees
-			if temp < 0: temp += 360
-			if temp > direction*90-1 and temp < direction*90+1:
-					rotation_degrees = direction*90
-					state = STATE.DRIVING
-					get_tree().create_timer(.25).timeout.connect(func():turning_progress = 0)
+			var road_dir :int = get_road_direction(global_position)
+			$Label.text = "%s - %s - %s" % [ROAD_DIR[road_dir],"Turning", ["UP","RIGHT","DOWN","LEFT"][direction]]
+			if is_equal_approx(rotation, deg_to_rad(direction*90)) and road_dir != 2: 
+				state = STATE.DRIVING
+				#get_tree().create_timer(.25).timeout.connect(func():turning_progress = 0)
 			else:
-				rotation = lerp_angle(rotation, deg_to_rad(direction*90), turning_progress) # move_toward(rotation,deg_to_rad(direction*90),3*delta)
-				turning_progress = clamp(turning_progress + 3*delta,0,1)
-
-
+				#rotation = lerp_angle(rotation, deg_to_rad(direction*90), turning_progress) # move_toward(rotation,deg_to_rad(direction*90),3*delta)
+				#turning_progress = clamp(turning_progress + 3*delta,0,1)
+				rotation = rotate_toward(rotation,deg_to_rad(direction*90),10*delta)
 
 		STATE.DRIVING:
 			var road_dir :int = get_road_direction(global_position)
@@ -114,15 +112,16 @@ func _physics_process(delta: float) -> void:
 			if road_dir == 1 and direction not in [UP,DOWN]: 
 				direction = [UP,DOWN].pick_random()
 				rotation=deg_to_rad(direction*90)
-			$Label.text = "%s - %s - %s" % [ROAD_DIR[road_dir],"Turning" if state == STATE.TURNING else "Driving", ["UP","RIGHT","DOWN","LEFT"][direction]]
+			$Label.text = "%s - %s - %s" % [ROAD_DIR[road_dir],"Driving", ["UP","RIGHT","DOWN","LEFT"][direction]]
 			var mod:int
-			if direction == LEFT or direction == RIGHT:
+			if direction in [LEFT,RIGHT]:
 				mod = (int(position.x) % 64)
 				lock_y_32()
 			else:
 				mod = (int(position.y) % 64)
 				lock_x_32()
-			if not turning_progress and road_dir == BOTH and 30 < mod and mod < 34:
+			# Start a turn if within a range
+			if road_dir == BOTH and 30 < mod and mod < 34:
 				if direction == LEFT or direction == RIGHT:
 					lock_x_32()
 				else:
@@ -132,6 +131,7 @@ func _physics_process(delta: float) -> void:
 				state = STATE.TURNING
 				return
 
+# Velocity Foward
 	velocity = (velocity + v_direction*SPEED).clamp(-V_MAX_SPEED,V_MAX_SPEED)
 	var temp_pos = position
 	var collide = move_and_collide(velocity*delta)
@@ -156,6 +156,7 @@ func lock_y_32():
 	position.y = snapped(position.y,32)	
 
 func random_turn():
+	#return v_direction#TEST#
 	var directions = []
 	for dir:Vector2 in V_DIR:
 		var check_pos = global_position + dir*64
