@@ -95,12 +95,13 @@ func _physics_process(delta: float) -> void:
 		STATE.TURNING:
 			var road_dir :int = get_road_direction(global_position)
 			$Label.text = "%s - %s - %s" % [ROAD_DIR[road_dir],"Turning", ["UP","RIGHT","DOWN","LEFT"][direction]]
-			if is_equal_approx(rotation, deg_to_rad(direction*90)) and road_dir != 2: 
+			if is_equal_approx(wrapf(rotation,0.0,TAU), deg_to_rad(direction*90)) and road_dir != 2:
 				state = STATE.DRIVING
 				#get_tree().create_timer(.25).timeout.connect(func():turning_progress = 0)
 			else:
 				#rotation = lerp_angle(rotation, deg_to_rad(direction*90), turning_progress) # move_toward(rotation,deg_to_rad(direction*90),3*delta)
 				#turning_progress = clamp(turning_progress + 3*delta,0,1)
+				print(rotation)
 				rotation = rotate_toward(rotation,deg_to_rad(direction*90),10*delta)
 
 		STATE.DRIVING:
@@ -129,7 +130,7 @@ func _physics_process(delta: float) -> void:
 				velocity = Vector2.ZERO
 				new_direction(random_turn())
 				state = STATE.TURNING
-				return
+				
 
 # Velocity Foward
 	velocity = (velocity + v_direction*SPEED).clamp(-V_MAX_SPEED,V_MAX_SPEED)

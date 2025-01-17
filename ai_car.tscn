@@ -35,6 +35,7 @@ position = Vector2(-3.8147e-06, -4.37112e-08)
 texture = SubResource("AtlasTexture_as5e6")
 
 [node name="Label" type="Label" parent="."]
+visible = false
 top_level = true
 offset_right = 40.0
 offset_bottom = 23.0
