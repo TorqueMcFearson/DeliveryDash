@@ -110,7 +110,7 @@ var location :String
 var player_inventory :Array[Order]
 var tutorial = true
 var day = 1
-var tween :Tween = Tween.new()
+var tween :Tween 
 var day_over:bool = false
 var time_passed := 0.0
 
@@ -131,7 +131,7 @@ var gas := 45.0:
 			out_of_gas()
 var fuel_rate:=1
 var debug_dictionary := {"Fuel Spend": 0,}
-
+var gas_label_pos = Vector2(-14,-151)
 
 
 func _ready() -> void:
@@ -147,13 +147,17 @@ func _ready() -> void:
 	
 	
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("pause") and not get_tree().current_scene.name in ["Title","4 AM"]:
+	if event.is_action_pressed("pause") and not get_tree().current_scene.name == "Title":
 		
 		if phone.state: 
 			await phone._phone_off()
 		
 		get_tree().paused=true
-		show_tutorial()
+		print(get_tree().current_scene.name)
+		if get_tree().current_scene.name == "4 AM":
+			pass
+		else:
+			show_tutorial()
 
 func _process(delta: float) -> void:
 	gas_can_effects(delta)
@@ -162,17 +166,20 @@ func _process(delta: float) -> void:
 func gas_can_effects(delta):
 	$"UI/Gas Can".scale = Vector2(1,1)
 	if gas > FUEL_WARNING_LEVEL:
-		$"UI/Gas Can".modulate = Color(1, 1, 1)
+		$"UI/Gas Can".modulate = Color(1, 1, 1,1)
 	elif gas > 0:
+		var strength = 1-(gas/FUEL_WARNING_LEVEL)
 		time_passed += delta
-		var blink = .5 + .5 * sin(time_passed * 9) 
+		var blink_str = .7*strength
+		var blink = 1-blink_str + blink_str * sin(time_passed * 8) 
 		var color = $"UI/Gas Can".modulate
 		color.b = blink
 		color.g = blink
 		color.r = 1.0
+		color.a = 1.0
 		$"UI/Gas Can".modulate = color
 		if gas < FUEL_WARNING_LEVEL *0.5 and not gas_tween:
-			var n_scale = 1 + .1 * sin(time_passed * 9) 
+			var n_scale = 1 + .1*strength * sin(time_passed * 8)
 			$"UI/Gas Can".scale = Vector2(n_scale,n_scale)
 	else:
 		$"UI/Gas Can".modulate = Color(0.753, 0.843, 1,0.75)
@@ -222,6 +229,8 @@ func show_UI():
 func update_clock():
 	$UI/Panel/Time.text = clock.get_time()
 	if clock.is_time_up():
+		var player = get_tree().current_scene.find_child("Player")
+		player.show_timeup_message()
 		end_day()
 
 		
@@ -535,7 +544,7 @@ func get_gas():
 func get_gas_tick(gas_added):
 	var cost = get_cost(gas_added)
 	print("cost: ",cost)
-	%"Gas Cost".text = "-$"+str(cost)
+	%"Gas Cost".text = "-$"+str(int(cost))
 	
 func stop_gas(gas_added):
 	if gas_tween: gas_tween.kill()
@@ -543,7 +552,6 @@ func stop_gas(gas_added):
 	gas_tween.tween_property(gas_can,"position",$"UI/Gas Unfocus".position,.25)
 	gas_tween.tween_callback(func():gas_tween = null)
 	if gas_added:
-		
 		var gpos = %"Gas Cost".global_position
 		%"Gas Cost".set_as_top_level(true)
 		var tween2 := create_tween() 
@@ -551,7 +559,7 @@ func stop_gas(gas_added):
 		await tween2.finished
 		cash_decrease(get_cost(gas_added))
 		%"Gas Cost".set_as_top_level(false)
-		%"Gas Cost".position = Vector2(-14,-151)
+		%"Gas Cost".position = gas_label_pos
 	%"Gas Cost".text = ""
 
 func money_for_gas(gas_added,gas_add_rate):
@@ -564,3 +572,5 @@ func get_cost(gas_added):
 func set_gas_level():
 	gas_level.custom_minimum_size = Vector2(gas_level.custom_minimum_size.x,max_fuel)
 	gas_level.max_value = max_fuel
+	gas_label_pos.y = -50 - max_fuel
+	%"Gas Cost".position = gas_label_pos

@@ -87,7 +87,7 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
 	if stopped:
-		$Label.text = "%s - %s" % ["stopped"]
+		$Label.text = "%s" % ["stopped"]
 		return
 		
 #Direction Logic
@@ -101,7 +101,6 @@ func _physics_process(delta: float) -> void:
 			else:
 				#rotation = lerp_angle(rotation, deg_to_rad(direction*90), turning_progress) # move_toward(rotation,deg_to_rad(direction*90),3*delta)
 				#turning_progress = clamp(turning_progress + 3*delta,0,1)
-				print(rotation)
 				rotation = rotate_toward(rotation,deg_to_rad(direction*90),10*delta)
 
 		STATE.DRIVING:

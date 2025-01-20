@@ -140,7 +140,13 @@ func respawn():
 		global_position = UI.PLAYER_HOME_SPAWN
 	else:
 		global_position = get_parent().get_nearest_gas_station()
-	
+
+func show_timeup_message():
+		$CanvasLayer/Respawning.text = "Day Over... Driving Home"
+		$CanvasLayer/Respawning.show()
+		#await get_tree().create_timer(2).timeout # Commented out because player will get freed by then.
+		#$CanvasLayer/Respawning.hide()
+		
 func get_current_tilemap():
 	var pos = roads.to_local(global_position)
 	return roads.local_to_map(pos)
