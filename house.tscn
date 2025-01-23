@@ -6,9 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://dk0650lh3wlih" path="res://Sprites/bag.png" id="4_s2jys"]
 [ext_resource type="FontFile" uid="uid://gs5irb036wet" path="res://Font/RobotoMono-VariableFont_wght.ttf" id="5_nx81l"]
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_y2oq7"]
-texture = ExtResource("2_q7dmr")
-modulate_color = Color(1, 1, 0.992157, 0.513726)
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mqrct"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4nplb"]
 texture = ExtResource("2_q7dmr")
@@ -16,7 +14,9 @@ modulate_color = Color(1, 1, 0.97, 0.905882)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cjop8"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mqrct"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_y2oq7"]
+texture = ExtResource("2_q7dmr")
+modulate_color = Color(1, 1, 0.992157, 0.513726)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_37otb"]
 
@@ -36,6 +36,8 @@ corner_radius_top_right = 6
 corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4w1eo"]
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r1msl"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0ld5i"]
@@ -48,8 +50,6 @@ corner_radius_top_left = 15
 corner_radius_top_right = 15
 corner_radius_bottom_right = 15
 corner_radius_bottom_left = 15
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4w1eo"]
 
 [node name="House" type="Node2D"]
 script = ExtResource("1_wborb")
@@ -64,21 +64,21 @@ offset_top = 617.0
 offset_right = 747.0
 offset_bottom = 715.0
 focus_mode = 0
-theme_override_styles/normal = SubResource("StyleBoxTexture_y2oq7")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_mqrct")
 theme_override_styles/hover = SubResource("StyleBoxTexture_4nplb")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_cjop8")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_mqrct")
+theme_override_styles/normal = SubResource("StyleBoxTexture_y2oq7")
 
 [node name="Button" type="Button" parent="."]
 offset_left = 594.0
 offset_top = 256.0
 offset_right = 694.0
 offset_bottom = 440.0
-theme_override_styles/normal = SubResource("StyleBoxEmpty_37otb")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_37otb")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_37otb")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_37otb")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_37otb")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_37otb")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_37otb")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_37otb")
 
 [node name="Bag" type="Sprite2D" parent="."]
 position = Vector2(632, 406)
@@ -96,9 +96,9 @@ pivot_offset = Vector2(206, -17)
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_colors/font_shadow_color = Color(0.607843, 0.607843, 0.607843, 0.247059)
 theme_override_colors/font_outline_color = Color(0.370364, 0.370364, 0.370364, 1)
+theme_override_constants/line_spacing = -2
 theme_override_constants/outline_size = 1
 theme_override_constants/shadow_outline_size = 2
-theme_override_constants/line_spacing = -2
 theme_override_fonts/font = SubResource("FontVariation_a343u")
 theme_override_font_sizes/font_size = 15
 theme_override_styles/normal = SubResource("StyleBoxFlat_ppb8c")
@@ -118,11 +118,11 @@ offset_top = -1.0
 offset_right = 168.0
 offset_bottom = 154.0
 focus_mode = 0
-theme_override_styles/normal = SubResource("StyleBoxEmpty_r1msl")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_4w1eo")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_r1msl")
 theme_override_styles/hover = SubResource("StyleBoxFlat_0ld5i")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_0ld5i")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_r1msl")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_4w1eo")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_r1msl")
 
 [connection signal="pressed" from="Exit" to="." method="_on_exit_pressed"]
 [connection signal="mouse_entered" from="Button" to="." method="_on_button_mouse_entered"]

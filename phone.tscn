@@ -170,10 +170,12 @@ position = Vector2(-25, -236)
 [node name="Phone Bad Ding" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_62ajy")
 volume_db = -4.0
+bus = &"SFX"
 
 [node name="Phone Click" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("8_yxj5d")
 volume_db = -4.0
+bus = &"SFX"
 
 [node name="ActiveOrderTimer" type="Label" parent="."]
 modulate = Color(1, 1, 1, 0.65098)

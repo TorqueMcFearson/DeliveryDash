@@ -74,8 +74,6 @@ const MAX_ORDERS = 3
 const ORDER_MIN_TIME = 7
 const ORDER_MAX_TIME = 13
 const FORGOT_MARK_PICKUP_PVALUE = 6
-
-
 var round_stats : Dictionary = {
 	"Orders Accepted" : 0,
 	"Orders Completed" : 0,
@@ -87,6 +85,7 @@ var round_stats : Dictionary = {
 	"Cash Earned" : 0,
 	"Rating Change" : 0, 
 	}
+
 ## Order Generation ######################
 const first_names = [
 	"James", "Mary", "John", "Patricia", "Robert", "Jennifer", "Michael", "Linda",
@@ -110,6 +109,7 @@ var location :String
 var player_inventory :Array[Order]
 var tutorial = true
 var day = 1
+var difficulty := 1.0
 var tween :Tween 
 var day_over:bool = false
 var time_passed := 0.0
@@ -148,11 +148,13 @@ func _ready() -> void:
 	
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause") and not get_tree().current_scene.name == "Title":
-		
+		print("PAUSE")
 		if phone.state: 
 			await phone._phone_off()
-		
+
 		get_tree().paused=true
+		if not tutorial:
+			$"Options".get_child(0).pause()
 		print(get_tree().current_scene.name)
 		if get_tree().current_scene.name == "4 AM":
 			pass

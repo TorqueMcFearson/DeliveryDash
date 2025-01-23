@@ -886,6 +886,7 @@ gizmo_extents = 0.0
 
 [node name="Slide_SFX" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamRandomizer_hq16f")
+bus = &"SFX"
 
 [node name="Day" type="Label" parent="."]
 self_modulate = Color(1, 1, 1, 0.709804)

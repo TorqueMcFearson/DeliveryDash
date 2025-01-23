@@ -1,33 +1,10 @@
-[gd_scene load_steps=36 format=3 uid="uid://d15wce0skylvj"]
+[gd_scene load_steps=24 format=3 uid="uid://d15wce0skylvj"]
 
-[ext_resource type="Script" path="res://Scripts/Tutorial.gd" id="1_er20i"]
 [ext_resource type="FontFile" uid="uid://v3swnsgchgpo" path="res://Font/BebasNeue-Regular.ttf" id="2_asebk"]
-[ext_resource type="Texture2D" uid="uid://bkc1f67x1dho5" path="res://Sprites/arrow - Copy.png" id="3_pgcd1"]
-[ext_resource type="Texture2D" uid="uid://bcakyuvuj32h3" path="res://Sprites/star_filled.png" id="4_dmhf4"]
-[ext_resource type="Texture2D" uid="uid://blkm81wkqu1lq" path="res://Sprites/gas can.png" id="5_buf6y"]
 [ext_resource type="FontFile" uid="uid://ydwn4indox68" path="res://Font/Bangers-Regular.ttf" id="6_5iavn"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_urqv6"]
-bg_color = Color(0.1479, 0.17, 0.164843, 0.847059)
-
-[sub_resource type="FontVariation" id="FontVariation_7q6wu"]
-base_font = ExtResource("2_asebk")
-spacing_glyph = -1
-spacing_space = 1
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f4ovs"]
-content_margin_left = 18.0
-content_margin_top = 10.0
-content_margin_right = 18.0
-content_margin_bottom = 10.0
-bg_color = Color(0, 0, 0, 0.623529)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
-shadow_color = Color(0, 0, 0, 0.313726)
-shadow_size = 8
-shadow_offset = Vector2(3, 3)
+[ext_resource type="Script" path="res://pause_menu.gd" id="6_jrpou"]
+[ext_resource type="Theme" uid="uid://r1ihjlkhy6rj" path="res://StyleBoxes/Options Menu.tres" id="7_usd1d"]
+[ext_resource type="Script" path="res://volume_slider.gd" id="8_aln4r"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_le0hv"]
 content_margin_left = 12.0
@@ -69,8 +46,8 @@ corner_radius_bottom_left = 12
 shadow_color = Color(0.101961, 0.101961, 0.101961, 0.682353)
 shadow_size = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_alhxt"]
-bg_color = Color(1, 0, 0, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cb82b"]
+bg_color = Color(0.333333, 1, 0, 1)
 border_width_left = 2
 border_width_top = 3
 border_width_right = 2
@@ -87,9 +64,9 @@ shadow_color = Color(0.101961, 0.101961, 0.101961, 0.682353)
 shadow_size = 1
 shadow_offset = Vector2(2, 2)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5jtmb"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lguhn"]
 content_margin_top = 7.0
-bg_color = Color(0.97, 0, 0.0161664, 1)
+bg_color = Color(0.3, 0.9, 0, 1)
 border_width_left = 2
 border_width_top = 3
 border_width_right = 2
@@ -100,12 +77,13 @@ corner_radius_top_right = 12
 corner_radius_bottom_right = 12
 corner_radius_bottom_left = 12
 expand_margin_left = 1.0
+expand_margin_top = 1.0
 expand_margin_right = 1.0
 shadow_color = Color(0.101961, 0.101961, 0.101961, 0.682353)
 shadow_size = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ab3md"]
-bg_color = Color(1, 0.1, 0.1, 0.85098)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3oqoa"]
+bg_color = Color(0.4, 1, 0.1, 0.85098)
 border_width_left = 2
 border_width_top = 3
 border_width_right = 2
@@ -186,8 +164,8 @@ shadow_color = Color(0.101961, 0.101961, 0.101961, 0.682353)
 shadow_size = 1
 shadow_offset = Vector2(2, 2)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cb82b"]
-bg_color = Color(0.333333, 1, 0, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_alhxt"]
+bg_color = Color(1, 0, 0, 1)
 border_width_left = 2
 border_width_top = 3
 border_width_right = 2
@@ -204,9 +182,9 @@ shadow_color = Color(0.101961, 0.101961, 0.101961, 0.682353)
 shadow_size = 1
 shadow_offset = Vector2(2, 2)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lguhn"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5jtmb"]
 content_margin_top = 7.0
-bg_color = Color(0.3, 0.9, 0, 1)
+bg_color = Color(0.97, 0, 0.0161664, 1)
 border_width_left = 2
 border_width_top = 3
 border_width_right = 2
@@ -217,13 +195,12 @@ corner_radius_top_right = 12
 corner_radius_bottom_right = 12
 corner_radius_bottom_left = 12
 expand_margin_left = 1.0
-expand_margin_top = 1.0
 expand_margin_right = 1.0
 shadow_color = Color(0.101961, 0.101961, 0.101961, 0.682353)
 shadow_size = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3oqoa"]
-bg_color = Color(0.4, 1, 0.1, 0.85098)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ab3md"]
+bg_color = Color(1, 0.1, 0.1, 0.85098)
 border_width_left = 2
 border_width_top = 3
 border_width_right = 2
@@ -238,317 +215,58 @@ shadow_color = Color(0.101961, 0.101961, 0.101961, 0.682353)
 shadow_size = 1
 shadow_offset = Vector2(2, 2)
 
-[sub_resource type="Image" id="Image_v35rj"]
-data = {
-"data": PackedByteArray(255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 18, 253, 253, 253, 100, 255, 255, 255, 156, 254, 254, 254, 183, 254, 254, 254, 183, 255, 255, 255, 156, 253, 253, 253, 99, 255, 255, 255, 17, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 65, 254, 254, 254, 183, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 182, 255, 255, 255, 63, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 65, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 255, 255, 255, 63, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 18, 254, 254, 254, 183, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 181, 255, 255, 255, 16, 255, 255, 255, 0, 255, 255, 255, 0, 253, 253, 253, 100, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 255, 255, 255, 97, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 156, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 155, 255, 255, 255, 0, 255, 255, 255, 0, 254, 254, 254, 183, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 182, 255, 255, 255, 0, 255, 255, 255, 0, 254, 254, 254, 183, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 181, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 156, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 154, 255, 255, 255, 0, 255, 255, 255, 0, 253, 253, 253, 99, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 253, 253, 253, 97, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 17, 254, 254, 254, 182, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 180, 255, 255, 255, 15, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 63, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 255, 255, 255, 61, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 63, 254, 254, 254, 181, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 191, 254, 254, 254, 180, 255, 255, 255, 61, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 16, 255, 255, 255, 97, 254, 254, 254, 155, 254, 254, 254, 182, 254, 254, 254, 181, 254, 254, 254, 154, 253, 253, 253, 97, 255, 255, 255, 15, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0),
-"format": "RGBA8",
-"height": 16,
-"mipmaps": false,
-"width": 16
-}
+[sub_resource type="FontVariation" id="FontVariation_vtl5f"]
+base_font = ExtResource("2_asebk")
 
-[sub_resource type="ImageTexture" id="ImageTexture_66krk"]
-image = SubResource("Image_v35rj")
+[sub_resource type="LabelSettings" id="LabelSettings_dtddo"]
+font = SubResource("FontVariation_vtl5f")
+font_size = 15
 
-[sub_resource type="Image" id="Image_8mcpe"]
-data = {
-"data": PackedByteArray(255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 9, 255, 255, 255, 49, 255, 255, 255, 77, 255, 255, 255, 90, 255, 255, 255, 90, 255, 255, 255, 77, 255, 255, 255, 49, 255, 255, 255, 9, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 32, 255, 255, 255, 90, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 90, 255, 255, 255, 31, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 32, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 31, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 9, 255, 255, 255, 90, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 89, 255, 255, 255, 8, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 49, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 48, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 77, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 77, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 90, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 90, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 90, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 89, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 77, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 76, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 49, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 48, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 9, 255, 255, 255, 90, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 89, 255, 255, 255, 8, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 31, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 30, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 31, 255, 255, 255, 89, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 94, 255, 255, 255, 89, 255, 255, 255, 30, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 8, 255, 255, 255, 48, 255, 255, 255, 77, 255, 255, 255, 90, 255, 255, 255, 89, 255, 255, 255, 76, 255, 255, 255, 48, 255, 255, 255, 8, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0),
-"format": "RGBA8",
-"height": 16,
-"mipmaps": false,
-"width": 16
-}
+[sub_resource type="GDScript" id="GDScript_ip47g"]
+script/source = "extends OptionButton
 
-[sub_resource type="ImageTexture" id="ImageTexture_yvyi4"]
-image = SubResource("Image_8mcpe")
+const difficulties = [.5,1.0,1.5]
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	selected = difficulties.find(UI.difficulty)
+	pass # Replace with function body.
 
-[sub_resource type="Image" id="Image_8dy5r"]
-data = {
-"data": PackedByteArray(255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 23, 254, 254, 254, 133, 254, 254, 254, 209, 254, 254, 254, 244, 254, 254, 254, 244, 254, 254, 254, 209, 254, 254, 254, 132, 255, 255, 255, 22, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 87, 254, 254, 254, 244, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 243, 255, 255, 255, 84, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 87, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 255, 255, 255, 84, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 23, 254, 254, 254, 244, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 242, 255, 255, 255, 21, 255, 255, 255, 0, 255, 255, 255, 0, 254, 254, 254, 133, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 130, 255, 255, 255, 0, 255, 255, 255, 0, 254, 254, 254, 209, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 207, 255, 255, 255, 0, 255, 255, 255, 0, 254, 254, 254, 244, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 243, 255, 255, 255, 0, 255, 255, 255, 0, 254, 254, 254, 244, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 242, 255, 255, 255, 0, 255, 255, 255, 0, 254, 254, 254, 209, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 206, 255, 255, 255, 0, 255, 255, 255, 0, 254, 254, 254, 132, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 129, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 22, 254, 254, 254, 243, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 241, 255, 255, 255, 20, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 84, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 255, 255, 255, 81, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 84, 254, 254, 254, 242, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 241, 255, 255, 255, 81, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 21, 254, 254, 254, 130, 254, 254, 254, 207, 254, 254, 254, 243, 254, 254, 254, 242, 254, 254, 254, 206, 254, 254, 254, 129, 255, 255, 255, 20, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0),
-"format": "RGBA8",
-"height": 16,
-"mipmaps": false,
-"width": 16
-}
 
-[sub_resource type="ImageTexture" id="ImageTexture_fi0eb"]
-image = SubResource("Image_8dy5r")
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
 
-[sub_resource type="Image" id="Image_rkyb6"]
-data = {
-"data": PackedByteArray(255, 255, 255, 0, 255, 255, 255, 64, 255, 255, 255, 64, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 64, 255, 255, 255, 64, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 64, 255, 255, 255, 64, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 64, 255, 255, 255, 64, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 64, 255, 255, 255, 64, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 64, 255, 255, 255, 64, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 64, 255, 255, 255, 64, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 64, 255, 255, 255, 64, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 64, 255, 255, 255, 64, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 64, 255, 255, 255, 64, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 64, 255, 255, 255, 64, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 64, 255, 255, 255, 64, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 64, 255, 255, 255, 64, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 64, 255, 255, 255, 64, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 64, 255, 255, 255, 64, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 64, 255, 255, 255, 64, 255, 255, 255, 0),
-"format": "RGBA8",
-"height": 16,
-"mipmaps": false,
-"width": 4
-}
 
-[sub_resource type="ImageTexture" id="ImageTexture_cs4h4"]
-image = SubResource("Image_rkyb6")
+func _on_item_selected(index: int) -> void:
+	UI.difficulty = difficulties[index]
+	pass # Replace with function body.
+"
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n5lrx"]
-content_margin_left = 4.0
-content_margin_top = 4.0
-content_margin_right = 4.0
-content_margin_bottom = 4.0
-bg_color = Color(0.0333333, 1, 0, 0.4)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-corner_detail = 6
+[sub_resource type="GDScript" id="GDScript_1nbo1"]
+script/source = "extends CheckBox
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wcd5v"]
-content_margin_left = 4.0
-content_margin_top = 4.0
-content_margin_right = 4.0
-content_margin_bottom = 4.0
-bg_color = Color(0.0333333, 1, 0, 0.662745)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-corner_detail = 6
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dk44w"]
-content_margin_left = 4.0
-content_margin_top = 4.0
-content_margin_right = 4.0
-content_margin_bottom = 4.0
-bg_color = Color(0.101961, 0.0431373, 0.219608, 0.6)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-corner_detail = 6
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	set_pressed_no_signal(UI.tutorial)
 
-[sub_resource type="Theme" id="Theme_lgrob"]
-HSlider/constants/center_grabber = 0
-HSlider/constants/grabber_offset = 0
-HSlider/icons/grabber = SubResource("ImageTexture_66krk")
-HSlider/icons/grabber_disabled = SubResource("ImageTexture_yvyi4")
-HSlider/icons/grabber_highlight = SubResource("ImageTexture_fi0eb")
-HSlider/icons/tick = SubResource("ImageTexture_cs4h4")
-HSlider/styles/grabber_area = SubResource("StyleBoxFlat_n5lrx")
-HSlider/styles/grabber_area_highlight = SubResource("StyleBoxFlat_wcd5v")
-HSlider/styles/slider = SubResource("StyleBoxFlat_dk44w")
 
-[node name="Control" type="Control"]
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+
+
+func _on_toggled(toggled_on: bool) -> void:
+	UI.tutorial = toggled_on  # Replace with function body.
+"
+
+[node name="Options" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="Tutorial" type="Control" parent="."]
-process_mode = 2
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-script = ExtResource("1_er20i")
-
-[node name="Panel" type="Panel" parent="Tutorial"]
-layout_mode = 0
-offset_top = -10.0
-offset_right = 1294.0
-offset_bottom = 721.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_urqv6")
-
-[node name="Time" type="Label" parent="Tutorial"]
-layout_mode = 0
-offset_left = 517.0
-offset_top = 82.0
-offset_right = 784.0
-offset_bottom = 151.0
-theme_override_constants/line_spacing = -5
-theme_override_fonts/font = SubResource("FontVariation_7q6wu")
-theme_override_font_sizes/font_size = 22
-theme_override_styles/normal = SubResource("StyleBoxFlat_f4ovs")
-text = "Your shift is from 4:00-8:00 pm.
-You have 4 hours to earn a living."
-autowrap_mode = 3
-
-[node name="Arrow-Copy" type="Sprite2D" parent="Tutorial/Time"]
-self_modulate = Color(0, 0, 0, 0.627451)
-position = Vector2(116, -18)
-rotation = -1.57079
-scale = Vector2(0.694836, 0.977872)
-texture = ExtResource("3_pgcd1")
-region_enabled = true
-region_rect = Rect2(8.70999, 0, 53.29, 38)
-region_filter_clip_enabled = true
-
-[node name="Time2" type="Label" parent="Tutorial"]
-layout_mode = 0
-offset_left = 1025.0
-offset_top = 83.0
-offset_right = 1270.0
-offset_bottom = 218.0
-theme_override_constants/line_spacing = -5
-theme_override_fonts/font = SubResource("FontVariation_7q6wu")
-theme_override_font_sizes/font_size = 22
-theme_override_styles/normal = SubResource("StyleBoxFlat_f4ovs")
-text = "The higher your     rating, 
-the more $ you get tipped!
-
-Just don't mess up or forget orders, and keep on delivering!"
-autowrap_mode = 3
-
-[node name="Arrow-Copy" type="Sprite2D" parent="Tutorial/Time2"]
-self_modulate = Color(0, 0, 0, 0.627451)
-position = Vector2(168, -18)
-rotation = -1.57079
-scale = Vector2(0.694836, 0.977872)
-texture = ExtResource("3_pgcd1")
-region_enabled = true
-region_rect = Rect2(8.70999, 0, 53.29, 38)
-region_filter_clip_enabled = true
-
-[node name="TextureRect" type="TextureRect" parent="Tutorial/Time2"]
-layout_mode = 0
-offset_left = 127.0
-offset_top = 12.0
-offset_right = 146.0
-offset_bottom = 31.0
-texture = ExtResource("4_dmhf4")
-expand_mode = 1
-
-[node name="Time3" type="Label" parent="Tutorial"]
-layout_mode = 0
-offset_left = 37.0
-offset_top = 80.0
-offset_right = 314.0
-offset_bottom = 196.0
-theme_override_constants/line_spacing = -5
-theme_override_fonts/font = SubResource("FontVariation_7q6wu")
-theme_override_font_sizes/font_size = 22
-theme_override_styles/normal = SubResource("StyleBoxFlat_f4ovs")
-text = "Earn    money by delivering orders!
-
-Hurry if you want to afford rent and food at the end of the day!"
-autowrap_mode = 3
-
-[node name="Arrow-Copy" type="Sprite2D" parent="Tutorial/Time3"]
-self_modulate = Color(0, 0, 0, 0.627451)
-position = Vector2(35, -18)
-rotation = -1.57079
-scale = Vector2(0.694836, 0.977872)
-texture = ExtResource("3_pgcd1")
-region_enabled = true
-region_rect = Rect2(8.70999, 0, 53.29, 38)
-region_filter_clip_enabled = true
-
-[node name="L_Cash" type="Label" parent="Tutorial/Time3"]
-layout_mode = 0
-offset_left = 55.0
-offset_top = 8.0
-offset_right = 207.0
-offset_bottom = 168.0
-scale = Vector2(0.25, 0.25)
-theme_override_colors/font_color = Color(1, 0.978132, 0.263246, 0.996078)
-theme_override_colors/font_shadow_color = Color(0.223529, 0.219608, 0.258824, 0.666667)
-theme_override_constants/shadow_outline_size = 30
-theme_override_fonts/font = ExtResource("2_asebk")
-theme_override_font_sizes/font_size = 100
-text = "$"
-
-[node name="Time5" type="Label" parent="Tutorial"]
-layout_mode = 0
-offset_left = 43.0
-offset_top = 236.0
-offset_right = 314.0
-offset_bottom = 458.0
-theme_override_constants/line_spacing = -2
-theme_override_fonts/font = SubResource("FontVariation_7q6wu")
-theme_override_font_sizes/font_size = 22
-theme_override_styles/normal = SubResource("StyleBoxFlat_f4ovs")
-text = "                 Controls:
-Drive                            W/A/S/D
-click Stuff                   Left Click
-scroll orders          mouse wheel
-put phone away           Right click
-enter building         E / left click
-pause game                          esc
-Emergency reset                      r"
-autowrap_mode = 3
-
-[node name="Gas Text" type="Label" parent="Tutorial"]
-layout_mode = 0
-offset_left = 98.0
-offset_top = 558.0
-offset_right = 411.0
-offset_bottom = 680.0
-theme_override_constants/line_spacing = -2
-theme_override_fonts/font = SubResource("FontVariation_7q6wu")
-theme_override_font_sizes/font_size = 22
-theme_override_styles/normal = SubResource("StyleBoxFlat_f4ovs")
-text = "Make sure to Keep      gas in your tank. Those towing fees can be quite Expensive!
-
-(Hint: Gas stations are on yellow roads)"
-autowrap_mode = 3
-
-[node name="Gas Can" type="TextureRect" parent="Tutorial/Gas Text"]
-modulate = Color(0.925781, 0.925781, 0.925781, 1)
-layout_mode = 0
-offset_left = 140.0
-offset_top = 10.0
-offset_right = 164.0
-offset_bottom = 34.0
-texture = ExtResource("5_buf6y")
-expand_mode = 2
-
-[node name="Arrow-Copy" type="Sprite2D" parent="Tutorial/Gas Text"]
-self_modulate = Color(0, 0, 0, 0.627451)
-position = Vector2(-18, 64)
-rotation = 3.14159
-scale = Vector2(0.694836, 0.977872)
-texture = ExtResource("3_pgcd1")
-region_enabled = true
-region_rect = Rect2(8.70999, 0, 53.29, 38)
-region_filter_clip_enabled = true
-
-[node name="Time4" type="Label" parent="Tutorial"]
-layout_mode = 0
-offset_left = 516.0
-offset_top = 485.0
-offset_right = 1034.0
-offset_bottom = 708.0
-theme_override_constants/line_spacing = -5
-theme_override_fonts/font = SubResource("FontVariation_7q6wu")
-theme_override_font_sizes/font_size = 22
-theme_override_styles/normal = SubResource("StyleBoxFlat_f4ovs")
-text = "Welcome to the DeliveryDash APP!
-
-when driving, it's your best friend. Use it to scroll through your deliveries and update their status. 
-
-Your unseen employer is always watching... So don't forget to respond to orders and follow procedures so you don't lose any precious stars!
-
-Quick tip! it's always better to reject an order than negelect it."
-autowrap_mode = 3
-
-[node name="Arrow-Copy" type="Sprite2D" parent="Tutorial/Time4"]
-self_modulate = Color(0, 0, 0, 0.627451)
-position = Vector2(536, 147)
-scale = Vector2(0.694836, 0.977872)
-texture = ExtResource("3_pgcd1")
-region_enabled = true
-region_rect = Rect2(8.70999, 0, 53.29, 38)
-region_filter_clip_enabled = true
-
-[node name="Label" type="Label" parent="Tutorial"]
-layout_mode = 0
-offset_left = 560.0
-offset_top = 311.0
-offset_right = 742.0
-offset_bottom = 334.0
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.639216)
-theme_override_constants/shadow_offset_x = 1
-theme_override_constants/shadow_offset_y = 1
-theme_override_constants/shadow_outline_size = 5
-text = "Click to Continue"
-horizontal_alignment = 1
 
 [node name="Pause Menu" type="Panel" parent="."]
 layout_mode = 1
@@ -563,8 +281,9 @@ offset_right = 194.5
 offset_bottom = 109.0
 grow_horizontal = 2
 grow_vertical = 2
-pivot_offset = Vector2(121, 261)
+pivot_offset = Vector2(387.5, 5)
 theme_override_styles/panel = SubResource("StyleBoxFlat_le0hv")
+script = ExtResource("6_jrpou")
 
 [node name="Page 1" type="Control" parent="Pause Menu"]
 anchors_preset = 0
@@ -647,63 +366,7 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Next Screen" type="Button" parent="Pause Menu/Buttons"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = 96.0
-offset_top = 171.0
-offset_right = 253.0
-offset_bottom = 220.0
-grow_horizontal = 2
-grow_vertical = 0
-focus_mode = 0
-theme_override_colors/font_disabled_color = Color(0.288518, 0.288518, 0.288518, 1)
-theme_override_colors/font_hover_color = Color(0.977937, 0.977937, 0.977937, 1)
-theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
-theme_override_colors/font_color = Color(0.899258, 0.899258, 0.899258, 1)
-theme_override_colors/font_outline_color = Color(0.233925, 0.233925, 0.233925, 1)
-theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("6_5iavn")
-theme_override_font_sizes/font_size = 35
-theme_override_styles/disabled = SubResource("StyleBoxFlat_5oi8m")
-theme_override_styles/hover = SubResource("StyleBoxFlat_alhxt")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_5jtmb")
-theme_override_styles/normal = SubResource("StyleBoxFlat_ab3md")
-text = "Main Menu"
-
-[node name="Next Screen2" type="Button" parent="Pause Menu/Buttons"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = 96.0
-offset_top = 105.0
-offset_right = 253.0
-offset_bottom = 154.0
-grow_horizontal = 2
-grow_vertical = 0
-focus_mode = 0
-theme_override_colors/font_disabled_color = Color(0.288518, 0.288518, 0.288518, 1)
-theme_override_colors/font_hover_color = Color(0.977937, 0.977937, 0.977937, 1)
-theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
-theme_override_colors/font_color = Color(0.899258, 0.899258, 0.899258, 1)
-theme_override_colors/font_outline_color = Color(0.233925, 0.233925, 0.233925, 1)
-theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("6_5iavn")
-theme_override_font_sizes/font_size = 35
-theme_override_styles/disabled = SubResource("StyleBoxFlat_a7vk3")
-theme_override_styles/hover = SubResource("StyleBoxFlat_mvy6u")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_ri70q")
-theme_override_styles/normal = SubResource("StyleBoxFlat_yydoh")
-text = "Options"
-
-[node name="Next Screen3" type="Button" parent="Pause Menu/Buttons"]
+[node name="Resume" type="Button" parent="Pause Menu/Buttons"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -731,20 +394,69 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_lguhn")
 theme_override_styles/normal = SubResource("StyleBoxFlat_3oqoa")
 text = "Resume"
 
-[node name="Options Menu" type="Panel" parent="."]
+[node name="Options" type="Button" parent="Pause Menu/Buttons"]
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = 7
 anchor_left = 0.5
-anchor_top = 0.5
+anchor_top = 1.0
 anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 760.0
-offset_top = -202.0
-offset_right = 1149.0
-offset_bottom = 92.0
+anchor_bottom = 1.0
+offset_left = 96.0
+offset_top = 105.0
+offset_right = 253.0
+offset_bottom = 154.0
 grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(121, 261)
+grow_vertical = 0
+focus_mode = 0
+theme_override_colors/font_disabled_color = Color(0.288518, 0.288518, 0.288518, 1)
+theme_override_colors/font_hover_color = Color(0.977937, 0.977937, 0.977937, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(0.899258, 0.899258, 0.899258, 1)
+theme_override_colors/font_outline_color = Color(0.233925, 0.233925, 0.233925, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("6_5iavn")
+theme_override_font_sizes/font_size = 35
+theme_override_styles/disabled = SubResource("StyleBoxFlat_a7vk3")
+theme_override_styles/hover = SubResource("StyleBoxFlat_mvy6u")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ri70q")
+theme_override_styles/normal = SubResource("StyleBoxFlat_yydoh")
+text = "Options"
+
+[node name="Main Menu" type="Button" parent="Pause Menu/Buttons"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 96.0
+offset_top = 171.0
+offset_right = 253.0
+offset_bottom = 220.0
+grow_horizontal = 2
+grow_vertical = 0
+focus_mode = 0
+theme_override_colors/font_disabled_color = Color(0.288518, 0.288518, 0.288518, 1)
+theme_override_colors/font_hover_color = Color(0.977937, 0.977937, 0.977937, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(0.899258, 0.899258, 0.899258, 1)
+theme_override_colors/font_outline_color = Color(0.233925, 0.233925, 0.233925, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("6_5iavn")
+theme_override_font_sizes/font_size = 35
+theme_override_styles/disabled = SubResource("StyleBoxFlat_5oi8m")
+theme_override_styles/hover = SubResource("StyleBoxFlat_alhxt")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_5jtmb")
+theme_override_styles/normal = SubResource("StyleBoxFlat_ab3md")
+text = "Main Menu"
+
+[node name="Options Menu" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 1417.0
+offset_top = 183.0
+offset_right = 1806.0
+offset_bottom = 477.0
+pivot_offset = Vector2(0, 294)
 theme_override_styles/panel = SubResource("StyleBoxFlat_le0hv")
 
 [node name="Page 1" type="Control" parent="Options Menu"]
@@ -838,7 +550,7 @@ grow_horizontal = 2
 grow_vertical = 2
 columns = 2
 
-[node name="Music" type="Label" parent="Options Menu/Sliders"]
+[node name="MusicLabel" type="Label" parent="Options Menu/Sliders"]
 layout_mode = 2
 size_flags_horizontal = 2
 size_flags_vertical = 0
@@ -851,14 +563,26 @@ text = "Music Volume"
 horizontal_alignment = 1
 vertical_alignment = 2
 
-[node name="MusicSlider" type="HSlider" parent="Options Menu/Sliders"]
-custom_minimum_size = Vector2(100, 0)
+[node name="Music" type="HSlider" parent="Options Menu/Sliders"]
+custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 size_flags_vertical = 4
 focus_mode = 0
+theme = ExtResource("7_usd1d")
 value = 50.0
+script = ExtResource("8_aln4r")
 
-[node name="SFX" type="Label" parent="Options Menu/Sliders"]
+[node name="Value" type="Label" parent="Options Menu/Sliders/Music"]
+layout_mode = 0
+offset_top = -2.0
+offset_right = 50.0
+offset_bottom = 23.0
+text = "12"
+label_settings = SubResource("LabelSettings_dtddo")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SFXLabel" type="Label" parent="Options Menu/Sliders"]
 layout_mode = 2
 size_flags_horizontal = 2
 size_flags_vertical = 0
@@ -871,32 +595,25 @@ text = "SFX Volume"
 horizontal_alignment = 1
 vertical_alignment = 2
 
-[node name="SFXSlider" type="HSlider" parent="Options Menu/Sliders"]
-custom_minimum_size = Vector2(100, 0)
+[node name="SFX" type="HSlider" parent="Options Menu/Sliders"]
+custom_minimum_size = Vector2(100, 20)
 layout_mode = 2
 size_flags_vertical = 4
 focus_mode = 0
-theme = SubResource("Theme_lgrob")
+theme = ExtResource("7_usd1d")
 value = 100.0
+script = ExtResource("8_aln4r")
 
-[node name="Tutorial" type="Label" parent="Options Menu/Sliders"]
-layout_mode = 2
-size_flags_horizontal = 2
-size_flags_vertical = 0
-size_flags_stretch_ratio = 0.85
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/shadow_outline_size = 4
-theme_override_fonts/font = SubResource("FontVariation_0q6cr")
-theme_override_font_sizes/font_size = 24
-text = "Tutorial Enabled"
+[node name="Value" type="Label" parent="Options Menu/Sliders/SFX"]
+offset_top = -2.0
+offset_right = 51.0
+offset_bottom = 23.0
+text = "12"
+label_settings = SubResource("LabelSettings_dtddo")
 horizontal_alignment = 1
-vertical_alignment = 2
+vertical_alignment = 1
 
-[node name="TutorialBox" type="CheckBox" parent="Options Menu/Sliders"]
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="Difficulty" type="Label" parent="Options Menu/Sliders"]
+[node name="DifficultyLabel" type="Label" parent="Options Menu/Sliders"]
 layout_mode = 2
 size_flags_horizontal = 2
 size_flags_vertical = 0
@@ -910,8 +627,11 @@ text = "Difficulty
 horizontal_alignment = 1
 vertical_alignment = 2
 
-[node name="OptionButton" type="OptionButton" parent="Options Menu/Sliders"]
+[node name="Difficulty" type="OptionButton" parent="Options Menu/Sliders"]
 layout_mode = 2
+focus_mode = 0
+theme = ExtResource("7_usd1d")
+alignment = 1
 selected = 0
 item_count = 3
 popup/item_0/text = "Easy"
@@ -919,6 +639,26 @@ popup/item_1/text = "Medium"
 popup/item_1/id = 1
 popup/item_2/text = "Hard"
 popup/item_2/id = 2
+script = SubResource("GDScript_ip47g")
+
+[node name="TutorialLabel" type="Label" parent="Options Menu/Sliders"]
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 0
+size_flags_stretch_ratio = 0.85
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 4
+theme_override_fonts/font = SubResource("FontVariation_0q6cr")
+theme_override_font_sizes/font_size = 24
+text = "Tutorial Enabled"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="Tutorial" type="CheckBox" parent="Options Menu/Sliders"]
+layout_mode = 2
+size_flags_horizontal = 4
+focus_mode = 0
+script = SubResource("GDScript_1nbo1")
 
 [node name="Back Button" type="Button" parent="Options Menu"]
 layout_mode = 1
@@ -927,10 +667,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -184.5
-offset_top = -43.0
-offset_right = -125.5
-offset_bottom = -11.0
+offset_left = -36.5
+offset_top = -53.0
+offset_right = 31.5
+offset_bottom = -12.0
 grow_horizontal = 2
 grow_vertical = 0
 focus_mode = 0
@@ -947,3 +687,10 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_alhxt")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_5jtmb")
 theme_override_styles/normal = SubResource("StyleBoxFlat_ab3md")
 text = "Back"
+
+[connection signal="pressed" from="Pause Menu/Buttons/Resume" to="Pause Menu" method="_on_resume_pressed"]
+[connection signal="pressed" from="Pause Menu/Buttons/Options" to="Pause Menu" method="_on_options_pressed"]
+[connection signal="pressed" from="Pause Menu/Buttons/Main Menu" to="Pause Menu" method="_on_main_menu_pressed"]
+[connection signal="item_selected" from="Options Menu/Sliders/Difficulty" to="Options Menu/Sliders/Difficulty" method="_on_item_selected"]
+[connection signal="toggled" from="Options Menu/Sliders/Tutorial" to="Options Menu/Sliders/Tutorial" method="_on_toggled"]
+[connection signal="pressed" from="Options Menu/Back Button" to="Pause Menu" method="_on_back_button_pressed"]

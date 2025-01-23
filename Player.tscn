@@ -173,6 +173,7 @@ shape = SubResource("RectangleShape2D_f0cy2")
 [node name="Motor_Sound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_52k5n")
 autoplay = true
+bus = &"SFX"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 100
