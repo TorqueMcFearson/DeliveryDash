@@ -248,7 +248,7 @@ script/source = "extends CheckBox
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	set_pressed_no_signal(UI.tutorial)
+	set_pressed_no_signal(UI.tutorial_enabled)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -257,7 +257,7 @@ func _process(delta: float) -> void:
 
 
 func _on_toggled(toggled_on: bool) -> void:
-	UI.tutorial = toggled_on  # Replace with function body.
+	UI.tutorial_enabled = toggled_on  # Replace with function body.
 "
 
 [node name="Options" type="Control"]
@@ -269,18 +269,11 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Pause Menu" type="Panel" parent="."]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -194.5
-offset_top = -185.0
-offset_right = 194.5
-offset_bottom = 109.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 0
+offset_left = 445.5
+offset_top = 213.0
+offset_right = 834.5
+offset_bottom = 507.0
 pivot_offset = Vector2(387.5, 5)
 theme_override_styles/panel = SubResource("StyleBoxFlat_le0hv")
 script = ExtResource("6_jrpou")
@@ -605,6 +598,7 @@ value = 100.0
 script = ExtResource("8_aln4r")
 
 [node name="Value" type="Label" parent="Options Menu/Sliders/SFX"]
+layout_mode = 0
 offset_top = -2.0
 offset_right = 51.0
 offset_bottom = 23.0

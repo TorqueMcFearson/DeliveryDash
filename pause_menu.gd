@@ -4,10 +4,12 @@ const OFFSET = 100
 const PIVOT_OUT = Vector2(389/2,0)
 const PIVOT_IN = Vector2(389/2,294)
 @onready var options_menu: Panel = $"../Options Menu"
+var just_options = false
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	$"..".show()
 	self.hide()
 
 
@@ -40,6 +42,11 @@ func unpause():
 	options_menu.hide()
 	hide()
 	
+func show_options():
+	animate_in(options_menu)
+func hide_options():
+	animate_out(options_menu)
+	
 func animate_out(obj:Panel,obj2:Panel=null):
 	obj.pivot_offset = PIVOT_OUT
 	var tween = create_tween().set_parallel(true)
@@ -58,4 +65,7 @@ func animate_in(obj2):
 	
 
 func _on_back_button_pressed() -> void:
-	animate_out(options_menu,self)  # Replace with function body.
+	if just_options:
+		animate_out(options_menu)
+	else:
+		animate_out(options_menu,self)  # Replace with function body.

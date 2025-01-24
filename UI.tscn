@@ -195,6 +195,12 @@ bg_color = Color(0, 0, 0, 1)
 [node name="UI_Layer" type="CanvasLayer"]
 script = ExtResource("1_fpkyk")
 
+[node name="Pause Dimmer" type="Panel" parent="."]
+visible = false
+offset_right = 1294.0
+offset_bottom = 731.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_qg3eo")
+
 [node name="Tutorial" type="Control" parent="."]
 process_mode = 2
 layout_mode = 3
@@ -745,6 +751,7 @@ bus = &"Music"
 
 [node name="Options" parent="." instance=ExtResource("15_k7ey6")]
 process_mode = 2
+visible = false
 pivot_offset = Vector2(1726, 714)
 mouse_filter = 2
 

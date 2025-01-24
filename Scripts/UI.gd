@@ -108,6 +108,7 @@ var active_order :Order
 var location :String
 var player_inventory :Array[Order]
 var tutorial = true
+var tutorial_enabled = true
 var day = 1
 var difficulty := 1.0
 var tween :Tween 
@@ -148,15 +149,13 @@ func _ready() -> void:
 	
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause") and not get_tree().current_scene.name == "Title":
-		print("PAUSE")
 		if phone.state: 
 			await phone._phone_off()
-
+		$"Pause Dimmer".show()
 		get_tree().paused=true
-		if not tutorial:
-			$"Options".get_child(0).pause()
-		print(get_tree().current_scene.name)
-		if get_tree().current_scene.name == "4 AM":
+		if not tutorial or not tutorial_enabled:
+			show_pause_menu()
+		if get_tree().current_scene.name == "4 AM" or not UI.tutorial_enabled:
 			pass
 		else:
 			show_tutorial()
@@ -200,7 +199,10 @@ func clock_effects(delta):
 		
 func show_tutorial():
 	$Tutorial.show()
-		
+
+func show_pause_menu():
+	$"Options".get_child(0).pause()
+	
 func test_UI_functions():
 	#add_cash(120,0)
 	#get_tree().create_timer(5).timeout.connect(end_day)

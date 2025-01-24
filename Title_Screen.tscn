@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://caduwy08lr4s1"]
+[gd_scene load_steps=23 format=3 uid="uid://caduwy08lr4s1"]
 
 [ext_resource type="Texture2D" uid="uid://cdxwxktq5bge0" path="res://Backgrounds/Title.jpg" id="1_7m5r0"]
 [ext_resource type="Texture2D" uid="uid://da6d5psli7wv2" path="res://Sprites/Title_Driver.png" id="2_086dc"]
 [ext_resource type="Script" path="res://Scripts/Title_UI.gd" id="3_4trdc"]
 [ext_resource type="FontFile" uid="uid://ydwn4indox68" path="res://Font/Bangers-Regular.ttf" id="4_g3ib7"]
+[ext_resource type="PackedScene" uid="uid://d15wce0skylvj" path="res://Options Menu.tscn" id="5_cfrfe"]
 
 [sub_resource type="GDScript" id="GDScript_gxr70"]
 resource_name = "TitleParallax"
@@ -12,31 +13,32 @@ script/source = "extends ParallaxBackground
 @export var scroll_speed = 400
 @onready var driver: Sprite2D = $\"../Title Driver/Driver Sprite\"
 @onready var driver_right_limit = $\"../Title Driver/RigthLimit\".position.x
+@onready var options_menu: Control = $\"../Options\".get_child(0)
 
 var driver_x_direction = -1
 var driver_x_speed = 40
 var driver_x_count = 0
-@onready var driver_x_dest = 50
+@onready var driver_x_dest = -200
 
 var driver_y_direction = 5
 var driver_y_count = 0
 const driver_y_count_max = 50
+var tween : Tween
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	#set_process(false)
 	driver.position.x = -1200
-	var tween = create_tween()
+	tween = create_tween()
 	tween.tween_property(driver,\"position\",Vector2(-111,driver.position.y),2).set_trans(Tween.TRANS_BACK).set_delay(.6)
-	
-	#tween.parallel().tween_callback(set_process.bind(true)).set_delay(.5)
+	tween.tween_callback(func():tween = null)
 	pass # Replace with function body.
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	scroll_offset.x -= scroll_speed * delta
+	if tween: return
 	driver_x(delta,driver_x_direction,driver_x_speed)
 	
 	
@@ -49,6 +51,8 @@ func _process(delta: float) -> void:
 func driver_x(delta,direction,speed):
 	var velocity = direction * speed * delta
 	var driver_pos = driver.position.x
+	if sign(driver_x_direction) != sign(driver_x_dest):
+		driver_x_direction *= -1
 	if is_past_limit():
 		driver_x_direction *= -1
 		direction = driver_x_direction
@@ -61,9 +65,11 @@ func is_past_limit():
 	return driver.position.x > driver_x_dest
 
 func _on_options_pressed() -> void:
-	$\"../Title_UI/Options\".disabled = true # Replace with function body.
-	$\"../Title_UI/Options\".text = \"No options, I forgot...\"
-	create_tween().tween_property($\"../Title_UI/Options\",\"position\",Vector2(0,250),25).as_relative().set_delay(1.5)
+	options_menu.just_options = true
+	options_menu.show_options()
+	#$\"../Title_UI/Buttons/Options\".disabled = true # Replace with function body.
+	#$\"../Title_UI/Buttons/Options\".text = \"No options, I forgot...\"
+	#create_tween().tween_property($\"../Title_UI/Buttons/Options\",\"position\",Vector2(0,250),25).as_relative().set_delay(1.5)
 	
 "
 
@@ -92,6 +98,205 @@ shadow_size = 4
 base_font = ExtResource("4_g3ib7")
 spacing_glyph = 3
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7qo83"]
+content_margin_top = 7.0
+bg_color = Color(0.233925, 0.233925, 0.233925, 1)
+border_width_left = 2
+border_width_top = 3
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.162066, 0.162066, 0.162065, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0.101961, 0.101961, 0.101961, 0.682353)
+shadow_size = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2how3"]
+bg_color = Color(0.333333, 1, 0, 1)
+border_width_left = 2
+border_width_top = 3
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.162066, 0.162066, 0.162065, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+expand_margin_left = 1.0
+expand_margin_top = 3.0
+expand_margin_right = 1.0
+shadow_color = Color(0.101961, 0.101961, 0.101961, 0.682353)
+shadow_size = 1
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oky6r"]
+content_margin_top = 7.0
+bg_color = Color(0.3, 0.9, 0, 1)
+border_width_left = 2
+border_width_top = 3
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.162066, 0.162066, 0.162065, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+expand_margin_left = 1.0
+expand_margin_top = 1.0
+expand_margin_right = 1.0
+shadow_color = Color(0.101961, 0.101961, 0.101961, 0.682353)
+shadow_size = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tl1gy"]
+bg_color = Color(0.4, 1, 0.1, 0.85098)
+border_width_left = 2
+border_width_top = 3
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.162066, 0.162066, 0.162065, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+expand_margin_top = 3.0
+shadow_color = Color(0.101961, 0.101961, 0.101961, 0.682353)
+shadow_size = 1
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gytne"]
+content_margin_top = 7.0
+bg_color = Color(0.233925, 0.233925, 0.233925, 1)
+border_width_left = 2
+border_width_top = 3
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.162066, 0.162066, 0.162065, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0.101961, 0.101961, 0.101961, 0.682353)
+shadow_size = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vmjq8"]
+bg_color = Color(1, 0.833333, 0, 1)
+border_width_left = 2
+border_width_top = 3
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.162066, 0.162066, 0.162065, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+expand_margin_left = 1.0
+expand_margin_top = 3.0
+expand_margin_right = 1.0
+shadow_color = Color(0.101961, 0.101961, 0.101961, 0.682353)
+shadow_size = 1
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qhb3h"]
+content_margin_top = 7.0
+bg_color = Color(0.97, 0.808333, 0, 1)
+border_width_left = 2
+border_width_top = 3
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.162066, 0.162066, 0.162065, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+expand_margin_left = 1.0
+expand_margin_right = 1.0
+shadow_color = Color(0.101961, 0.101961, 0.101961, 0.682353)
+shadow_size = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lpgsu"]
+bg_color = Color(1, 0.863333, 0.18, 0.85098)
+border_width_left = 2
+border_width_top = 3
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.162066, 0.162066, 0.162065, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+expand_margin_top = 3.0
+shadow_color = Color(0.101961, 0.101961, 0.101961, 0.682353)
+shadow_size = 1
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_thd7p"]
+content_margin_top = 7.0
+bg_color = Color(0.233925, 0.233925, 0.233925, 1)
+border_width_left = 2
+border_width_top = 3
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.162066, 0.162066, 0.162065, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0.101961, 0.101961, 0.101961, 0.682353)
+shadow_size = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_prdul"]
+bg_color = Color(1, 0, 0, 1)
+border_width_left = 2
+border_width_top = 3
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.162066, 0.162066, 0.162065, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+expand_margin_left = 1.0
+expand_margin_top = 3.0
+expand_margin_right = 1.0
+shadow_color = Color(0.101961, 0.101961, 0.101961, 0.682353)
+shadow_size = 1
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w5elh"]
+content_margin_top = 7.0
+bg_color = Color(0.97, 0, 0.0161664, 1)
+border_width_left = 2
+border_width_top = 3
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.162066, 0.162066, 0.162065, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+expand_margin_left = 1.0
+expand_margin_right = 1.0
+shadow_color = Color(0.101961, 0.101961, 0.101961, 0.682353)
+shadow_size = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bhu7f"]
+bg_color = Color(1, 0.1, 0.1, 0.85098)
+border_width_left = 2
+border_width_top = 3
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.162066, 0.162066, 0.162065, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+expand_margin_top = 3.0
+shadow_color = Color(0.101961, 0.101961, 0.101961, 0.682353)
+shadow_size = 1
+shadow_offset = Vector2(2, 2)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_65r0a"]
 bg_color = Color(0, 0, 0, 1)
 
@@ -111,10 +316,10 @@ centered = false
 position = Vector2(640, 360)
 
 [node name="Driver Sprite" type="Sprite2D" parent="Title Driver"]
-position = Vector2(-111, 38)
+position = Vector2(2.99998, 0)
 scale = Vector2(1.48276, 1.58209)
 texture = ExtResource("2_086dc")
-offset = Vector2(74.8604, -32.8679)
+offset = Vector2(-2.02324, -8.84904)
 
 [node name="RigthLimit" type="Marker2D" parent="Title Driver"]
 position = Vector2(302, 62)
@@ -189,7 +394,14 @@ offset_right = 428.0
 offset_bottom = 621.0
 size_flags_horizontal = 3
 size_flags_vertical = 0
-theme_override_font_sizes/font_size = 20
+focus_mode = 0
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("4_g3ib7")
+theme_override_font_sizes/font_size = 37
+theme_override_styles/disabled = SubResource("StyleBoxFlat_7qo83")
+theme_override_styles/hover = SubResource("StyleBoxFlat_2how3")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_oky6r")
+theme_override_styles/normal = SubResource("StyleBoxFlat_tl1gy")
 text = "Start Game"
 
 [node name="Options" type="Button" parent="Title_UI/Buttons"]
@@ -202,7 +414,13 @@ offset_bottom = 621.0
 size_flags_horizontal = 3
 size_flags_vertical = 0
 focus_mode = 0
-theme_override_font_sizes/font_size = 20
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("4_g3ib7")
+theme_override_font_sizes/font_size = 37
+theme_override_styles/disabled = SubResource("StyleBoxFlat_gytne")
+theme_override_styles/hover = SubResource("StyleBoxFlat_vmjq8")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_qhb3h")
+theme_override_styles/normal = SubResource("StyleBoxFlat_lpgsu")
 text = "Options
 "
 
@@ -215,7 +433,14 @@ offset_right = 1082.0
 offset_bottom = 621.0
 size_flags_horizontal = 3
 size_flags_vertical = 0
-theme_override_font_sizes/font_size = 20
+focus_mode = 0
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("4_g3ib7")
+theme_override_font_sizes/font_size = 37
+theme_override_styles/disabled = SubResource("StyleBoxFlat_thd7p")
+theme_override_styles/hover = SubResource("StyleBoxFlat_prdul")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_w5elh")
+theme_override_styles/normal = SubResource("StyleBoxFlat_bhu7f")
 text = "Exit
 "
 
@@ -228,6 +453,13 @@ offset_bottom = 720.0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_65r0a")
 metadata/_edit_lock_ = true
+
+[node name="Options" parent="." instance=ExtResource("5_cfrfe")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
 
 [connection signal="pressed" from="Title_UI/Buttons/Start" to="Title_UI" method="_on_start_pressed"]
 [connection signal="pressed" from="Title_UI/Buttons/Options" to="Background Scroll" method="_on_options_pressed"]

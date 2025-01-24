@@ -30,7 +30,7 @@ func _ready() -> void:
 	player.position = UI.player_map_position
 	UI.show_UI()
 	randomize_houses()
-	if UI.tutorial:
+	if UI.tutorial and UI.tutorial_enabled:
 		await UI.fade_in(1) # Replace with function body.
 		print("FADE IN COMPLETE")
 		UI.show_tutorial()
