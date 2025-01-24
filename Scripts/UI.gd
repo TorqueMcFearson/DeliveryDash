@@ -11,6 +11,7 @@ const _4_AM = preload("res://4_am.tscn")
 
 signal new_active_order_set(order:Order)
 signal tween_complete
+signal tutorial_change
 
 class ClockTime:
 	var hour: int
@@ -108,7 +109,10 @@ var active_order :Order
 var location :String
 var player_inventory :Array[Order]
 var tutorial = true
-var tutorial_enabled = true
+var tutorial_enabled = true: 
+	set(value):
+		tutorial_enabled = value
+		tutorial_change.emit()
 var day = 1
 var difficulty := 1.0
 var tween :Tween 
@@ -199,6 +203,9 @@ func clock_effects(delta):
 		
 func show_tutorial():
 	$Tutorial.show()
+	
+func hide_tutorial():
+	$Tutorial.hide()
 
 func show_pause_menu():
 	$"Options".get_child(0).pause()

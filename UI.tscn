@@ -239,7 +239,7 @@ region_enabled = true
 region_rect = Rect2(8.70999, 0, 53.29, 38)
 region_filter_clip_enabled = true
 
-[node name="Time2" type="Label" parent="Tutorial"]
+[node name="Rating" type="Label" parent="Tutorial"]
 layout_mode = 0
 offset_left = 1025.0
 offset_top = 83.0
@@ -255,7 +255,7 @@ the more $ you get tipped!
 Just don't mess up or forget orders, and keep on delivering!"
 autowrap_mode = 3
 
-[node name="Arrow-Copy" type="Sprite2D" parent="Tutorial/Time2"]
+[node name="Arrow-Copy" type="Sprite2D" parent="Tutorial/Rating"]
 self_modulate = Color(0, 0, 0, 0.627451)
 position = Vector2(168, -18)
 rotation = -1.57079
@@ -265,16 +265,16 @@ region_enabled = true
 region_rect = Rect2(8.70999, 0, 53.29, 38)
 region_filter_clip_enabled = true
 
-[node name="TextureRect" type="TextureRect" parent="Tutorial/Time2"]
+[node name="TextureRect" type="TextureRect" parent="Tutorial/Rating"]
 layout_mode = 0
-offset_left = 127.0
+offset_left = 125.0
 offset_top = 12.0
-offset_right = 146.0
+offset_right = 144.0
 offset_bottom = 31.0
 texture = ExtResource("5_l8fxf")
 expand_mode = 1
 
-[node name="Time3" type="Label" parent="Tutorial"]
+[node name="Money" type="Label" parent="Tutorial"]
 layout_mode = 0
 offset_left = 37.0
 offset_top = 80.0
@@ -289,7 +289,7 @@ text = "Earn    money by delivering orders!
 Hurry if you want to afford rent and food at the end of the day!"
 autowrap_mode = 3
 
-[node name="Arrow-Copy" type="Sprite2D" parent="Tutorial/Time3"]
+[node name="Arrow-Copy" type="Sprite2D" parent="Tutorial/Money"]
 self_modulate = Color(0, 0, 0, 0.627451)
 position = Vector2(35, -18)
 rotation = -1.57079
@@ -299,7 +299,7 @@ region_enabled = true
 region_rect = Rect2(8.70999, 0, 53.29, 38)
 region_filter_clip_enabled = true
 
-[node name="L_Cash" type="Label" parent="Tutorial/Time3"]
+[node name="L_Cash" type="Label" parent="Tutorial/Money"]
 layout_mode = 0
 offset_left = 55.0
 offset_top = 8.0
@@ -313,7 +313,7 @@ theme_override_fonts/font = ExtResource("3_mq77v")
 theme_override_font_sizes/font_size = 100
 text = "$"
 
-[node name="Time5" type="Label" parent="Tutorial"]
+[node name="Controls" type="Label" parent="Tutorial"]
 layout_mode = 0
 offset_left = 43.0
 offset_top = 236.0
@@ -368,7 +368,7 @@ region_enabled = true
 region_rect = Rect2(8.70999, 0, 53.29, 38)
 region_filter_clip_enabled = true
 
-[node name="Time4" type="Label" parent="Tutorial"]
+[node name="Phone" type="Label" parent="Tutorial"]
 layout_mode = 0
 offset_left = 516.0
 offset_top = 485.0
@@ -387,7 +387,7 @@ Your unseen employer is always watching... So don't forget to respond to orders 
 Quick tip! it's always better to reject an order than negelect it."
 autowrap_mode = 3
 
-[node name="Arrow-Copy" type="Sprite2D" parent="Tutorial/Time4"]
+[node name="Arrow-Copy" type="Sprite2D" parent="Tutorial/Phone"]
 self_modulate = Color(0, 0, 0, 0.627451)
 position = Vector2(536, 147)
 scale = Vector2(0.694836, 0.977872)
@@ -396,20 +396,21 @@ region_enabled = true
 region_rect = Rect2(8.70999, 0, 53.29, 38)
 region_filter_clip_enabled = true
 
-[node name="Label" type="Label" parent="Tutorial"]
+[node name="Click To Continue" type="Label" parent="Tutorial"]
 layout_mode = 0
-offset_left = 560.0
-offset_top = 311.0
-offset_right = 742.0
-offset_bottom = 334.0
+offset_left = 562.0
+offset_top = 152.0
+offset_right = 744.0
+offset_bottom = 175.0
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.639216)
-theme_override_constants/shadow_offset_x = 1
-theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
 theme_override_constants/shadow_outline_size = 5
 text = "Click to Continue"
 horizontal_alignment = 1
 
 [node name="UI" type="Control" parent="."]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

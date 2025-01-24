@@ -1,10 +1,11 @@
-[gd_scene load_steps=23 format=3 uid="uid://caduwy08lr4s1"]
+[gd_scene load_steps=26 format=3 uid="uid://caduwy08lr4s1"]
 
 [ext_resource type="Texture2D" uid="uid://cdxwxktq5bge0" path="res://Backgrounds/Title.jpg" id="1_7m5r0"]
 [ext_resource type="Texture2D" uid="uid://da6d5psli7wv2" path="res://Sprites/Title_Driver.png" id="2_086dc"]
 [ext_resource type="Script" path="res://Scripts/Title_UI.gd" id="3_4trdc"]
 [ext_resource type="FontFile" uid="uid://ydwn4indox68" path="res://Font/Bangers-Regular.ttf" id="4_g3ib7"]
 [ext_resource type="PackedScene" uid="uid://d15wce0skylvj" path="res://Options Menu.tscn" id="5_cfrfe"]
+[ext_resource type="FontFile" uid="uid://v3swnsgchgpo" path="res://Font/BebasNeue-Regular.ttf" id="5_j043k"]
 
 [sub_resource type="GDScript" id="GDScript_gxr70"]
 resource_name = "TitleParallax"
@@ -164,6 +165,43 @@ expand_margin_top = 3.0
 shadow_color = Color(0.101961, 0.101961, 0.101961, 0.682353)
 shadow_size = 1
 shadow_offset = Vector2(2, 2)
+
+[sub_resource type="FontVariation" id="FontVariation_0q6cr"]
+base_font = ExtResource("5_j043k")
+spacing_top = 2
+
+[sub_resource type="GDScript" id="GDScript_1nbo1"]
+script/source = "extends CheckBox
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	UI.tutorial_change.connect(update_text)
+	set_pressed_no_signal(UI.tutorial_enabled)
+	
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+
+
+func _on_toggled(toggled_on: bool) -> void:
+	UI.tutorial_enabled = toggled_on
+
+
+func update_text():
+	if UI.tutorial_enabled:
+		$\"../TutorialLabel\".text = \"Tutorial Enabled\"
+		$\"../TutorialLabel\".modulate = \"white\"
+		#UI.show_tutorial()
+	else:
+		$\"../TutorialLabel\".modulate = Color(1, 1, 1, 0.5)
+		$\"../TutorialLabel\".text = \"Tutorial Disabled\"
+		#UI.hide_tutorial()  # Replace with function body.
+	set_pressed_no_signal(UI.tutorial_enabled)
+	
+"
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gytne"]
 content_margin_top = 7.0
@@ -404,6 +442,33 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_oky6r")
 theme_override_styles/normal = SubResource("StyleBoxFlat_tl1gy")
 text = "Start Game"
 
+[node name="TutorialLabel" type="Label" parent="Title_UI/Buttons/Start"]
+layout_mode = 0
+offset_left = 58.0
+offset_top = 61.0
+offset_right = 196.0
+offset_bottom = 95.0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+size_flags_stretch_ratio = 0.85
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 4
+theme_override_fonts/font = SubResource("FontVariation_0q6cr")
+theme_override_font_sizes/font_size = 24
+text = "Tutorial Enabled"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="Tutorial" type="CheckBox" parent="Title_UI/Buttons/Start"]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 67.0
+offset_right = 52.0
+offset_bottom = 91.0
+size_flags_horizontal = 4
+focus_mode = 0
+script = SubResource("GDScript_1nbo1")
+
 [node name="Options" type="Button" parent="Title_UI/Buttons"]
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
@@ -462,5 +527,6 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 
 [connection signal="pressed" from="Title_UI/Buttons/Start" to="Title_UI" method="_on_start_pressed"]
+[connection signal="toggled" from="Title_UI/Buttons/Start/Tutorial" to="Title_UI/Buttons/Start/Tutorial" method="_on_toggled"]
 [connection signal="pressed" from="Title_UI/Buttons/Options" to="Background Scroll" method="_on_options_pressed"]
 [connection signal="pressed" from="Title_UI/Buttons/Exit" to="Title_UI" method="_on_exit_pressed"]
