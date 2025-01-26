@@ -7,7 +7,7 @@ func _ready() -> void:
 	UI.fade_in()
 	$Path2D/PathFollow2D.progress_ratio = 0
 	create_tween().tween_property($Path2D/PathFollow2D,"progress_ratio",1,.75).set_trans(Tween.TRANS_CUBIC)
-	var delay = .50
+	var delay = .35
 	var distance = -$Buttons.position
 	for button in [$Buttons/Exit, $Buttons/Options, $Buttons/Start]:
 		create_tween().tween_property(button,"position",distance,.45).as_relative().set_delay(delay).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)

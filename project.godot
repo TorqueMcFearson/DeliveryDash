@@ -18,6 +18,7 @@ config/icon="res://Backgrounds/DD.png"
 [autoload]
 
 UI="*res://UI.tscn"
+Save="*res://Scripts/save.gd"
 
 [display]
 

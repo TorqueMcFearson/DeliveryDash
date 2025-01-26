@@ -2,9 +2,10 @@
 
 [ext_resource type="FontFile" uid="uid://v3swnsgchgpo" path="res://Font/BebasNeue-Regular.ttf" id="2_asebk"]
 [ext_resource type="FontFile" uid="uid://ydwn4indox68" path="res://Font/Bangers-Regular.ttf" id="6_5iavn"]
-[ext_resource type="Script" path="res://pause_menu.gd" id="6_jrpou"]
+[ext_resource type="Script" path="res://Scripts/tutorial_checkbox.gd" id="6_47hxg"]
+[ext_resource type="Script" path="res://Scripts/pause_menu.gd" id="6_jrpou"]
 [ext_resource type="Theme" uid="uid://r1ihjlkhy6rj" path="res://StyleBoxes/Options Menu.tres" id="7_usd1d"]
-[ext_resource type="Script" path="res://volume_slider.gd" id="8_aln4r"]
+[ext_resource type="Script" path="res://Scripts/volume_slider.gd" id="8_aln4r"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_le0hv"]
 content_margin_left = 12.0
@@ -239,40 +240,8 @@ func _process(delta: float) -> void:
 
 func _on_item_selected(index: int) -> void:
 	UI.difficulty = difficulties[index]
+	Save.save_preferences()
 	pass # Replace with function body.
-"
-
-[sub_resource type="GDScript" id="GDScript_1nbo1"]
-script/source = "extends CheckBox
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	UI.tutorial_change.connect(update_text)
-	set_pressed_no_signal(UI.tutorial_enabled)
-	
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
-
-func _on_toggled(toggled_on: bool) -> void:
-	UI.tutorial_enabled = toggled_on
-
-
-func update_text():
-	if UI.tutorial_enabled:
-		$\"../TutorialLabel\".text = \"Tutorial Enabled\"
-		$\"../TutorialLabel\".modulate = \"white\"
-		#UI.show_tutorial()
-	else:
-		$\"../TutorialLabel\".modulate = Color(1, 1, 1, 0.5)
-		$\"../TutorialLabel\".text = \"Tutorial Disabled\"
-		#UI.hide_tutorial()  # Replace with function body.
-	set_pressed_no_signal(UI.tutorial_enabled)
-	
 "
 
 [node name="Options" type="Control"]
@@ -622,6 +591,10 @@ label_settings = SubResource("LabelSettings_dtddo")
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="Timer" type="Timer" parent="Options Menu/Sliders/SFX"]
+wait_time = 0.1
+one_shot = true
+
 [node name="DifficultyLabel" type="Label" parent="Options Menu/Sliders"]
 layout_mode = 2
 size_flags_horizontal = 2
@@ -667,7 +640,7 @@ vertical_alignment = 2
 layout_mode = 2
 size_flags_horizontal = 4
 focus_mode = 0
-script = SubResource("GDScript_1nbo1")
+script = ExtResource("6_47hxg")
 
 [node name="Back Button" type="Button" parent="Options Menu"]
 layout_mode = 1
@@ -700,6 +673,7 @@ text = "Back"
 [connection signal="pressed" from="Pause Menu/Buttons/Resume" to="Pause Menu" method="_on_resume_pressed"]
 [connection signal="pressed" from="Pause Menu/Buttons/Options" to="Pause Menu" method="_on_options_pressed"]
 [connection signal="pressed" from="Pause Menu/Buttons/Main Menu" to="Pause Menu" method="_on_main_menu_pressed"]
+[connection signal="timeout" from="Options Menu/Sliders/SFX/Timer" to="Options Menu/Sliders/SFX/Timer" method="_on_timeout"]
 [connection signal="item_selected" from="Options Menu/Sliders/Difficulty" to="Options Menu/Sliders/Difficulty" method="_on_item_selected"]
 [connection signal="toggled" from="Options Menu/Sliders/Tutorial" to="Options Menu/Sliders/Tutorial" method="_on_toggled"]
 [connection signal="pressed" from="Options Menu/Back Button" to="Pause Menu" method="_on_back_button_pressed"]

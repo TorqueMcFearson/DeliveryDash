@@ -100,7 +100,6 @@ func _physics_process(delta: float) -> void:
 					bumped = true
 					MAX_SPEED *= BUMP_DAMPING
 					restore_speed()
-				print("I collided with ", collision.get_collider().name," speed was ", collision.get_collider_velocity() + velocity)
 				just_collided = true
 	process_motor()
 

@@ -108,7 +108,8 @@ const street_types = ["St", "Ave", "Rd", "Blvd", "Dr", "Ln", "Way", "Ct", "Pl", 
 var active_order :Order
 var location :String
 var player_inventory :Array[Order]
-var tutorial = true
+enum T{STAGE0 = 0, STAGE1 = 10,STAGE2 = 20,STAGE3 = 30,STAGE4 = 40,STAGE5 = 50}
+var tutorial := 1
 var tutorial_enabled = true: 
 	set(value):
 		tutorial_enabled = value
@@ -153,16 +154,16 @@ func _ready() -> void:
 	
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause") and not get_tree().current_scene.name == "Title":
-		if phone.state: 
-			await phone._phone_off()
 		$"Pause Dimmer".show()
+		$"Controls".show()
 		get_tree().paused=true
-		if not tutorial or not tutorial_enabled:
+		if not UI.tutorial_stage(0):
 			show_pause_menu()
 		if get_tree().current_scene.name == "4 AM" or not UI.tutorial_enabled:
 			pass
 		else:
 			show_tutorial()
+			pass
 
 func _process(delta: float) -> void:
 	gas_can_effects(delta)
@@ -206,10 +207,31 @@ func show_tutorial():
 	
 func hide_tutorial():
 	$Tutorial.hide()
+	
+func tutorial_stage(x):
+	return tutorial_enabled and tutorial < T["STAGE"+str(x)]+10
 
+func give_tutorial_signals(signals):
+	$"Tutorial".setup_tutorial_signals(signals)
+		
+func tutorial_phone(_stage:int):
+	await phone._phone_on()
+	pause(_stage)
+	
+func pause(run_tutorial_stage = null):
+	$"Pause Dimmer".show()
+	$"Controls".show()
+	get_tree().paused=true
+	if run_tutorial_stage == null:
+		show_pause_menu()
+	if get_tree().current_scene.name != "4 AM" and UI.tutorial_enabled:
+		show_tutorial()
+	if run_tutorial_stage != null:
+		$Tutorial.play_tutorial(run_tutorial_stage)
+	
 func show_pause_menu():
 	$"Options".get_child(0).pause()
-	
+
 func test_UI_functions():
 	#add_cash(120,0)
 	#get_tree().create_timer(5).timeout.connect(end_day)
@@ -273,6 +295,17 @@ func end_day():
 		order.queue_free()
 	fade_out(2,get_tree().change_scene_to_packed.bind(_4_AM))
 	
+func to_main_menu():
+	pause_timers()
+	if tween: tween.kill()
+	var tween2 = create_tween()
+	reset()
+	unpause()
+	fade_out(.25,get_tree().change_scene_to_packed.bind(load("res://Title_Screen.tscn")))
+
+func unpause():
+	$Tutorial.unpause()
+	
 func generate_customer():
 	return first_names.pick_random() + ' ' + last_names.pick_random()
 	
@@ -295,6 +328,9 @@ func generate_random_receipt(): #[order.customer,order.resturant,order.address]
 func new_order() -> Order:
 	var new_order = generate_order()
 	$Phone.add_order(new_order)
+	if UI.tutorial_stage(1):
+			get_tree().create_timer(.75).timeout.connect(tutorial_phone.bind(1))
+	elif UI.tutorial < 20: UI.tutorial = 20
 	return new_order
 
 func start_timers():
@@ -325,6 +361,7 @@ func order_timer_timeout():
 		$Phone.blink()
 		new_order()
 		new_order_timer_update()
+		
 	
 func order_timer_start(): 
 	$New_Order_Timer.start(randi_range(2,4))
@@ -497,6 +534,8 @@ func new_day():
 	phone._phone_off()
 	
 func reset():
+	for order in order_list.get_children():
+		order.queue_free()
 	day = 1
 	active_order = null
 	location = ""
@@ -566,7 +605,7 @@ func stop_gas(gas_added):
 		var gpos = %"Gas Cost".global_position
 		%"Gas Cost".set_as_top_level(true)
 		var tween2 := create_tween() 
-		tween2.tween_property(%"Gas Cost","global_position",$Tutorial/Time3/L_Cash.position,.42).from(gpos)
+		tween2.tween_property(%"Gas Cost","global_position",$Tutorial/Money/L_Cash.position,.42).from(gpos)
 		await tween2.finished
 		cash_decrease(get_cost(gas_added))
 		%"Gas Cost".set_as_top_level(false)
@@ -585,3 +624,6 @@ func set_gas_level():
 	gas_level.max_value = max_fuel
 	gas_label_pos.y = -50 - max_fuel
 	%"Gas Cost".position = gas_label_pos
+
+func play_sfx():
+	$Cash_Noise.play()

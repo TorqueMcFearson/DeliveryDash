@@ -274,7 +274,6 @@ size_flags_vertical = 3
 theme_override_constants/separation = 10
 
 [node name="Accept" type="Button" parent="HBoxContainer2/VBoxContainer"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 10
@@ -287,7 +286,6 @@ theme_override_styles/normal = ExtResource("6_t82dr")
 text = "ACCEPT"
 
 [node name="Reject" type="Button" parent="HBoxContainer2/VBoxContainer"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 10
@@ -521,11 +519,11 @@ bus = &"SFX"
 [connection signal="tree_exited" from="." to="." method="_on_tree_exited"]
 [connection signal="pressed" from="HBoxContainer2/order_select" to="." method="_button_pressed"]
 [connection signal="pressed" from="HBoxContainer2/order_select" to="." method="_on_select_order_header"]
-[connection signal="pressed" from="HBoxContainer2/VBoxContainer/Accept" to="." method="_button_pressed"]
 [connection signal="pressed" from="HBoxContainer2/VBoxContainer/Accept" to="." method="_on_accept_pressed"]
-[connection signal="pressed" from="HBoxContainer2/VBoxContainer/Reject" to="." method="_button_pressed"]
+[connection signal="pressed" from="HBoxContainer2/VBoxContainer/Accept" to="." method="_button_pressed"]
 [connection signal="pressed" from="HBoxContainer2/VBoxContainer/Reject" to="." method="_on_reject_pressed"]
-[connection signal="pressed" from="HBoxContainer2/VBoxContainer/Progress" to="." method="_button_pressed"]
+[connection signal="pressed" from="HBoxContainer2/VBoxContainer/Reject" to="." method="_button_pressed"]
 [connection signal="pressed" from="HBoxContainer2/VBoxContainer/Progress" to="." method="_on_progress_order_pressed"]
-[connection signal="pressed" from="HBoxContainer2/Expand_Details" to="." method="_button_pressed"]
+[connection signal="pressed" from="HBoxContainer2/VBoxContainer/Progress" to="." method="_button_pressed"]
 [connection signal="pressed" from="HBoxContainer2/Expand_Details" to="." method="_on_order_select_pressed"]
+[connection signal="pressed" from="HBoxContainer2/Expand_Details" to="." method="_button_pressed"]

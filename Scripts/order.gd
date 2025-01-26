@@ -38,6 +38,7 @@ static var order_next :int = 1
 signal bag_cleared
 signal scrollposition(pos:Vector2)
 signal new_active(order:Order)
+signal t_res_update
 enum {NEW,TO_STORE,TO_HOUSE,DELIVERED}
 enum FOOD {WAITING=1,PICKED_UP=2,DELIVERED=3,WRONG_LOCATION=4}
 enum {NONE,HOVER,CLICKED}
@@ -112,6 +113,7 @@ func progress_order():# NEW,TO_STORE,TO_HOUSE,DELIVERED
 				complete_order()
 				return
 	state = (state + 1)
+	t_res_update.emit()
 	
 func complete_order():
 	UI.round_stats["Orders Completed"] += 1

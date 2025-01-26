@@ -7,10 +7,12 @@ const PHONE_ON_SCALE = Vector2(2.4,2.6)
 @onready var PHONE_ON_POS = $Marker2D.global_position # Vector2(635,583)
 const PHONE_OFF_SCALE = Vector2(1,1)
 const PHONE_OFF_POS = Vector2(1075,583)
+var tween :Tween
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	$Blackout.show()
-
+	tween = create_tween()
+	tween.kill()
 	$Screen/Notification.scale.y = 0
 	scale = Vector2(1,1) # Replace with function body.
 
@@ -33,20 +35,25 @@ func add_order(order:Order):
 	order.scrollposition.connect(update_scroll)
 	$Screen/Scrollbox/Order_List.add_child(order)
 	
-func _phone_on() -> void:
+func _phone_on():
+	if tween.is_running():
+		await tween.finished
 	$ActiveOrderTimer.hide()
 	$Blackout.set_disabled(true)
 	$Blackout.mouse_filter = 2
 	state = ON
-	var tween = create_tween()
+	tween = create_tween()
 	tween.tween_property(self,"scale",PHONE_ON_SCALE,.4)
 	tween.parallel().tween_property(self,"position",PHONE_ON_POS,.25).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 	tween.parallel().tween_property($Blackout,"modulate",Color(1,1,1,0),.2)
+	return tween.finished
 	
 func _phone_off():
+	if tween.is_running():
+		await tween.finished
 	$Blackout.set_disabled(false)
 	$Blackout.button_pressed = false
-	var tween = create_tween()
+	tween = create_tween()
 	for order in order_list.get_children():
 		order.shrink_order()
 	tween.tween_property(self,"scale",PHONE_OFF_SCALE,.5)
@@ -71,7 +78,6 @@ func check_pickups():
 		
 func update_scroll(pos:Vector2):
 	$Screen/Scrollbox.scroll_vertical = pos.y
-	print(pos.y, " and ", $Screen/Scrollbox.scroll_vertical)
 	
 func blink():
 	if state == OFF:

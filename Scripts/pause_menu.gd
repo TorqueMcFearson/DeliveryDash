@@ -33,7 +33,7 @@ func _on_options_pressed() -> void:
 	
 
 func _on_main_menu_pressed() -> void:
-	pass # Replace with function body.
+	UI.to_main_menu()
 
 func pause():
 	animate_in(self)

@@ -30,12 +30,11 @@ func _ready() -> void:
 	player.position = UI.player_map_position
 	UI.show_UI()
 	randomize_houses()
-	if UI.tutorial and UI.tutorial_enabled:
-		await UI.fade_in(1) # Replace with function body.
-		print("FADE IN COMPLETE")
-		UI.show_tutorial()
-		get_tree().paused = true
+	if UI.tutorial_stage(0):
+		await UI.fade_in(.75) # Replace with function body.
+		UI.pause(0)
 	else:
+		if UI.tutorial < 10: UI.tutorial = 10
 		UI.fade_in(1)
 	#call_deferred("add_cars")
 	UI.get_stores($Stores.get_children())
@@ -107,7 +106,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			get_viewport().set_input_as_handled()
 
 
-	
+
 func randomize_houses():
 	var houses = $Houses.get_children()
 	houses.shuffle()

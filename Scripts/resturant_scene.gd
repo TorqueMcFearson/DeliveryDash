@@ -2,7 +2,9 @@ extends Node2D
 enum FOOD {WAITING=1,PICKED_UP=2,DELIVERED=3,WRONG_LOCATION=4}
 const CITY = preload("res://CityMain.tscn")
 const CORRECT_BAG_PVALUE = 10
-
+const TUTORIAL_STAGE = 2
+signal t_res_request
+signal t_res_grab
 var location:String
 var foregrounds = {"Taco Hut":"res://Sprites/foreground_taco_hutt.png",
  				  "Wenny's":"res://Sprites/foreground_wenny's.png",
@@ -21,7 +23,14 @@ func _ready() -> void:
 		print("ERROR: Location.UI was null when entering resturant.")
 	$Foreground.texture = load(foregrounds[location])
 	$speech.text = ""
-	UI.fade_in()
+	if UI.tutorial_stage(TUTORIAL_STAGE):
+		await UI.fade_in(.75) # Replace with function body.
+		UI.pause(TUTORIAL_STAGE)
+		var t_res_update = UI.active_order.t_res_update
+		UI.give_tutorial_signals([t_res_request,t_res_grab,t_res_update])
+	else:
+		if UI.tutorial < TUTORIAL_STAGE*10: UI.tutorial = TUTORIAL_STAGE*10
+		UI.fade_in(1)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -32,6 +41,7 @@ func _process(delta: float) -> void:
 func _on_exit_arrow_pressed() -> void: # button is EXIT
 	if UI.day_over:return
 	if UI.tween.is_valid():return
+	if UI.find_child("Tutorial").playing_tutorial:return
 	UI.location = ""
 	get_tree().create_timer(4).timeout.connect(UI.check_forgot)
 	UI.fade_out(.35,get_tree().change_scene_to_packed.bind(CITY),.25) # Replace with function body.
@@ -84,6 +94,7 @@ func _get_order() -> void: # Button
 		FOOD.DELIVERED: message = "Umm pretty sure that was already delivered..."
 		FOOD.WRONG_LOCATION: message = "Dude, wrong store..are you new?"
 	dialog(message)
+	t_res_request.emit()
 	
 func dialog(message):
 	$speech.add_theme_color_override("font_color","black")
@@ -124,6 +135,7 @@ func _on_take_bag() -> void:
 	bagged_order.take_bag()
 	need_to_mark_order.append(bagged_order)
 	remove_bag()
+	t_res_grab.emit()
 
 func _on_bag_mouse_entered() -> void:
 	$Check.text = "Take Bag" # Replace with function body.

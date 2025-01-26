@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://bin3hjdhs5ls8"]
+[gd_scene load_steps=38 format=3 uid="uid://bin3hjdhs5ls8"]
 
 [ext_resource type="Texture2D" uid="uid://bmlasb071pto3" path="res://Sprites/Cash.png" id="1_5daqs"]
 [ext_resource type="Script" path="res://Scripts/UI.gd" id="1_fpkyk"]
@@ -8,8 +8,11 @@
 [ext_resource type="PackedScene" uid="uid://b13o5dmyfe7mr" path="res://phone.tscn" id="5_jiinu"]
 [ext_resource type="Texture2D" uid="uid://bcakyuvuj32h3" path="res://Sprites/star_filled.png" id="5_l8fxf"]
 [ext_resource type="AudioStream" uid="uid://b6b8ilef1rrv0" path="res://SFX/phone_chime.mp3" id="7_fng2h"]
+[ext_resource type="StyleBox" uid="uid://1x6sw54qrhb8" path="res://StyleBoxes/progress-accept~complete-hover.tres" id="7_t3oj7"]
 [ext_resource type="Texture2D" uid="uid://ctr552nuextj0" path="res://Sprites/musicBtn.png" id="8_3lvg3"]
 [ext_resource type="AudioStream" uid="uid://cnfpqxlqna1lc" path="res://SFX/Click_01.wav" id="8_ajle4"]
+[ext_resource type="StyleBox" uid="uid://bfk44tl2r47xv" path="res://StyleBoxes/progress-accept~complete-pressed.tres" id="8_hfx0f"]
+[ext_resource type="StyleBox" uid="uid://13y5j3phgal2" path="res://StyleBoxes/progress-accept~complete-normal.tres" id="9_k28qe"]
 [ext_resource type="AudioStream" uid="uid://c2p05p0v3iem7" path="res://SFX/Complete_02.wav" id="9_me23b"]
 [ext_resource type="AudioStream" uid="uid://bv5mjdf70yxtp" path="res://SFX/echo-flux-258965.mp3" id="10_ntywh"]
 [ext_resource type="Texture2D" uid="uid://bkc1f67x1dho5" path="res://Sprites/arrow - Copy.png" id="12_mslnn"]
@@ -37,6 +40,9 @@ corner_radius_bottom_left = 5
 shadow_color = Color(0, 0, 0, 0.313726)
 shadow_size = 8
 shadow_offset = Vector2(3, 3)
+
+[sub_resource type="FontVariation" id="FontVariation_dcihk"]
+base_font = ExtResource("3_mq77v")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bntjs"]
 bg_color = Color(0.21359, 0.2054, 0.26, 0.733333)
@@ -202,25 +208,19 @@ offset_bottom = 731.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_qg3eo")
 
 [node name="Tutorial" type="Control" parent="."]
-process_mode = 2
+process_mode = 3
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("2_fgfmj")
 
-[node name="Panel" type="Panel" parent="Tutorial"]
-layout_mode = 0
-offset_right = 1294.0
-offset_bottom = 731.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_qg3eo")
-
 [node name="Time" type="Label" parent="Tutorial"]
 layout_mode = 0
 offset_left = 517.0
-offset_top = 82.0
+offset_top = 93.0
 offset_right = 784.0
-offset_bottom = 151.0
+offset_bottom = 162.0
 theme_override_constants/line_spacing = -5
 theme_override_fonts/font = SubResource("FontVariation_swb0f")
 theme_override_font_sizes/font_size = 22
@@ -229,22 +229,24 @@ text = "Your shift is from 4:00-8:00 pm.
 You have 4 hours to earn a living."
 autowrap_mode = 3
 
-[node name="Arrow-Copy" type="Sprite2D" parent="Tutorial/Time"]
-self_modulate = Color(0, 0, 0, 0.627451)
-position = Vector2(116, -18)
+[node name="Arrow-Copy" type="TextureRect" parent="Tutorial/Time"]
+self_modulate = Color(0, 0, 0, 0.74902)
+z_index = 10
+layout_mode = 0
+offset_left = 116.0
+offset_top = -4.0
+offset_right = 178.0
+offset_bottom = 34.0
 rotation = -1.57079
 scale = Vector2(0.694836, 0.977872)
 texture = ExtResource("12_mslnn")
-region_enabled = true
-region_rect = Rect2(8.70999, 0, 53.29, 38)
-region_filter_clip_enabled = true
 
 [node name="Rating" type="Label" parent="Tutorial"]
 layout_mode = 0
 offset_left = 1025.0
-offset_top = 83.0
+offset_top = 91.0
 offset_right = 1270.0
-offset_bottom = 218.0
+offset_bottom = 226.0
 theme_override_constants/line_spacing = -5
 theme_override_fonts/font = SubResource("FontVariation_swb0f")
 theme_override_font_sizes/font_size = 22
@@ -255,15 +257,17 @@ the more $ you get tipped!
 Just don't mess up or forget orders, and keep on delivering!"
 autowrap_mode = 3
 
-[node name="Arrow-Copy" type="Sprite2D" parent="Tutorial/Rating"]
+[node name="Arrow-Copy" type="TextureRect" parent="Tutorial/Rating"]
 self_modulate = Color(0, 0, 0, 0.627451)
-position = Vector2(168, -18)
+z_index = 10
+layout_mode = 0
+offset_left = 109.0
+offset_top = -4.0
+offset_right = 171.0
+offset_bottom = 34.0
 rotation = -1.57079
 scale = Vector2(0.694836, 0.977872)
 texture = ExtResource("12_mslnn")
-region_enabled = true
-region_rect = Rect2(8.70999, 0, 53.29, 38)
-region_filter_clip_enabled = true
 
 [node name="TextureRect" type="TextureRect" parent="Tutorial/Rating"]
 layout_mode = 0
@@ -276,10 +280,10 @@ expand_mode = 1
 
 [node name="Money" type="Label" parent="Tutorial"]
 layout_mode = 0
-offset_left = 37.0
-offset_top = 80.0
-offset_right = 314.0
-offset_bottom = 196.0
+offset_left = 12.0
+offset_top = 92.0
+offset_right = 289.0
+offset_bottom = 208.0
 theme_override_constants/line_spacing = -5
 theme_override_fonts/font = SubResource("FontVariation_swb0f")
 theme_override_font_sizes/font_size = 22
@@ -289,15 +293,17 @@ text = "Earn    money by delivering orders!
 Hurry if you want to afford rent and food at the end of the day!"
 autowrap_mode = 3
 
-[node name="Arrow-Copy" type="Sprite2D" parent="Tutorial/Money"]
+[node name="Arrow-Copy" type="TextureRect" parent="Tutorial/Money"]
 self_modulate = Color(0, 0, 0, 0.627451)
-position = Vector2(35, -18)
+z_index = 10
+layout_mode = 0
+offset_left = 30.0
+offset_top = -4.0
+offset_right = 92.0
+offset_bottom = 34.0
 rotation = -1.57079
 scale = Vector2(0.694836, 0.977872)
 texture = ExtResource("12_mslnn")
-region_enabled = true
-region_rect = Rect2(8.70999, 0, 53.29, 38)
-region_filter_clip_enabled = true
 
 [node name="L_Cash" type="Label" parent="Tutorial/Money"]
 layout_mode = 0
@@ -313,31 +319,11 @@ theme_override_fonts/font = ExtResource("3_mq77v")
 theme_override_font_sizes/font_size = 100
 text = "$"
 
-[node name="Controls" type="Label" parent="Tutorial"]
-layout_mode = 0
-offset_left = 43.0
-offset_top = 236.0
-offset_right = 314.0
-offset_bottom = 458.0
-theme_override_constants/line_spacing = -2
-theme_override_fonts/font = SubResource("FontVariation_swb0f")
-theme_override_font_sizes/font_size = 22
-theme_override_styles/normal = SubResource("StyleBoxFlat_nw17m")
-text = "                 Controls:
-Drive                            W/A/S/D
-click Stuff                   Left Click
-scroll orders          mouse wheel
-put phone away           Right click
-enter building         E / left click
-pause game                          esc
-Emergency reset                      r"
-autowrap_mode = 3
-
 [node name="Gas Text" type="Label" parent="Tutorial"]
 layout_mode = 0
-offset_left = 98.0
+offset_left = 113.0
 offset_top = 558.0
-offset_right = 411.0
+offset_right = 426.0
 offset_bottom = 680.0
 theme_override_constants/line_spacing = -2
 theme_override_fonts/font = SubResource("FontVariation_swb0f")
@@ -358,50 +344,126 @@ offset_bottom = 34.0
 texture = ExtResource("14_yytrt")
 expand_mode = 2
 
-[node name="Arrow-Copy" type="Sprite2D" parent="Tutorial/Gas Text"]
+[node name="Arrow-Copy" type="TextureRect" parent="Tutorial/Gas Text"]
 self_modulate = Color(0, 0, 0, 0.627451)
-position = Vector2(-18, 64)
+z_index = 10
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -3.0
+offset_top = 13.0
+offset_right = 59.0
+offset_bottom = 51.0
+grow_vertical = 2
 rotation = 3.14159
 scale = Vector2(0.694836, 0.977872)
 texture = ExtResource("12_mslnn")
-region_enabled = true
-region_rect = Rect2(8.70999, 0, 53.29, 38)
-region_filter_clip_enabled = true
 
 [node name="Phone" type="Label" parent="Tutorial"]
 layout_mode = 0
-offset_left = 516.0
-offset_top = 485.0
+offset_left = 629.0
+offset_top = 533.0
 offset_right = 1034.0
-offset_bottom = 708.0
+offset_bottom = 690.0
 theme_override_constants/line_spacing = -5
 theme_override_fonts/font = SubResource("FontVariation_swb0f")
 theme_override_font_sizes/font_size = 22
 theme_override_styles/normal = SubResource("StyleBoxFlat_nw17m")
 text = "Welcome to the DeliveryDash APP!
 
-when driving, it's your best friend. Use it to scroll through your deliveries and update their status. 
+when driving, it's your best friend. You'll use it to keep track of your deliveries and update their status. 
 
-Your unseen employer is always watching... So don't forget to respond to orders and follow procedures so you don't lose any precious stars!
-
-Quick tip! it's always better to reject an order than negelect it."
+We'll talk more about this later."
 autowrap_mode = 3
 
-[node name="Arrow-Copy" type="Sprite2D" parent="Tutorial/Phone"]
+[node name="Arrow-Copy" type="TextureRect" parent="Tutorial/Phone"]
 self_modulate = Color(0, 0, 0, 0.627451)
-position = Vector2(536, 147)
+z_index = 10
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 0.662
+anchor_right = 1.002
+anchor_bottom = 0.662
+offset_left = 1.0
+offset_top = -17.934
+offset_right = 62.19
+offset_bottom = 20.066
+grow_horizontal = 0
+grow_vertical = 2
 scale = Vector2(0.694836, 0.977872)
 texture = ExtResource("12_mslnn")
-region_enabled = true
-region_rect = Rect2(8.70999, 0, 53.29, 38)
-region_filter_clip_enabled = true
+
+[node name="Phone2" type="Label" parent="Tutorial"]
+z_index = 20
+custom_minimum_size = Vector2(350, 0)
+layout_mode = 0
+offset_left = 551.0
+offset_top = 346.0
+offset_right = 901.0
+offset_bottom = 393.0
+theme_override_constants/line_spacing = -5
+theme_override_fonts/font = SubResource("FontVariation_swb0f")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxFlat_nw17m")
+text = "First order tutorial box"
+autowrap_mode = 3
+
+[node name="Arrow-Copy" type="TextureRect" parent="Tutorial/Phone2"]
+self_modulate = Color(0, 0, 0, 0.627451)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 1.0
+offset_top = -19.0
+offset_right = 63.0
+offset_bottom = 19.0
+grow_horizontal = 0
+grow_vertical = 2
+scale = Vector2(0.694836, 0.977872)
+texture = ExtResource("12_mslnn")
+
+[node name="Resturant" type="Label" parent="Tutorial"]
+z_index = 20
+custom_minimum_size = Vector2(350, 0)
+layout_mode = 0
+offset_left = 354.0
+offset_top = 464.0
+offset_right = 704.0
+offset_bottom = 511.0
+theme_override_constants/line_spacing = -5
+theme_override_fonts/font = SubResource("FontVariation_swb0f")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxFlat_nw17m")
+text = "First Pickup tutorial box"
+autowrap_mode = 3
+
+[node name="Arrow-Copy" type="TextureRect" parent="Tutorial/Resturant"]
+self_modulate = Color(0, 0, 0, 0.627451)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -19.0
+offset_top = -1.0
+offset_right = 43.0
+offset_bottom = 37.0
+grow_horizontal = 2
+rotation = -1.5708
+scale = Vector2(0.694836, 0.977872)
+texture = ExtResource("12_mslnn")
 
 [node name="Click To Continue" type="Label" parent="Tutorial"]
+z_index = 30
 layout_mode = 0
-offset_left = 562.0
-offset_top = 152.0
-offset_right = 744.0
-offset_bottom = 175.0
+offset_left = 889.0
+offset_top = 678.0
+offset_right = 1020.0
+offset_bottom = 701.0
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.639216)
 theme_override_constants/shadow_offset_x = 2
 theme_override_constants/shadow_offset_y = 2
@@ -409,8 +471,46 @@ theme_override_constants/shadow_outline_size = 5
 text = "Click to Continue"
 horizontal_alignment = 1
 
-[node name="UI" type="Control" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="Tutorial"]
+layer = 2
+
+[node name="Sneaky Button" type="Button" parent="Tutorial/CanvasLayer"]
+offset_left = 898.0
+offset_top = 246.0
+offset_right = 1101.0
+offset_bottom = 287.0
+scale = Vector2(0.6, 0.65)
+size_flags_horizontal = 3
+size_flags_vertical = 10
+focus_mode = 0
+theme_override_fonts/font = SubResource("FontVariation_dcihk")
+theme_override_font_sizes/font_size = 28
+theme_override_styles/hover = ExtResource("7_t3oj7")
+theme_override_styles/pressed = ExtResource("8_hfx0f")
+theme_override_styles/normal = ExtResource("9_k28qe")
+text = "ACCEPT"
+
+[node name="Controls" type="Label" parent="."]
 visible = false
+offset_left = 43.0
+offset_top = 236.0
+offset_right = 314.0
+offset_bottom = 458.0
+theme_override_constants/line_spacing = -2
+theme_override_fonts/font = SubResource("FontVariation_swb0f")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxFlat_nw17m")
+text = "                 Controls:
+Drive                            W/A/S/D
+click Stuff                   Left Click
+scroll orders          mouse wheel
+put phone away           Right click
+enter building         E / left click
+pause game                          esc
+Emergency reset                      r"
+autowrap_mode = 3
+
+[node name="UI" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -420,6 +520,7 @@ grow_vertical = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
 mouse_filter = 2
+metadata/_edit_lock_ = true
 
 [node name="Panel" type="Panel" parent="UI"]
 layout_mode = 0
@@ -679,7 +780,6 @@ offset_left = -10.0
 offset_top = -151.0
 offset_right = 60.0
 offset_bottom = -115.0
-text = "$19"
 label_settings = SubResource("LabelSettings_7viq1")
 horizontal_alignment = 1
 
@@ -734,6 +834,7 @@ bus = &"SFX"
 
 [node name="Cash_Noise" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("8_ajle4")
+volume_db = 8.0
 pitch_scale = 0.8
 max_polyphony = 3
 bus = &"SFX"
@@ -745,6 +846,7 @@ max_polyphony = 3
 bus = &"SFX"
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
+process_mode = 3
 stream = ExtResource("10_ntywh")
 volume_db = -14.0
 autoplay = true
@@ -756,6 +858,7 @@ visible = false
 pivot_offset = Vector2(1726, 714)
 mouse_filter = 2
 
+[connection signal="pressed" from="Tutorial/CanvasLayer/Sneaky Button" to="Tutorial" method="_on_sneaky_button_pressed"]
 [connection signal="toggled" from="UI/TextureButton" to="." method="_on_texture_button_toggled"]
 [connection signal="timeout" from="ClockTick" to="." method="_on_clock_tick"]
 [connection signal="timeout" from="Order_Update" to="." method="_on_order_update_timeout"]
