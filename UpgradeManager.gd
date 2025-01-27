@@ -1,5 +1,5 @@
 extends Control
-@onready var upgrade_grid: GridContainer = $"Options Menu/UpgradeGrid"
+@onready var upgrade_nodes = $"Options Menu/UpgradeGrid".get_children() as Array[UpgradeNodes]
 signal done_shopping_pressed
 
 @export var upgrade_data = {
@@ -12,6 +12,7 @@ signal done_shopping_pressed
 		"callback" : upgrade_bumper
 		
 	},
+	
 	"TuroCharge Engine" : {
 		"max_level": 5,
 		"prices":[30,50,75,100,125],
@@ -53,12 +54,10 @@ signal done_shopping_pressed
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	#randomizer()
-	#UI.cash = 300
-	update_cash_label()
-	for upgrade in upgrade_grid.get_children():
+	for upgrade in upgrade_nodes:
 		upgrade.init(upgrade_data[upgrade.name])
 		upgrade.purchase.connect(upgrade_data[upgrade.name]["callback"])
-		
+	update()
 	print("-%d%% this is for testing purposes" % [5])
 	pass # Replace with function body.
 
@@ -146,7 +145,7 @@ func process_payment(price):
 	update_cash_label()
 
 func update():
-	for node in upgrade_grid.get_children():
+	for node in upgrade_nodes:
 		node.update()
 	update_cash_label()
 	

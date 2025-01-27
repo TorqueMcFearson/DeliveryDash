@@ -1,3 +1,4 @@
+class_name UpgradeNodes
 extends PanelContainer
 
 @onready var icon_node: TextureRect = $"UpgradeContainer/Icon-Title/Icon"
@@ -35,7 +36,6 @@ func init(upgrade_data:Dictionary):
 		if not get(stat):
 			print(stat," is not a property!")
 	add_stars()
-	update()
 	
 func update():
 	print("update fired")
@@ -45,7 +45,6 @@ func update():
 		set_price()
 		disable_by_cost(UI.cash)
 	set_stats()
-	
 	pass
 
 func set_level(_level:int):
@@ -76,16 +75,15 @@ func set_next_stats():
 		
 	
 func disable_by_cost(cash:int):
-	if cash < price:
-		price_node.set_disabled(true)
+	price_node.set_disabled(cash < price)
+		
 
 func disable_by_lvl():
-	
-	if level == max_level:
+	var res = is_max_level()
+	price_node.set_disabled(res)
+	if res:
 		price_node.text = "Max Upgrade"
-		price_node.set_disabled(true)
-		return true
-	return false
+	return res
 
 func is_max_level():
 	return level == max_level

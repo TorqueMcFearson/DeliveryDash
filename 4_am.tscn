@@ -885,12 +885,21 @@ gizmo_extents = 0.0
 position = Vector2(80, 0)
 gizmo_extents = 0.0
 
+[node name="NextDayStart" type="Marker2D" parent="Markers"]
+position = Vector2(138, 705)
+
+[node name="NextDayMiddle" type="Marker2D" parent="Markers"]
+position = Vector2(133, 167)
+
+[node name="NextDayEnd" type="Marker2D" parent="Markers"]
+position = Vector2(133, -126)
+
 [node name="Slide_SFX" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamRandomizer_hq16f")
 bus = &"SFX"
 
 [node name="Day" type="Label" parent="."]
-self_modulate = Color(1, 1, 1, 0.709804)
+self_modulate = Color(1, 1, 1, 0.705882)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5

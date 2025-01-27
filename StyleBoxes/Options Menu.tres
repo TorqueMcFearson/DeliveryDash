@@ -6,7 +6,7 @@
 
 [sub_resource type="ImageTexture" id="ImageTexture_l0dk7"]
 
-[sub_resource type="Image" id="Image_aax5m"]
+[sub_resource type="Image" id="Image_k5q2a"]
 data = {
 "data": PackedByteArray("////AP///0D///9A////AP///wD///9A////QP///wD///8A////QP///0D///8A////AP///0D///9A////AP///wD///9A////QP///wD///8A////QP///0D///8A////AP///0D///9A////AP///wD///9A////QP///wD///8A////QP///0D///8A////AP///0D///9A////AP///wD///9A////QP///wD///8A////QP///0D///8A////AP///0D///9A////AP///wD///9A////QP///wD///8A////QP///0D///8A////AP///0D///9A////AA=="),
 "format": "RGBA8",
@@ -16,7 +16,7 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_cs4h4"]
-image = SubResource("Image_aax5m")
+image = SubResource("Image_k5q2a")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tugc3"]
 content_margin_left = 4.0
@@ -1857,7 +1857,7 @@ cache/0/25/0/glyphs/3/size = Vector2(0, 0)
 cache/0/25/0/glyphs/3/uv_rect = Rect2(0, 0, 0, 0)
 cache/0/25/0/glyphs/3/texture_idx = -1
 
-[sub_resource type="Image" id="Image_d0t0t"]
+[sub_resource type="Image" id="Image_th2bl"]
 data = {
 "data": PackedByteArray("////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////ALOzs5mysrKmuLi4Ev///wD///8A////AP///wC4uLgSsrKyprKyspf///8A////ALKysqaysrLZsbGxs7i4uBL///8A////ALi4uBKysrKzsrKy2bKysqX///8A////ALi4uBKxsbGzsrKy2bGxsbO4uLgSuLi4ErKysrOysrLZsbGxs7S0tBH///8A////AP///wC4uLgSsbGxs7KystmysrLFsrKyxbKystmxsbGztLS0Ef///wD///8A////AP///wD///8AuLi4ErGxsbOysrLZsrKy2bGxsbO0tLQR////AP///wD///8A////AP///wD///8A////ALi4uBKysrKlsrKypbS0tBH///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A"),
 "format": "RGBA8",
@@ -1867,7 +1867,7 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_4dyyb"]
-image = SubResource("Image_d0t0t")
+image = SubResource("Image_th2bl")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mu1dd"]
 content_margin_left = 8.0

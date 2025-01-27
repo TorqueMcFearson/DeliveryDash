@@ -27,7 +27,7 @@ func _ready() -> void:
 	$PanelContainer.clip_contents = true
 	#if get_tree().current_scene == self: scene_root_ready()
 	expenses["Total Expenses"] = (expenses["Rent"] + expenses["Food"] + expenses["Electric"])
-	expenses["Total Cash"] = clampi(expenses["Pocket_Cash"] - expenses["Total Expenses"],0,1000)
+	expenses["Total Cash"] = max(expenses["Pocket_Cash"] - expenses["Total Expenses"],0)
 	if expenses["Total Cash"] == 0:
 		$"PanelContainer/Page 2/Order Rows/Total Cash/Cash".add_theme_color_override("font_color",Color(0.929, 0.102, 0.102))
 		broke = true
@@ -148,17 +148,26 @@ func write_stats_to_file():
 	f.close()
 	
 func after_page_2():
-	await UI.fade_out(1.5)
+	await UI.fade_out(1.15)
 	$PanelContainer.hide()
-	$Day.hide()
+	UI.new_day()
 	$"Car Upgrades".update()
-	await UI.fade_in(1.0)
+	UI.fade_in(1.0)
+	await tween_nextday_label()
 	$"Car Upgrades".show()
 	$"Car Upgrades".modulate = Color(1, 1, 1, 0)
-	create_tween().tween_property($"Car Upgrades","modulate",Color(1,1,1,1),.35)
+	create_tween().tween_property($"Car Upgrades","modulate",Color(1,1,1,1),.35).set_delay(.45)
+	create_tween().tween_property($Day,"global_position", $Markers/NextDayEnd.global_position,.5).set_trans(Tween.TRANS_QUAD)
 	
 
-
+func tween_nextday_label():
+	$Day.global_position = $Markers/NextDayStart.global_position
+	$Day.text = "Day %d" % UI.day
+	var tween := create_tween()
+	tween.tween_property($Day,"global_position", $Markers/NextDayMiddle.global_position,1).set_delay(.3).set_trans(Tween.TRANS_QUAD)
+	tween.tween_interval(1)
+	return tween.finished
+	
 func _on_car_upgrades_done_shopping_pressed() -> void:
 	var tween = create_tween()
 	UI.day_over = false
@@ -167,5 +176,4 @@ func _on_car_upgrades_done_shopping_pressed() -> void:
 	tween.tween_callback(func(): music_player.stream = load("res://SFX/echo-flux-258965.mp3");music_player.play())
 	tween.tween_property($Music,"volume_db",-14,1)
 	UI.player_map_position = UI.PLAYER_HOME_SPAWN
-	UI.new_day()
 	UI.fade_out(1.5,get_tree().change_scene_to_packed.bind(CITY_SCENE))

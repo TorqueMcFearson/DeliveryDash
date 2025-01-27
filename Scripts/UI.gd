@@ -283,8 +283,11 @@ func update_clock():
 	$UI/Panel/Time.text = clock.get_time()
 	if clock.is_time_up():
 		var player = get_tree().current_scene.find_child("Player")
-		player.show_timeup_message()
+
+		$Respawning.text = "Day Over... Driving Home"
+		$Respawning.show()
 		end_day()
+		$Respawning.hide()
 
 		
 func _on_clock_tick() -> void:
@@ -313,7 +316,7 @@ func end_day():
 	
 	for order in order_list.get_children():
 		order.queue_free()
-	fade_out(2,get_tree().change_scene_to_packed.bind(_4_AM))
+	await fade_out(2,get_tree().change_scene_to_packed.bind(_4_AM))
 	
 func to_main_menu():
 	pause_timers()
