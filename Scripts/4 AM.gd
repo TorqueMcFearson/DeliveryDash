@@ -2,6 +2,7 @@ extends Control
 const TITLE_SCENE = preload("res://Title_Screen.tscn")
 const CITY_SCENE = preload("res://CityMain.tscn")
 
+
 @onready var rows: Control = $"PanelContainer/Page 1/Order Rows"
 @onready var perf_rows: Control = $"PanelContainer/Page 1/Performance Rows"
 @onready var offscreen = $Markers/Offscreen.position.x
@@ -101,20 +102,13 @@ func _pay_bills_button():
 	
 func _page2_button():
 	$"PanelContainer/Next Screen".disabled = true 
-	var music_player = UI.find_child("Music",false)
 	UI.set_cash(expenses["Total Cash"])
-	var tween = create_tween()
-	tween.tween_property($Music,"volume_db",-50,1)
-	tween.tween_callback(func(): music_player.stream = load("res://SFX/echo-flux-258965.mp3");music_player.play())
-	tween.tween_property($Music,"volume_db",-14,1)
-	UI.day_over = false
 	if broke:
-		UI.reset()
-		UI.fade_out(1,get_tree().change_scene_to_packed.bind(TITLE_SCENE))
+		after_page_2()
+		#UI.reset()
+		#UI.fade_out(1,get_tree().change_scene_to_packed.bind(TITLE_SCENE))
 	else:
-		UI.player_map_position = UI.PLAYER_HOME_SPAWN
-		UI.new_day()
-		UI.fade_out(1.5,get_tree().change_scene_to_packed.bind(CITY_SCENE))
+		after_page_2()
 		
 func animate_stats_out(node):
 		var tween = create_tween()
@@ -153,3 +147,25 @@ func write_stats_to_file():
 	f.store_string(string)
 	f.close()
 	
+func after_page_2():
+	await UI.fade_out(1.5)
+	$PanelContainer.hide()
+	$Day.hide()
+	$"Car Upgrades".update()
+	await UI.fade_in(1.0)
+	$"Car Upgrades".show()
+	$"Car Upgrades".modulate = Color(1, 1, 1, 0)
+	create_tween().tween_property($"Car Upgrades","modulate",Color(1,1,1,1),.35)
+	
+
+
+func _on_car_upgrades_done_shopping_pressed() -> void:
+	var tween = create_tween()
+	UI.day_over = false
+	var music_player = UI.find_child("Music",false)
+	tween.tween_property($Music,"volume_db",-50,1)
+	tween.tween_callback(func(): music_player.stream = load("res://SFX/echo-flux-258965.mp3");music_player.play())
+	tween.tween_property($Music,"volume_db",-14,1)
+	UI.player_map_position = UI.PLAYER_HOME_SPAWN
+	UI.new_day()
+	UI.fade_out(1.5,get_tree().change_scene_to_packed.bind(CITY_SCENE))

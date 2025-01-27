@@ -16,15 +16,19 @@ extends CharacterBody2D
 ####################
 enum {HORZ,VERT,BOTH}
 enum STATE {DEACTIVE, ACTIVE, RESPAWNING}
-const ACCEL = 30.0
+var ACCEL = 20.0:
+	get():
+		return ACCEL * UI.accel_modifier
 const DECELL = 30.0
-const BUMP_DAMPING := .6
+var BUMP_DAMPING := .6:
+	get():
+		return move_toward(1,BUMP_DAMPING,UI.bump_modifer)
 const ROAD_DIR = ["Horz","Vert","Both"]
 const arrow_off_min = 160**2
 const arrow_on_min = 200**2
 	
 	##Preset Variables
-@export_range(0,2000,10.0) var MAX_SPEED_DEFAULT :float #450
+@export_range(0.0,2000.0,10.0) var MAX_SPEED_DEFAULT :float #450
 @onready var MAX_SPEED :float = MAX_SPEED_DEFAULT
 ########################################
 ## Variables & Enums
@@ -39,7 +43,7 @@ var collisions = []
 var state : STATE = STATE.ACTIVE
 var sound_velocity :float = 0
 var bumped:bool=false
-var fuel_rate:= .4
+
 
 ########################################
 ## Functions
@@ -80,10 +84,10 @@ func _physics_process(delta: float) -> void:
 	if not UI.gas:
 		MAX_SPEED = move_toward(MAX_SPEED,0,.75)
 		if speed > 1:input_vector = input_vector.normalized()
-		velocity = velocity.move_toward(input_vector * (MAX_SPEED * yellow_road_speed), ACCEL)
+		velocity = velocity.move_toward(input_vector * (MAX_SPEED * UI.speed_modifier * yellow_road_speed), ACCEL)
 	elif speed > 0:
 		if speed > 1:input_vector = input_vector.normalized()
-		velocity = velocity.move_toward(input_vector * (MAX_SPEED * yellow_road_speed), ACCEL)
+		velocity = velocity.move_toward(input_vector * (MAX_SPEED * UI.speed_modifier * yellow_road_speed), ACCEL)
 		UI.consume_gas(delta)
 	else:
 		# Decelerate to stop
@@ -102,6 +106,7 @@ func _physics_process(delta: float) -> void:
 					restore_speed()
 				just_collided = true
 	process_motor()
+	$Label.text = str(int(velocity.length()))
 
 func restore_speed():
 	if UI.gas:
@@ -158,7 +163,7 @@ func get_road_direction():
 func get_yellow_road():
 	var coords = get_current_tilemap()
 	var data: TileData = yellowroads.get_cell_tile_data(coords)
-	return 1.2 if data else 1.0
+	return 1.15 if data else 1.0
 	
 func set_sprite_horz(x_direction):
 	if x_direction:
@@ -190,7 +195,7 @@ func process_motor():
 	if not UI.gas:
 		$Motor_Sound.volume_db = -80
 		return
-	sound_velocity = lerp(sound_velocity,velocity.length(),.04)
+	sound_velocity = lerp(sound_velocity,velocity.length(),.2)
 	$Motor_Sound.pitch_scale = pitch_curve.sample(sound_velocity/MAX_SPEED)# + randf_range(-.05,.05)
 	$Motor_Sound.volume_db = volume_curve.sample(sound_velocity/MAX_SPEED) #+ randf_range(-.5,.5)
 	pass

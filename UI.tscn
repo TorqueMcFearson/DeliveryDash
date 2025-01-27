@@ -49,7 +49,7 @@ bg_color = Color(0.21359, 0.2054, 0.26, 0.733333)
 border_width_bottom = 4
 border_color = Color(0.098016, 0.0976375, 0.119702, 1)
 
-[sub_resource type="Shader" id="Shader_icnsr"]
+[sub_resource type="Shader" id="Shader_0p54g"]
 code = "shader_type canvas_item;
 
 uniform vec4 color : source_color = vec4(1.0);
@@ -114,7 +114,7 @@ void fragment() {
 }"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gjgpg"]
-shader = SubResource("Shader_icnsr")
+shader = SubResource("Shader_0p54g")
 shader_parameter/color = Color(0.411765, 1, 0.431373, 0.772549)
 shader_parameter/width = 0.607
 shader_parameter/pattern = 1
@@ -246,15 +246,13 @@ layout_mode = 0
 offset_left = 1025.0
 offset_top = 91.0
 offset_right = 1270.0
-offset_bottom = 226.0
+offset_bottom = 160.0
 theme_override_constants/line_spacing = -5
 theme_override_fonts/font = SubResource("FontVariation_swb0f")
 theme_override_font_sizes/font_size = 22
 theme_override_styles/normal = SubResource("StyleBoxFlat_nw17m")
 text = "The higher your     rating, 
-the more $ you get tipped!
-
-Just don't mess up or forget orders, and keep on delivering!"
+the more $ you get tipped!"
 autowrap_mode = 3
 
 [node name="Arrow-Copy" type="TextureRect" parent="Tutorial/Rating"]
@@ -283,14 +281,12 @@ layout_mode = 0
 offset_left = 12.0
 offset_top = 92.0
 offset_right = 289.0
-offset_bottom = 208.0
+offset_bottom = 139.0
 theme_override_constants/line_spacing = -5
 theme_override_fonts/font = SubResource("FontVariation_swb0f")
 theme_override_font_sizes/font_size = 22
 theme_override_styles/normal = SubResource("StyleBoxFlat_nw17m")
-text = "Earn    money by delivering orders!
-
-Hurry if you want to afford rent and food at the end of the day!"
+text = "Earn    money by delivering orders!"
 autowrap_mode = 3
 
 [node name="Arrow-Copy" type="TextureRect" parent="Tutorial/Money"]
@@ -322,16 +318,14 @@ text = "$"
 [node name="Gas Text" type="Label" parent="Tutorial"]
 layout_mode = 0
 offset_left = 113.0
-offset_top = 558.0
+offset_top = 580.0
 offset_right = 426.0
-offset_bottom = 680.0
+offset_bottom = 652.0
 theme_override_constants/line_spacing = -2
 theme_override_fonts/font = SubResource("FontVariation_swb0f")
 theme_override_font_sizes/font_size = 22
 theme_override_styles/normal = SubResource("StyleBoxFlat_nw17m")
-text = "Make sure to Keep      gas in your tank. Those towing fees can be quite Expensive!
-
-(Hint: Gas stations are on yellow roads)"
+text = "Make sure to Keep      gas in your tank. Those towing fees can be quite Expensive!"
 autowrap_mode = 3
 
 [node name="Gas Can" type="TextureRect" parent="Tutorial/Gas Text"]
@@ -399,10 +393,10 @@ texture = ExtResource("12_mslnn")
 z_index = 20
 custom_minimum_size = Vector2(350, 0)
 layout_mode = 0
-offset_left = 551.0
-offset_top = 346.0
-offset_right = 901.0
-offset_bottom = 393.0
+offset_left = 541.0
+offset_top = 230.0
+offset_right = 891.0
+offset_bottom = 277.0
 theme_override_constants/line_spacing = -5
 theme_override_fonts/font = SubResource("FontVariation_swb0f")
 theme_override_font_sizes/font_size = 22
@@ -429,17 +423,18 @@ texture = ExtResource("12_mslnn")
 
 [node name="Resturant" type="Label" parent="Tutorial"]
 z_index = 20
-custom_minimum_size = Vector2(350, 0)
+custom_minimum_size = Vector2(300, 0)
 layout_mode = 0
-offset_left = 354.0
-offset_top = 464.0
-offset_right = 704.0
-offset_bottom = 511.0
+offset_left = 689.0
+offset_top = 371.0
+offset_right = 1039.0
+offset_bottom = 440.0
 theme_override_constants/line_spacing = -5
 theme_override_fonts/font = SubResource("FontVariation_swb0f")
 theme_override_font_sizes/font_size = 22
 theme_override_styles/normal = SubResource("StyleBoxFlat_nw17m")
-text = "First Pickup tutorial box"
+text = "We've arrived! just toss the food on the doorstep, people hate interacting nowadays."
+horizontal_alignment = 1
 autowrap_mode = 3
 
 [node name="Arrow-Copy" type="TextureRect" parent="Tutorial/Resturant"]
@@ -471,10 +466,10 @@ theme_override_constants/shadow_outline_size = 5
 text = "Click to Continue"
 horizontal_alignment = 1
 
-[node name="CanvasLayer" type="CanvasLayer" parent="Tutorial"]
+[node name="Sneaky Layer" type="CanvasLayer" parent="Tutorial"]
 layer = 2
 
-[node name="Sneaky Button" type="Button" parent="Tutorial/CanvasLayer"]
+[node name="Sneaky Button" type="Button" parent="Tutorial/Sneaky Layer"]
 offset_left = 898.0
 offset_top = 246.0
 offset_right = 1101.0
@@ -716,6 +711,7 @@ texture = ExtResource("5_l8fxf")
 expand_mode = 2
 
 [node name="TextureButton" type="Button" parent="UI"]
+process_mode = 3
 layout_mode = 0
 offset_left = 1226.0
 offset_top = 669.0
@@ -858,7 +854,7 @@ visible = false
 pivot_offset = Vector2(1726, 714)
 mouse_filter = 2
 
-[connection signal="pressed" from="Tutorial/CanvasLayer/Sneaky Button" to="Tutorial" method="_on_sneaky_button_pressed"]
+[connection signal="pressed" from="Tutorial/Sneaky Layer/Sneaky Button" to="Tutorial" method="_on_sneaky_button_pressed"]
 [connection signal="toggled" from="UI/TextureButton" to="." method="_on_texture_button_toggled"]
 [connection signal="timeout" from="ClockTick" to="." method="_on_clock_tick"]
 [connection signal="timeout" from="Order_Update" to="." method="_on_order_update_timeout"]

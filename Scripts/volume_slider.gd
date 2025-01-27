@@ -29,7 +29,6 @@ func ready_label():
 
 func _on_value_changed(value):
 	AudioServer.set_bus_volume_db(audio_bus, linear_to_db(pow(value*.01,2)))
-	var test = AudioServer.get_bus_volume_db(audio_bus)
 	ready_label()
 	if name == "SFX" and $"../SFX/Timer".is_stopped():
 		print("SFX FIRING")

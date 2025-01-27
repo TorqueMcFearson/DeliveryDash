@@ -2,22 +2,38 @@ extends Control
 
 @onready var ts_nodes :Array[Label] = [$Phone, $Time, $Money, $Rating, $"Gas Text"]
 @onready var click_label = $"Click To Continue"
+
 enum T{INTRO,NEW_ORDER,RESTURANT,HOUSE}
+const TUTORIAL_END_STAGE = 40
 const COMPLETE_MESSAGE = " - Click to Resume - "
 const TUTORIAL_POS = {10: Vector2(494,207),
 					  11: Vector2(504,260),
 					  12: Vector2(633,225),
 					  13: Vector2(504,240),
+					  14: Vector2(494,167),
 					  20: Vector2(280,317),
 					  21: Vector2(84,330),
-					  22: Vector2(541,238),}
+					  22: Vector2(541,230),
+					  30: Vector2(469,472),
+					  31: Vector2(546,241),
+					  32: Vector2(541,230),
+					  33: Vector2(487,319),
+					  34: Vector2(19,57),
+					  35: Vector2(920,52)}
 const TUTORIAL_MESSAGES = { 10: "Sweet gainful employment, you got an order!",
 							11: "Don't ignore these or your boss will dock your rating big time!",
 							12: "if your overwhelmed, rejecting is only a tiny hit to your rating",
 							13: "Press Accept, and let's start our 1st delivery!",
+							14: "Also, you can click here to change between active orders!",
 							20: "Time to get our food. Ask this guy for it.",
 							21: "Don't forget to take the bag!",
-							22: "Don't forget to update the order status!\n Click this and let's get moving!",}
+							22: "Don't forget to update the order status!\nClick this and let's get moving!",
+							30: "We've arrived! Go ahead, just toss the food on the doorstep.",
+							31: "Now to mark it as delivered.",
+							32: "Awesome. That's one down, time to collect our pay!",
+							33: "You recieve base pay + a tip based on your rating.",
+							34: "Completing orders increases our rating, which increases our tips!",
+							35: "So get out there and start dashing!"}
 var playing_tutorial := false
 var stage = 0
 var click_to_continue := true
@@ -27,7 +43,7 @@ func _ready():
 	hide_all()
 
 func _input(event: InputEvent) -> void:
-	if not get_tree().paused: return
+	if not visible: return
 	if playing_tutorial and event.is_pressed() and event is InputEventMouseButton \
 	or event.is_action_pressed("pause"):
 		if playing_tutorial:
@@ -72,12 +88,17 @@ func progress_tutorial():
 				$Phone2.text = message
 				$Phone2.size.y = 0
 				$Phone2.position = TUTORIAL_POS.get(UI.tutorial)
-				if TUTORIAL_MESSAGES.get(UI.tutorial+1):
-					set_continue_text($Phone2)
-				else:
+				if UI.tutorial == 13:
+					click_to_continue = false
 					click_label.hide()
-					$"CanvasLayer".show()
-					return
+					$"Sneaky Layer".show()
+				else:
+					click_label.show()
+					set_continue_text($Phone2)
+			else:
+				remove_tutorial_signals()
+				stage_done()
+
 				
 				
 		T.RESTURANT:
@@ -94,12 +115,35 @@ func progress_tutorial():
 				if UI.tutorial == 22:
 					text_label.position += UI.active_order.position*.6
 			else:
+				remove_tutorial_signals()
 				stage_done()
 
 		
 		
-		T.HOUSE:pass
-		
+		T.HOUSE:
+			$Phone2.hide()
+			$Resturant.show()
+			var text_label =$Resturant
+			if UI.tutorial in [31,32]:
+				$Resturant.hide()
+				await UI.phone._phone_on()
+				text_label = $Phone2
+				text_label.show()
+			elif UI.tutorial == 33:
+				click_to_continue = true
+				$"Resturant/Arrow-Copy".hide()
+				set_continue_text($"Resturant")
+			var message = TUTORIAL_MESSAGES.get(UI.tutorial)
+			if message:
+				text_label.text = message
+				text_label.size.y = 0
+				text_label.position = TUTORIAL_POS.get(UI.tutorial)
+				if UI.tutorial in [31,32]:
+					text_label.position += UI.active_order.position*.6
+			else:
+				$"Resturant/Arrow-Copy".show()
+				remove_tutorial_signals()
+				stage_done()
 		
 		4:pass
 		5:pass
@@ -107,7 +151,7 @@ func progress_tutorial():
 	UI.tutorial += 1
 
 func set_continue_text(node=null,label_text = "Click to Continue"):
-	click_label.text = "Click to Resume"
+	click_label.text = label_text
 	if node:
 		click_label.position = node.position + node.size - Vector2(click_label.size.x+4,12)
 	else:
@@ -118,6 +162,8 @@ func stage_done():
 	hide_all()
 	playing_tutorial = false
 	unpause()
+	if UI.tutorial == TUTORIAL_END_STAGE: 
+		UI.tutorial_enabled = false
 	
 func play_tutorial(stage:int):
 	playing_tutorial = true
@@ -133,8 +179,8 @@ func play_tutorial(stage:int):
 			progress_tutorial()
 			
 			
-		T.RESTURANT:
-			UI.tutorial = 20
+		T.RESTURANT,T.HOUSE:
+			UI.tutorial = stage*10
 			$"Click To Continue".hide()
 			$"../Controls".hide()
 			$"../Pause Dimmer".hide()
@@ -144,7 +190,6 @@ func play_tutorial(stage:int):
 			$Phone2.show()
 			progress_tutorial()
 			
-		T.HOUSE:pass
 		4:pass
 		5:pass
 
@@ -155,8 +200,11 @@ func hide_all():
 
 func _on_sneaky_button_pressed() -> void:
 	var order = UI.order_list.get_child(0) as Order
-	stage_done()
+	$"Sneaky Layer".hide()
+	click_to_continue = true
+
 	order._on_accept_pressed()
+	get_tree().create_timer(.25).timeout.connect(progress_tutorial)
 	
 func setup_tutorial_signals(signals):
 	connected_signals = signals.duplicate()
@@ -173,6 +221,7 @@ func t_res_request():
 	if UI.tutorial == 21:
 		print("request fired!")
 		progress_tutorial()
+		
 func t_res_grab():
 	if UI.tutorial == 22:
 		print("grab fired!")
@@ -181,4 +230,19 @@ func t_res_grab():
 func t_res_update():
 	print("update order fired!")
 	if UI.tutorial == 23:
+		progress_tutorial()
+
+func t_house_drop():
+	if UI.tutorial == 31:
+		print("drop!")
+		progress_tutorial()
+		
+func t_house_update():
+	if UI.tutorial == 32:
+		print("update fired!")
+		progress_tutorial()
+		
+func t_house_complete():
+	print("complete fired!")
+	if UI.tutorial == 33:
 		progress_tutorial()

@@ -4,10 +4,10 @@ class Bag:
 	var order:Order
 	var receipt:Array
 	var correct:bool
-	func _init(order,receipt,correct) -> void:
-		self.order = order
-		self.receipt = receipt
-		self.correct = correct
+	func _init(_order,_receipt,_correct) -> void:
+		self.order = _order
+		self.receipt = _receipt
+		self.correct = _correct
 
 @onready var progress_button: Button = $HBoxContainer2/VBoxContainer/Progress
 @onready var until_order_expires: Label = $"HBoxContainer2/Order_Expand/TimeLeftBox/Until Order Expires"
@@ -39,6 +39,8 @@ signal bag_cleared
 signal scrollposition(pos:Vector2)
 signal new_active(order:Order)
 signal t_res_update
+signal t_house_update
+signal t_house_complete
 enum {NEW,TO_STORE,TO_HOUSE,DELIVERED}
 enum FOOD {WAITING=1,PICKED_UP=2,DELIVERED=3,WRONG_LOCATION=4}
 enum {NONE,HOVER,CLICKED}
@@ -71,20 +73,20 @@ func _ready() -> void:
 	state = NEW
 	pass # Replace with function body.
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass
 
-func init(customer:String,resturant,house,address):
+func init(_customer:String,_resturant,_house,_address):
 	self.order_num = order_next
 	order_next +=1
-	self.customer = customer
-	self.resturant = resturant.name
-	self.resturant_pos = resturant.global_position
-	self.resturant_idx = resturant.idx
-	self.house = house.name
-	self.house_pos = house.global_position
-	self.house_idx = house.idx
-	self.address = address
+	self.customer = _customer
+	self.resturant = _resturant.name
+	self.resturant_pos = _resturant.global_position
+	self.resturant_idx = _resturant.idx
+	self.house = _house.name
+	self.house_pos = _house.global_position
+	self.house_idx = _house.idx
+	self.address = _address
 	self.store_to_house_dist = int(resturant_pos.distance_to(resturant_pos)/100)
 
 #func _unhandled_key_input(event: InputEvent) -> void:
@@ -109,8 +111,11 @@ func progress_order():# NEW,TO_STORE,TO_HOUSE,DELIVERED
 					UI.made_a_mistake(FORGOT_UPDATE_PVALUE)
 					forgot_delivery = true
 				return
+			else:
+				t_house_update.emit()
 		DELIVERED:
 				complete_order()
+				t_house_complete.emit()
 				return
 	state = (state + 1)
 	t_res_update.emit()
@@ -143,6 +148,7 @@ func update_state(): #Called whenever the state changes
 			update_button()
 			target.text = address 
 			progress_button.text = "Mark as Delivered"
+			
 		DELIVERED: 
 			$HBoxContainer2/Order_Expand/TimeLeftBox.hide()
 			$HBoxContainer/Arrowbox.hide()
@@ -152,7 +158,7 @@ func update_state(): #Called whenever the state changes
 			$Status.text = "$%d + $%d TIP = $%d" % [reward, tip,reward+tip] 
 			progress_button.text = "Collect Pay"
 			
-	
+
 	if state == NEW: 
 		if not reward:
 				reward = int(randi_range(2,12) + dist/2)
@@ -206,7 +212,6 @@ func update_time():
 		$HBoxContainer2/Order_Expand/TimeLeftBox/TimeLeft.text = "Expired!"
 		order_expired()
 	else:
-		timeleft
 		var mins = int(timeleft /60)
 		var secs = timeleft % 60
 		$HBoxContainer2/Order_Expand/TimeLeftBox/TimeLeft.text = "%01d:%02d" % [mins,secs]

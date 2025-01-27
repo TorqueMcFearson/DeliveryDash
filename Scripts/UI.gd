@@ -1,5 +1,10 @@
 extends CanvasLayer
 
+# Cut Message
+# Hurry if you want to afford rent and food at the end of the day!
+# Just don't mess up or forget orders, and keep on delivering!
+# (Hint: Gas stations are on yellow roads)
+
 const ORDER = preload("res://order.tscn")
 const _4_AM = preload("res://4_am.tscn")
 @onready var order_list: VBoxContainer = $Phone/Screen/Scrollbox/Order_List
@@ -59,8 +64,8 @@ class Building:
 		self.type = type
 
 ## Play State ######################
-var rating : float = 20.0
-var cash :int = 10
+@export var rating : float = 20.0
+@export var cash :int = 10
 var cash_to_add :int = 0
 var tween_tracking:bool
 var tip_to_add :int = 0
@@ -114,30 +119,49 @@ var tutorial_enabled = true:
 	set(value):
 		tutorial_enabled = value
 		tutorial_change.emit()
-var day = 1
-var difficulty := 1.0
+@export var day = 1
+@export var difficulty := 1.0
 var tween :Tween 
 var day_over:bool = false
 var time_passed := 0.0
-
+@export var speed_modifier := 1.0
+@export var accel_modifier := 1.0
+@export var max_fuel_modifier := 1.0:
+	set(value):
+		max_fuel_modifier = value
+		set_gas_level()
+@export var fuel_consume_modifier := 1.0
+@export var bump_modifer := 1.0
+@export var car_horn := false
+@export var upgrade_levels = {
+	"Strong Bumpers" : 0,
+	"TuroCharge Engine" : 0,
+	"Fuel Efficiency" : 0,
+	"Fuel Tank Size" : 0,
+	"Car Horn" : 0,
+	}
 ## Gas Variables ######################
 const GAS_COST = .5
 const FUEL_WARNING_LEVEL = 25
 var gas_inflation = 0.05
 var gas_tween:Tween
 var max_fuel := 50.0:
-	set(value):
-		max_fuel = value
-		set_gas_level()
+	get():
+		return max_fuel * max_fuel_modifier
+
 var gas := 45.0:
 	set(value):
 		gas = clampf(value,0,max_fuel)
 		gas_level.value = gas
 		if gas == 0:
 			out_of_gas()
-var fuel_rate:=1
+
+var fuel_rate:=.92:
+	get():
+		return fuel_rate * UI.fuel_consume_modifier
 var debug_dictionary := {"Fuel Spend": 0,}
 var gas_label_pos = Vector2(-14,-151)
+var upgrades = {}
 
 
 func _ready() -> void:
@@ -159,11 +183,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_tree().paused=true
 		if not UI.tutorial_stage(0):
 			show_pause_menu()
-		if get_tree().current_scene.name == "4 AM" or not UI.tutorial_enabled:
-			pass
-		else:
-			show_tutorial()
-			pass
+		show_tutorial()
 
 func _process(delta: float) -> void:
 	gas_can_effects(delta)
@@ -239,7 +259,7 @@ func test_UI_functions():
 	#did_a_good(30)
 	pass
 
-func fade_in(duration=1,callback=null,delay=.25):
+func fade_in(duration=1.0,callback=null,delay=.25):
 	tween = create_tween()
 	tween.tween_property($Fader,"modulate",Color(1,1,1,0),duration)
 	if callback:tween.tween_callback(callback).set_delay(delay)
@@ -298,7 +318,6 @@ func end_day():
 func to_main_menu():
 	pause_timers()
 	if tween: tween.kill()
-	var tween2 = create_tween()
 	reset()
 	unpause()
 	fade_out(.25,get_tree().change_scene_to_packed.bind(load("res://Title_Screen.tscn")))
@@ -413,7 +432,6 @@ func did_a_good(value):
 func tween_star(spawn_point):
 	var fs :TextureRect = $FlyingStar
 	var star_tween:Tween = create_tween()
-	var default_pos = fs.global_position 
 	fs.scale = Vector2.ZERO
 	fs.global_position = spawn_point
 	star_tween.tween_property(fs,"scale",Vector2(1,1),.2)

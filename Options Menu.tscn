@@ -216,11 +216,11 @@ shadow_color = Color(0.101961, 0.101961, 0.101961, 0.682353)
 shadow_size = 1
 shadow_offset = Vector2(2, 2)
 
-[sub_resource type="FontVariation" id="FontVariation_vtl5f"]
+[sub_resource type="FontVariation" id="FontVariation_dnxk1"]
 base_font = ExtResource("2_asebk")
 
 [sub_resource type="LabelSettings" id="LabelSettings_dtddo"]
-font = SubResource("FontVariation_vtl5f")
+font = SubResource("FontVariation_dnxk1")
 font_size = 15
 
 [sub_resource type="GDScript" id="GDScript_ip47g"]

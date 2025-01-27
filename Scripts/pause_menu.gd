@@ -61,7 +61,7 @@ func animate_in(obj2):
 	obj2.scale = Vector2(1,0)
 	obj2.position = position
 	obj2.show()
-	create_tween().tween_property(obj2,"scale",Vector2.ONE,ANIMATE_SPEED).set_trans(Tween.TRANS_EXPO).finished
+	create_tween().tween_property(obj2,"scale",Vector2.ONE,ANIMATE_SPEED).set_trans(Tween.TRANS_EXPO)
 	
 
 func _on_back_button_pressed() -> void:

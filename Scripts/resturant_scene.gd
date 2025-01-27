@@ -24,7 +24,7 @@ func _ready() -> void:
 	$Foreground.texture = load(foregrounds[location])
 	$speech.text = ""
 	if UI.tutorial_stage(TUTORIAL_STAGE):
-		await UI.fade_in(.75) # Replace with function body.
+		UI.fade_in(.75) # Replace with function body.
 		UI.pause(TUTORIAL_STAGE)
 		var t_res_update = UI.active_order.t_res_update
 		UI.give_tutorial_signals([t_res_request,t_res_grab,t_res_update])
