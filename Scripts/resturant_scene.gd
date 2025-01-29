@@ -43,7 +43,7 @@ func _on_exit_arrow_pressed() -> void: # button is EXIT
 	if UI.tween.is_valid():return
 	if UI.find_child("Tutorial").playing_tutorial:return
 	UI.location = ""
-	get_tree().create_timer(4).timeout.connect(UI.check_forgot)
+	get_tree().create_timer(4).timeout.connect(UI.check_forgot.bind(need_to_mark_order))
 	UI.fade_out(.35,get_tree().change_scene_to_packed.bind(CITY),.25) # Replace with function body.
 
 func make_bag(order:Order):

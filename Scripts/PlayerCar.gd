@@ -88,7 +88,7 @@ func _physics_process(delta: float) -> void:
 	elif speed > 0:
 		if speed > 1:input_vector = input_vector.normalized()
 		velocity = velocity.move_toward(input_vector * (MAX_SPEED * UI.speed_modifier * yellow_road_speed), ACCEL)
-		UI.consume_gas(delta)
+		UI.consume_gas(delta,velocity,MAX_SPEED_DEFAULT)
 	else:
 		# Decelerate to stop
 		velocity = velocity.move_toward(Vector2.ZERO, DECELL )

@@ -3,6 +3,7 @@ signal t_house_drop
 const CITY = preload("res://CityMain.tscn")
 var bag_drop = false
 const TUTORIAL_STAGE = 3 
+var need_to_mark_order :Array[Order]
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -24,6 +25,7 @@ func _process(delta: float) -> void:
 	pass
 
 func drop_bag():
+	need_to_mark_order.append(UI.active_order)
 	$Bag/Receipt.text = "%s\nOrder# %s\n\n%s\n\n%s" % UI.active_order.bag.receipt
 	$Bag.modulate = Color(1,1,1,1)
 	bag_drop = true
@@ -35,7 +37,7 @@ func _on_exit_pressed() -> void:
 	if UI.tween.is_valid():return
 	if UI.find_child("Tutorial").playing_tutorial:return
 	UI.location = ""
-	get_tree().create_timer(4).timeout.connect(UI.check_forgot)
+	get_tree().create_timer(4).timeout.connect(UI.check_forgot.bind(need_to_mark_order))
 	UI.fade_out(.35,get_tree().change_scene_to_packed.bind(CITY),.25) # Replace with function body.
 
 func _on_check_receipt() -> void:

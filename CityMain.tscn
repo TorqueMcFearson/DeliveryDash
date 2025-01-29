@@ -868,7 +868,7 @@ position = Vector2(691, 2336)
 gizmo_extents = 1.0
 
 [node name="spawn6" type="Marker2D" parent="Spawns"]
-position = Vector2(1002, 2777)
+position = Vector2(480, 2585)
 gizmo_extents = 1.0
 
 [node name="spawn7" type="Marker2D" parent="Spawns"]

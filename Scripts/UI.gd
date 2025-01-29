@@ -522,10 +522,10 @@ func complete_order(order):
 	await get_tree().create_timer(1.5).timeout
 	add_cash(reward,tip) 
 
-func check_forgot():
+func check_forgot(forgotten):
 	var is_forgot = func (order:Order):return order.state != order.food_status and order.state != Order.NEW
-	var forgotten :Array = order_list.get_children().filter(is_forgot)
-	if forgotten:
+	#var forgotten :Array = order_list.get_children().filter(is_forgot)
+	if forgotten.filter(is_forgot):
 		for order in forgotten:
 			order.progress_order()
 		UI.phone.bad_notification("You forgot to update the status!");
@@ -596,8 +596,8 @@ func set_rating(value):
 	$UI/Panel/STAR_BAR.size.x =  STAR_BAR_WIDTH * ratio
 
 
-func consume_gas(delta):
-	gas -= fuel_rate*delta
+func consume_gas(delta,velocity,MAX_SPEED_DEFAULT):
+	gas -= fuel_rate*(velocity.length()/MAX_SPEED_DEFAULT)*delta
 
 func out_of_gas():
 	var player = get_tree().current_scene.find_child("Player")
