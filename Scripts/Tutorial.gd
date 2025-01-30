@@ -41,6 +41,7 @@ var connected_signals :Array
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	hide_all()
+	$"../Controls".hide()
 
 func _input(event: InputEvent) -> void:
 	if not visible: return
@@ -57,7 +58,7 @@ func unpause():
 	$"../Pause Dimmer".hide()
 	$"../Controls".hide()
 	get_viewport().set_input_as_handled()
-	$"../Options".get_child(0).unpause()
+	$"../OptionsLayer/Options".get_child(0).unpause()
 	self.hide()
 	set_continue_text(null,"-Game Paused-")
 	#queue_free()

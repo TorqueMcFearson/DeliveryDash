@@ -52,10 +52,11 @@ var bumped:bool=false
 func _ready() -> void:
 	pass
 	
+
 func _unhandled_key_input(event: InputEvent) -> void:
-	if Input.is_action_just_pressed("Respawn") and state != STATE.RESPAWNING:
-		respawn()
-			
+	if event is InputEventKey:
+		if event.pressed and event.keycode == KEY_SPACE:
+			blast_horn()
 	
 func _physics_process(delta: float) -> void:
 	render_arrow()
@@ -123,6 +124,8 @@ func out_of_gas():
 	
 
 func respawn():
+	if state == STATE.RESPAWNING: return
+	if UI.tween.is_valid(): return
 	$OutOfGas.stop()
 	if UI.gas:
 		$CanvasLayer/Respawning.text = "Respawning.."
@@ -209,3 +212,30 @@ func _on_traffic_body_exited(body: Node2D) -> void:
 func _on_out_of_gas_timeout() -> void:
 	if UI.gas == 0:
 		respawn() # Replace with function body.
+
+func blast_horn():
+	$Horn.play()
+	var blast_zone = generate_blast_radius()
+	await gather_collision_data()
+	var blasted_cars = blast_zone.get_overlapping_bodies()
+	blast_zone.queue_free()  # Remove the temporary area
+	blasted_cars.erase(self)
+	for car in blasted_cars:
+		car.get_horned()
+	
+
+func generate_blast_radius():
+	var attack_radius: float = 450.0
+	var blast_zone = Area2D.new()
+	var shape := CircleShape2D.new()
+	var collision_shape := CollisionShape2D.new()
+	shape.radius = attack_radius
+	collision_shape.shape = shape
+	blast_zone.collision_mask = 2
+	blast_zone.add_child(collision_shape)
+	add_child(blast_zone)
+	return blast_zone
+	
+func gather_collision_data():
+	await get_tree().physics_frame
+	await get_tree().physics_frame

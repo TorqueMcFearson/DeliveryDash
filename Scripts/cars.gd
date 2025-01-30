@@ -40,6 +40,7 @@ var vehicle_name:String = "pickup"
 const SPEED = 20
 const MAX_SPEED = 200
 const V_MAX_SPEED = Vector2(MAX_SPEED,MAX_SPEED)
+var max_speed_mod=1
 
 var stopped : bool = false
 var tilemap: TileMapLayer
@@ -52,8 +53,9 @@ const V_DIR = [Vector2.UP,Vector2.RIGHT,Vector2.DOWN,Vector2.LEFT]
 const ROAD_DIR = ["Horz","Vert","Both","OffRoad"]
 var direction :int
 var v_direction:Vector2
-var state
+var state:STATE
 var turning_progress : float = 0
+var running := false
 
 
 
@@ -132,7 +134,7 @@ func _physics_process(delta: float) -> void:
 				
 
 # Velocity Foward
-	velocity = (velocity + v_direction*SPEED).clamp(-V_MAX_SPEED,V_MAX_SPEED)
+	velocity = (velocity + v_direction*SPEED).clamp(-V_MAX_SPEED*max_speed_mod,V_MAX_SPEED*max_speed_mod)
 	var temp_pos = position
 	var collide = move_and_collide(velocity*delta)
 	if collide:
@@ -162,6 +164,8 @@ func random_turn():
 		var check_pos = global_position + dir*64
 		if dir != -v_direction and get_road_direction(check_pos) != 3:
 			directions.append(dir)
+	if running and len(directions) > 1:
+		directions.erase(get_dir_to_player())
 	return directions.pick_random()
 		
 func new_direction(new_dir):
@@ -196,3 +200,28 @@ func set_sprite_vert(y_direction):
 	if y_direction:
 		sprite.flip_v = false
 		$Move_collision.rotation = deg_to_rad(90 * y_direction / abs(y_direction))
+
+func get_horned():
+	var d_cm = collision_mask
+	var d_mxm = max_speed_mod
+	max_speed_mod = randf_range(1.5,2)
+	collision_mask = 1
+	stopped = false
+	running = true
+	run_from_player()
+	
+	await get_tree().create_timer(3).timeout
+	running = false
+	max_speed_mod = d_mxm
+	collision_mask = d_cm
+	
+func run_from_player():
+	var dir_to_player = get_dir_to_player()
+	if (v_direction.x and v_direction.x == dir_to_player.x) or(v_direction.y and v_direction.y == dir_to_player.y):
+		state = STATE.TURNING #rotate(deg_to_rad(180))
+		new_direction(-v_direction)
+		
+
+func get_dir_to_player():	
+	return global_position.direction_to(UI.player.position).round()
+	

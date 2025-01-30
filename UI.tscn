@@ -486,11 +486,10 @@ theme_override_styles/normal = ExtResource("9_k28qe")
 text = "ACCEPT"
 
 [node name="Controls" type="Label" parent="."]
-visible = false
 offset_left = 43.0
-offset_top = 236.0
+offset_top = 249.0
 offset_right = 314.0
-offset_bottom = 458.0
+offset_bottom = 446.0
 theme_override_constants/line_spacing = -2
 theme_override_fonts/font = SubResource("FontVariation_swb0f")
 theme_override_font_sizes/font_size = 22
@@ -501,8 +500,7 @@ click Stuff                   Left Click
 scroll orders          mouse wheel
 put phone away           Right click
 enter building         E / left click
-pause game                          esc
-Emergency reset                      r"
+pause game                          esc"
 autowrap_mode = 3
 
 [node name="UI" type="Control" parent="."]

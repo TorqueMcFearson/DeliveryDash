@@ -8,10 +8,7 @@ var test_var = 12
 var func_point = test1
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	func_point.call()
-	func_point = test2
-	func_point.call()
-	print(TESTING_SHIT.get_name())
+	pass
 	
 	
 
@@ -28,5 +25,6 @@ func test2():
 "
 
 [node name="Node2D" type="Node2D"]
+position = Vector2(151, 89)
 rotation = -6.28319
 script = SubResource("GDScript_xxjc3")

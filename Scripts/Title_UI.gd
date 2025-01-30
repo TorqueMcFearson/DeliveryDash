@@ -25,7 +25,7 @@ func _on_start_pressed() -> void:
 		button.disabled = true
 	if UI.day_over:return
 	UI.fade_out(1,get_tree().change_scene_to_packed.bind(CITY),.25)
-	#get_tree().create_timer(.75).timeout.connect(UI.start_timers)
+	get_tree().create_timer(1).timeout.connect(UI.unpause_timers)
 
 
 func _on_options_pressed() -> void:

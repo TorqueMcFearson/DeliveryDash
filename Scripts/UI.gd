@@ -17,16 +17,17 @@ const _4_AM = preload("res://4_am.tscn")
 signal new_active_order_set(order:Order)
 signal tween_complete
 signal tutorial_change
-
+var shift_start = [16,00]
+var shift_end = [20,00]
 class ClockTime:
 	var hour: int
 	var minute :int
 	var time_up :Array
 	
-	func _init(xhour:int,xminute:int) -> void:
-		hour = xhour
-		minute = xminute
-		time_up = [xhour+4,xminute] 
+	func _init(xstart_time,xshift_end) -> void:
+		hour = xstart_time[0]
+		minute = xstart_time[1]
+		time_up = xshift_end 
 			
 	func tick():
 		minute += 1
@@ -49,6 +50,7 @@ class ClockTime:
 		
 	func is_time_up():
 		return hour == time_up[0] and minute == time_up[1]
+		
 	func almost_time():
 		return hour == 19 and minute > 29
 class Building:
@@ -69,7 +71,7 @@ class Building:
 var cash_to_add :int = 0
 var tween_tracking:bool
 var tip_to_add :int = 0
-var clock = ClockTime.new(16,00)
+var clock = ClockTime.new(shift_start,shift_end)
 var player_map_position : Vector2 =  PLAYER_HOME_SPAWN 
 var stores : Array
 var houses : Array
@@ -112,6 +114,7 @@ const street_types = ["St", "Ave", "Rd", "Blvd", "Dr", "Ln", "Way", "Ct", "Pl", 
 ## Game Dynamics ######################
 var active_order :Order
 var location :String
+var player : CharacterBody2D
 var player_inventory :Array[Order]
 enum T{STAGE0 = 0, STAGE1 = 10,STAGE2 = 20,STAGE3 = 30,STAGE4 = 40,STAGE5 = 50}
 var tutorial := 1
@@ -288,6 +291,7 @@ func update_clock():
 		$Respawning.show()
 		end_day()
 		$Respawning.hide()
+		$New_Order_Timer.paused = true
 
 		
 func _on_clock_tick() -> void:
@@ -539,7 +543,7 @@ func new_day():
 	day += 1
 	location = ""
 	player_map_position =  PLAYER_HOME_SPAWN 
-	clock = ClockTime.new(16,00)
+	clock = ClockTime.new(shift_start,shift_end)
 	round_stats = {
 	"Orders Accepted" : 0,
 	"Orders Completed" : 0,
@@ -565,7 +569,7 @@ func reset():
 	cash_to_add = 0
 	tween_tracking = false
 	tip_to_add = 0
-	clock = ClockTime.new(16,00)
+	clock = ClockTime.new(shift_start,shift_end)
 	player_map_position =  PLAYER_HOME_SPAWN 
 	round_stats = {
 	"Orders Accepted" : 0,
@@ -648,3 +652,7 @@ func set_gas_level():
 
 func play_sfx():
 	$Cash_Noise.play()
+
+func is_on_map():
+	var root = get_tree().current_scene
+	return root and root.name == "City"

@@ -27,6 +27,7 @@ var time_passed = 0.0
 func _ready() -> void:
 	#$CanvasModulate.color = Color(0,0,0,1)
 	print(player.global_position)
+	UI.player = player
 	player.position = UI.player_map_position
 	UI.show_UI()
 	randomize_houses()
@@ -44,7 +45,7 @@ func _ready() -> void:
 		mark_target(UI.active_order)
 	else:
 		UI.order_timer_start()
-	UI.unpause_timers()
+	
 
 func _process(delta: float) -> void:
 	var target:Sprite2D
@@ -57,7 +58,6 @@ func _process(delta: float) -> void:
 	time_passed += delta
 	var width = 2 + .2 * sin(time_passed * BLINK_SPEED)  
 	width = pow(width,2)
-
 	target.material.set_shader_parameter("width", width)
 
 
@@ -130,6 +130,7 @@ func add_cars(n = MAX_CARS):
 		new_car.global_position = usable_markers.pop_back().global_position
 		new_car.tilemap = tilemap
 		$Cars.add_child(new_car)
+		
 
 func _on_car_check_timeout() -> void:
 	var count = $Cars.get_child_count()

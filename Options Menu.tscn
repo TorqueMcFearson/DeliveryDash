@@ -1,28 +1,12 @@
-[gd_scene load_steps=24 format=3 uid="uid://d15wce0skylvj"]
+[gd_scene load_steps=27 format=3 uid="uid://d15wce0skylvj"]
 
+[ext_resource type="StyleBox" uid="uid://csdjvh5802fh4" path="res://StyleBoxes/Options Menu stylebox.tres" id="1_xjowy"]
 [ext_resource type="FontFile" uid="uid://v3swnsgchgpo" path="res://Font/BebasNeue-Regular.ttf" id="2_asebk"]
 [ext_resource type="FontFile" uid="uid://ydwn4indox68" path="res://Font/Bangers-Regular.ttf" id="6_5iavn"]
 [ext_resource type="Script" path="res://Scripts/tutorial_checkbox.gd" id="6_47hxg"]
 [ext_resource type="Script" path="res://Scripts/pause_menu.gd" id="6_jrpou"]
 [ext_resource type="Theme" uid="uid://r1ihjlkhy6rj" path="res://StyleBoxes/Options Menu.tres" id="7_usd1d"]
 [ext_resource type="Script" path="res://Scripts/volume_slider.gd" id="8_aln4r"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_le0hv"]
-content_margin_left = 12.0
-content_margin_top = 8.0
-content_margin_right = 12.0
-content_margin_bottom = 8.0
-bg_color = Color(0.1763, 0.26978, 0.41, 0.952941)
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
-border_color = Color(0.1484, 0.1428, 0.21, 1)
-border_blend = true
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_jw774"]
 color = Color(0.239216, 0.345098, 0.513726, 0.356863)
@@ -216,6 +200,57 @@ shadow_color = Color(0.101961, 0.101961, 0.101961, 0.682353)
 shadow_size = 1
 shadow_offset = Vector2(2, 2)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x4ovc"]
+bg_color = Color(1, 0.603667, 0.18, 1)
+border_width_left = 2
+border_width_top = 3
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.162066, 0.162066, 0.162065, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+expand_margin_left = 1.0
+expand_margin_top = 3.0
+expand_margin_right = 1.0
+shadow_color = Color(0.101961, 0.101961, 0.101961, 0.682353)
+shadow_size = 1
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uwqry"]
+content_margin_top = 7.0
+bg_color = Color(1, 0.603667, 0.18, 1)
+border_width_left = 2
+border_width_top = 3
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.162066, 0.162066, 0.162065, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+expand_margin_left = 1.0
+expand_margin_right = 1.0
+shadow_color = Color(0.101961, 0.101961, 0.101961, 0.682353)
+shadow_size = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m4bb2"]
+bg_color = Color(1, 0.603667, 0.18, 0.85098)
+border_width_left = 2
+border_width_top = 3
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.162066, 0.162066, 0.162065, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+expand_margin_top = 3.0
+shadow_color = Color(0.101961, 0.101961, 0.101961, 0.682353)
+shadow_size = 1
+shadow_offset = Vector2(2, 2)
+
 [sub_resource type="FontVariation" id="FontVariation_dnxk1"]
 base_font = ExtResource("2_asebk")
 
@@ -252,30 +287,38 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Pause Menu" type="Panel" parent="."]
-layout_mode = 0
-offset_left = 445.5
-offset_top = 213.0
-offset_right = 834.5
-offset_bottom = 507.0
+[node name="Pause Menu" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -194.5
+offset_top = -53.0
+offset_right = 194.5
+offset_bottom = 53.0
+grow_horizontal = 2
+grow_vertical = 2
 pivot_offset = Vector2(387.5, 5)
-theme_override_styles/panel = SubResource("StyleBoxFlat_le0hv")
+theme_override_styles/panel = ExtResource("1_xjowy")
 script = ExtResource("6_jrpou")
 
 [node name="Page 1" type="Control" parent="Pause Menu"]
-anchors_preset = 0
-offset_left = 1.0
-offset_top = 3.0
-offset_right = 41.0
-offset_bottom = 43.0
+layout_mode = 2
 
 [node name="Orders" type="HSeparator" parent="Pause Menu/Page 1"]
 custom_minimum_size = Vector2(160, 40)
-layout_mode = 2
-offset_left = 49.0
-offset_top = 22.0
-offset_right = 338.0
-offset_bottom = 62.0
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -169.5
+offset_top = 8.0
+offset_right = 169.5
+offset_bottom = 48.0
+grow_horizontal = 2
 size_flags_vertical = 0
 size_flags_stretch_ratio = 5.31
 theme_override_styles/separator = SubResource("StyleBoxLine_jw774")
@@ -304,44 +347,9 @@ text = "Game Paused"
 horizontal_alignment = 1
 vertical_alignment = 2
 
-[node name="Performance" type="HSeparator" parent="Pause Menu/Page 1"]
+[node name="Buttons" type="Control" parent="Pause Menu"]
 visible = false
 layout_mode = 2
-offset_left = 49.0
-offset_top = 247.0
-offset_right = 338.0
-offset_bottom = 251.0
-size_flags_vertical = 0
-size_flags_stretch_ratio = 2.67
-theme_override_styles/separator = SubResource("StyleBoxLine_jw774")
-
-[node name="Performance Header" type="Label" parent="Pause Menu/Page 1/Performance"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -59.0
-offset_top = -24.0
-offset_right = 59.0
-offset_bottom = 24.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 4
-size_flags_vertical = 0
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/shadow_outline_size = 4
-theme_override_fonts/font = SubResource("FontVariation_0q6cr")
-theme_override_font_sizes/font_size = 40
-text = "Performance"
-horizontal_alignment = 1
-vertical_alignment = 2
-
-[node name="Buttons" type="Control" parent="Pause Menu"]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
 
 [node name="Resume" type="Button" parent="Pause Menu/Buttons"]
 layout_mode = 1
@@ -350,10 +358,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = 96.0
-offset_top = 41.0
-offset_right = 253.0
-offset_bottom = 90.0
+offset_left = -73.5
+offset_top = -113.0
+offset_right = 83.5
+offset_bottom = -64.0
 grow_horizontal = 2
 grow_vertical = 0
 focus_mode = 0
@@ -378,10 +386,9 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = 96.0
-offset_top = 105.0
-offset_right = 253.0
-offset_bottom = 154.0
+offset_left = -73.5
+offset_top = -49.0
+offset_right = 83.5
 grow_horizontal = 2
 grow_vertical = 0
 focus_mode = 0
@@ -406,10 +413,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = 96.0
-offset_top = 171.0
-offset_right = 253.0
-offset_bottom = 220.0
+offset_left = -73.5
+offset_top = 17.0
+offset_right = 83.5
+offset_bottom = 66.0
 grow_horizontal = 2
 grow_vertical = 0
 focus_mode = 0
@@ -427,14 +434,101 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_5jtmb")
 theme_override_styles/normal = SubResource("StyleBoxFlat_ab3md")
 text = "Main Menu"
 
+[node name="ButtonMargin" type="MarginContainer" parent="Pause Menu"]
+layout_mode = 2
+theme_override_constants/margin_top = 70
+theme_override_constants/margin_bottom = 20
+
+[node name="ButtonBox" type="VBoxContainer" parent="Pause Menu/ButtonMargin"]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 2
+
+[node name="Resume" type="Button" parent="Pause Menu/ButtonMargin/ButtonBox"]
+custom_minimum_size = Vector2(157, 49)
+layout_mode = 2
+size_flags_horizontal = 4
+focus_mode = 0
+theme_override_colors/font_disabled_color = Color(0.288518, 0.288518, 0.288518, 1)
+theme_override_colors/font_hover_color = Color(0.977937, 0.977937, 0.977937, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(0.899258, 0.899258, 0.899258, 1)
+theme_override_colors/font_outline_color = Color(0.233925, 0.233925, 0.233925, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("6_5iavn")
+theme_override_font_sizes/font_size = 35
+theme_override_styles/disabled = SubResource("StyleBoxFlat_5oi8m")
+theme_override_styles/hover = SubResource("StyleBoxFlat_cb82b")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_lguhn")
+theme_override_styles/normal = SubResource("StyleBoxFlat_3oqoa")
+text = "Resume"
+
+[node name="Options" type="Button" parent="Pause Menu/ButtonMargin/ButtonBox"]
+custom_minimum_size = Vector2(157, 49)
+layout_mode = 2
+size_flags_horizontal = 4
+focus_mode = 0
+theme_override_colors/font_disabled_color = Color(0.288518, 0.288518, 0.288518, 1)
+theme_override_colors/font_hover_color = Color(0.977937, 0.977937, 0.977937, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(0.899258, 0.899258, 0.899258, 1)
+theme_override_colors/font_outline_color = Color(0.233925, 0.233925, 0.233925, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("6_5iavn")
+theme_override_font_sizes/font_size = 35
+theme_override_styles/disabled = SubResource("StyleBoxFlat_a7vk3")
+theme_override_styles/hover = SubResource("StyleBoxFlat_mvy6u")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ri70q")
+theme_override_styles/normal = SubResource("StyleBoxFlat_yydoh")
+text = "Options"
+
+[node name="Stuck" type="Button" parent="Pause Menu/ButtonMargin/ButtonBox"]
+custom_minimum_size = Vector2(157, 49)
+layout_mode = 2
+size_flags_horizontal = 4
+focus_mode = 0
+theme_override_colors/font_disabled_color = Color(0.288518, 0.288518, 0.288518, 1)
+theme_override_colors/font_hover_color = Color(0.977937, 0.977937, 0.977937, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(0.899258, 0.899258, 0.899258, 1)
+theme_override_colors/font_outline_color = Color(0.233925, 0.233925, 0.233925, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("6_5iavn")
+theme_override_font_sizes/font_size = 35
+theme_override_styles/disabled = SubResource("StyleBoxFlat_a7vk3")
+theme_override_styles/hover = SubResource("StyleBoxFlat_x4ovc")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_uwqry")
+theme_override_styles/normal = SubResource("StyleBoxFlat_m4bb2")
+text = "Stuck?"
+
+[node name="Main Menu" type="Button" parent="Pause Menu/ButtonMargin/ButtonBox"]
+custom_minimum_size = Vector2(157, 49)
+layout_mode = 2
+size_flags_horizontal = 4
+focus_mode = 0
+theme_override_colors/font_disabled_color = Color(0.288518, 0.288518, 0.288518, 1)
+theme_override_colors/font_hover_color = Color(0.977937, 0.977937, 0.977937, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(0.899258, 0.899258, 0.899258, 1)
+theme_override_colors/font_outline_color = Color(0.233925, 0.233925, 0.233925, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("6_5iavn")
+theme_override_font_sizes/font_size = 35
+theme_override_styles/disabled = SubResource("StyleBoxFlat_5oi8m")
+theme_override_styles/hover = SubResource("StyleBoxFlat_alhxt")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_5jtmb")
+theme_override_styles/normal = SubResource("StyleBoxFlat_ab3md")
+text = "Main Menu"
+
 [node name="Options Menu" type="Panel" parent="."]
+unique_name_in_owner = true
 layout_mode = 0
 offset_left = 1417.0
 offset_top = 183.0
 offset_right = 1806.0
 offset_bottom = 477.0
 pivot_offset = Vector2(0, 294)
-theme_override_styles/panel = SubResource("StyleBoxFlat_le0hv")
+theme_override_styles/panel = ExtResource("1_xjowy")
 
 [node name="Page 1" type="Control" parent="Options Menu"]
 anchors_preset = 0
@@ -475,40 +569,6 @@ theme_override_constants/shadow_outline_size = 4
 theme_override_fonts/font = SubResource("FontVariation_0q6cr")
 theme_override_font_sizes/font_size = 40
 text = "Options"
-horizontal_alignment = 1
-vertical_alignment = 2
-
-[node name="Performance" type="HSeparator" parent="Options Menu/Page 1"]
-visible = false
-layout_mode = 2
-offset_left = 49.0
-offset_top = 247.0
-offset_right = 338.0
-offset_bottom = 251.0
-size_flags_vertical = 0
-size_flags_stretch_ratio = 2.67
-theme_override_styles/separator = SubResource("StyleBoxLine_jw774")
-
-[node name="Performance Header" type="Label" parent="Options Menu/Page 1/Performance"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -59.0
-offset_top = -24.0
-offset_right = 59.0
-offset_bottom = 24.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 4
-size_flags_vertical = 0
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/shadow_outline_size = 4
-theme_override_fonts/font = SubResource("FontVariation_0q6cr")
-theme_override_font_sizes/font_size = 40
-text = "Performance"
 horizontal_alignment = 1
 vertical_alignment = 2
 
@@ -673,6 +733,10 @@ text = "Back"
 [connection signal="pressed" from="Pause Menu/Buttons/Resume" to="Pause Menu" method="_on_resume_pressed"]
 [connection signal="pressed" from="Pause Menu/Buttons/Options" to="Pause Menu" method="_on_options_pressed"]
 [connection signal="pressed" from="Pause Menu/Buttons/Main Menu" to="Pause Menu" method="_on_main_menu_pressed"]
+[connection signal="pressed" from="Pause Menu/ButtonMargin/ButtonBox/Resume" to="Pause Menu" method="_on_resume_pressed"]
+[connection signal="pressed" from="Pause Menu/ButtonMargin/ButtonBox/Options" to="Pause Menu" method="_on_options_pressed"]
+[connection signal="pressed" from="Pause Menu/ButtonMargin/ButtonBox/Stuck" to="Pause Menu" method="_on_stuck_pressed"]
+[connection signal="pressed" from="Pause Menu/ButtonMargin/ButtonBox/Main Menu" to="Pause Menu" method="_on_main_menu_pressed"]
 [connection signal="timeout" from="Options Menu/Sliders/SFX/Timer" to="Options Menu/Sliders/SFX/Timer" method="_on_timeout"]
 [connection signal="item_selected" from="Options Menu/Sliders/Difficulty" to="Options Menu/Sliders/Difficulty" method="_on_item_selected"]
 [connection signal="toggled" from="Options Menu/Sliders/Tutorial" to="Options Menu/Sliders/Tutorial" method="_on_toggled"]

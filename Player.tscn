@@ -1,10 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://chh4eg6sus1x"]
+[gd_scene load_steps=13 format=3 uid="uid://chh4eg6sus1x"]
 
 [ext_resource type="Script" path="res://Scripts/PlayerCar.gd" id="1_fxmo4"]
 [ext_resource type="Texture2D" uid="uid://bm1woxmr486ps" path="res://Sprites/cars.png" id="2_djg4b"]
 [ext_resource type="Texture2D" uid="uid://bq1t8xabjm18t" path="res://Sprites/arrow.png" id="3_mddtf"]
 [ext_resource type="AudioStream" uid="uid://csffgre7kycou" path="res://SFX/truck_idle.wav" id="4_52k5n"]
 [ext_resource type="Script" path="res://Scripts/arrow.gd" id="4_jvi78"]
+[ext_resource type="AudioStream" uid="uid://4rwbxc23pww4" path="res://SFX/honk.wav" id="6_fb446"]
 
 [sub_resource type="Curve" id="Curve_f6lch"]
 min_value = 0.5
@@ -202,6 +203,9 @@ offset_top = -54.0
 offset_right = 10.0
 offset_bottom = -31.0
 text = "100"
+
+[node name="Horn" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_fb446")
 
 [connection signal="body_exited" from="Traffic" to="." method="_on_traffic_body_exited"]
 [connection signal="timeout" from="OutOfGas" to="." method="_on_out_of_gas_timeout"]

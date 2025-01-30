@@ -176,4 +176,5 @@ func _on_car_upgrades_done_shopping_pressed() -> void:
 	tween.tween_callback(func(): music_player.stream = load("res://SFX/echo-flux-258965.mp3");music_player.play())
 	tween.tween_property($Music,"volume_db",-14,1)
 	UI.player_map_position = UI.PLAYER_HOME_SPAWN
-	UI.fade_out(1.5,get_tree().change_scene_to_packed.bind(CITY_SCENE))
+	await UI.fade_out(1.5,get_tree().change_scene_to_packed.bind(CITY_SCENE))
+	get_tree().create_timer(1).timeout.connect(UI.unpause_timers)
