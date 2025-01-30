@@ -250,7 +250,7 @@ func pause(run_tutorial_stage = null):
 		$Tutorial.play_tutorial(run_tutorial_stage)
 	
 func show_pause_menu():
-	$"Options".get_child(0).pause()
+	$OptionsLayer/Options.get_child(0).pause()
 
 func test_UI_functions():
 	#add_cash(120,0)
