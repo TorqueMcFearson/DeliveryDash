@@ -58,7 +58,6 @@ func _ready() -> void:
 		upgrade.init(upgrade_data[upgrade.name])
 		upgrade.purchase.connect(upgrade_data[upgrade.name]["callback"])
 	update()
-	print("-%d%% this is for testing purposes" % [5])
 	pass # Replace with function body.
 
 
@@ -86,7 +85,6 @@ func update_cash_label():
 	$"Options Menu/Cash/L_Cash".text = "$" + str(UI.cash)
 
 func upgrade_bumper(price):
-	print("fired upgrade_bumper")
 	var upgrade = "Strong Bumpers"
 	process_payment(price)
 	process_upgrade(upgrade)
@@ -95,7 +93,6 @@ func upgrade_bumper(price):
 	
 
 func upgrade_engine(price):
-	print("fired upgrade_engine")
 	process_payment(price)
 	var upgrade = "TuroCharge Engine"
 	process_upgrade(upgrade)
@@ -103,7 +100,6 @@ func upgrade_engine(price):
 	update()
 	
 func upgrade_fuel_eff(price):
-	print("fired upgrade_fuel_eff")
 	process_payment(price)
 	var upgrade = "Fuel Efficiency"
 	process_upgrade(upgrade)
@@ -111,7 +107,6 @@ func upgrade_fuel_eff(price):
 	update()
 	
 func upgrade_fuel_tank(price):
-	print("fired upgrade_fuel_tank")
 	process_payment(price)
 	var upgrade = "Fuel Tank Size"
 	process_upgrade(upgrade)
@@ -119,26 +114,23 @@ func upgrade_fuel_tank(price):
 	update()
 	
 func upgrade_car_horn(price):
-	print("fired upgrade_car_horn")
-	process_payment(price)
-	var upgrade = "Car Horn"
-	process_upgrade(upgrade)
 	UI.car_horn = true
+	var upgrade = "Car Horn"
+	process_payment(price)
+	process_upgrade(upgrade)
 	update()
 
 func process_upgrade(upgrade):
 	UI.upgrade_levels[upgrade] += 1
-	var level = UI.upgrade_levels[upgrade]
 	
 func process_modifer(upgrade,modifier):
 	var level = UI.upgrade_levels[upgrade]
 	if modifier is Array:
-		for n in range(len(modifier)):
-			UI.set(modifier[n],1.0+(upgrade_data[upgrade]["stats"][level-1][n]/100.00))
-			prints("NEW MODIFIER",upgrade,UI.get(modifier[n]))
+		for idx in range(len(modifier)):
+			var stat_data = (upgrade_data[upgrade]["stats"][level-1][idx]/100.00)
+			UI.set(modifier[idx],1.0+stat_data)
 	else:
 		UI.set(modifier,1.0+(upgrade_data[upgrade]["stats"][level-1]/100.00))
-		prints("NEW MODIFIER",upgrade,UI.get(modifier))
 	
 func process_payment(price):
 	UI.cash -= price

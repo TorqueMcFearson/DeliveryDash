@@ -26,10 +26,12 @@ var BUMP_DAMPING := .6:
 const ROAD_DIR = ["Horz","Vert","Both"]
 const arrow_off_min = 160**2
 const arrow_on_min = 200**2
+const HORN_COOLDOWN = 3
 	
 	##Preset Variables
 @export_range(0.0,2000.0,10.0) var MAX_SPEED_DEFAULT :float #450
 @onready var MAX_SPEED :float = MAX_SPEED_DEFAULT
+
 ########################################
 ## Variables & Enums
 ####################
@@ -43,6 +45,7 @@ var collisions = []
 var state : STATE = STATE.ACTIVE
 var sound_velocity :float = 0
 var bumped:bool=false
+var car_horn = UI.car_horn
 
 
 ########################################
@@ -54,9 +57,11 @@ func _ready() -> void:
 	
 
 func _unhandled_key_input(event: InputEvent) -> void:
-	if event is InputEventKey:
-		if event.pressed and event.keycode == KEY_SPACE:
-			blast_horn()
+	if car_horn:
+		if event is InputEventKey:
+			if event.is_action_pressed("Honk"):
+				blast_horn()
+				cooldown_horn()
 	
 func _physics_process(delta: float) -> void:
 	render_arrow()
@@ -194,7 +199,7 @@ func render_arrow():
 	arrow.position = arrow.global_position.clamp(global_position+arrow_safezone.position,global_position+arrow_safezone.end) #global_position-vp.end/2.8,global_position+vp.end/2.8)
 	arrow.rotation = position.direction_to(dest).angle()
 
-func process_motor():		
+func process_motor():
 	if not UI.gas:
 		$Motor_Sound.volume_db = -80
 		return
@@ -213,6 +218,20 @@ func _on_out_of_gas_timeout() -> void:
 	if UI.gas == 0:
 		respawn() # Replace with function body.
 
+
+func cooldown_horn():
+	car_horn = false
+	var timer = get_tree().create_timer(HORN_COOLDOWN)
+	timer.timeout.connect(func():print("DOES THIS WORK?");re_activate_horn())
+
+	
+	
+	
+
+func re_activate_horn():
+	print("COOLDOWN REFRESHED")
+	car_horn = true
+	
 func blast_horn():
 	$Horn.play()
 	var blast_zone = generate_blast_radius()

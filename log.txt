@@ -6,3 +6,7 @@ DAY 1 || Cash Earned: 0 , Pocket_Cash: 10 , Total Expenses: 61 , Total Cash: 0 ,
 
 2025-01-30T13:52:36
 DAY 1 || Cash Earned: 0 , Pocket_Cash: 10 , Total Expenses: 85 , Total Cash: 0 , Fuel Spend: 0
+
+
+2025-01-31T10:56:16
+DAY 1 || Cash Earned: 0 , Pocket_Cash: 1000 , Total Expenses: 68 , Total Cash: 932 , Fuel Spend: 0

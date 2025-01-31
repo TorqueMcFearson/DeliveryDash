@@ -164,7 +164,6 @@ var fuel_rate:=.92:
 		return fuel_rate * UI.fuel_consume_modifier
 var debug_dictionary := {"Fuel Spend": 0,}
 var gas_label_pos = Vector2(-14,-151)
-var upgrades = {}
 
 
 func _ready() -> void:
