@@ -1868,7 +1868,6 @@ data = {
 
 [sub_resource type="ImageTexture" id="ImageTexture_4dyyb"]
 image = SubResource("Image_bk453")
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mu1dd"]
 content_margin_left = 8.0
 content_margin_top = 4.0
