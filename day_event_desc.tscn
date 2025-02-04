@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://bgwk1x3r30b0d"]
 
 [ext_resource type="FontFile" uid="uid://gs5irb036wet" path="res://Font/RobotoMono-VariableFont_wght.ttf" id="1_gntce"]
-[ext_resource type="Script" path="res://rich_text_label.gd" id="1_plj3h"]
+[ext_resource type="Script" path="res://DayEventDescription.gd" id="1_plj3h"]
 
 [sub_resource type="FontVariation" id="FontVariation_isqdm"]
 base_font = ExtResource("1_gntce")
@@ -23,9 +23,12 @@ corner_radius_top_right = 6
 corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 
-[node name="DayEventDesc" type="Node2D"]
+[node name="DayEventDesc" type="Control"]
+layout_mode = 3
+anchors_preset = 0
 
 [node name="DayEventText" type="RichTextLabel" parent="."]
+layout_mode = 0
 offset_left = 366.0
 offset_top = 188.0
 offset_right = 746.0

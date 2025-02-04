@@ -1,4 +1,5 @@
 extends RichTextLabel
+@onready var sub_text: RichTextLabel = $"../SubText"
 const good_event_database :Dictionary= {
 	0:{ "title":"Bad Weather",
 		"description":"While locking your front door, you notice %s as the sky darkens with clouds.",
@@ -14,28 +15,28 @@ const good_event_database :Dictionary= {
 		"property": null, #TODO
 		"amount": 1.5}, #TODO
 		
-	2:{ "title":"Fresh Asphalt",
+	2:{ "title":"Spilt Coffee",
 		"description":"While fueling up before work, you accidentally %s.",
 		"highlight" : "spill your triple-shot espresso into your gas tank",
 		"snippet":"faster driving speed",
 		"property": null, #TODO
 		"amount": 1.5}, #TODO
 		
-	3:{ "title":"Patient Customers",
+	3:{ "title":"Crashed Tanker",
 		"description":"While eating breakfast, the news mentions a tanker crashed on the freeway, %s.",
 		"highlight" : "releasing tons of laughing gas into the air",
 		"snippet":"patient customers",
 		"property": null, #TODO
 		"amount": 1.5}, #TODO
 		
-	4:{ "title":"Sporting Event",
+	4:{ "title":"The Big Game",
 		"description":"While picking up groceries, you see several people in facepaint and big banners that read %s!",
 		"highlight" : "SuperBowl Sunday",
 		"snippet":"lots of orders",
 		"property": null, #TODO
 		"amount": 1.5}, #TODO
 		
-	5:{ "title":"Gas Hike",
+	5:{ "title":"Trade Wars",
 		"description":"While browsing social media, several memes describe a trade embargo %s to your country.",
 		"highlight" : "restricting imports of crude oil",
 		"snippet":"higher gas prices",
@@ -49,7 +50,7 @@ const good_event_database :Dictionary= {
 		"snippet":"fast gas pumps",
 		"property": null, #TODO
 		"amount": 1.5}, #TODO
-}
+		}
 const bad_event_database :Dictionary= {
 		0:{ "title":"Local Festival",
 		"description":"While swiping tiktok, you get a video ad about some %s.",
@@ -65,28 +66,28 @@ const bad_event_database :Dictionary= {
 		"property": null, #TODO
 		"amount": 1.5}, #TODO
 		
-	2:{ "title":"Spare Tire",
+	2:{ "title":"Flat Tire",
 		"description":"While pulling out your driveway, you hear the rubbery flop of a flat, forcing you to swap to your %s.",
 		"highlight" : "rickety spare tire",
 		"snippet":"slower driving speed",
 		"property": null, #TODO
 		"amount": 1.5}, #TODO
 		
-	3:{ "title":"Impatient customers",
-		"description":"While chatting on discord, you notice that %s is since Netflix did a crackdown on passwords.",
+	3:{ "title":"Mad World",
+		"description":"While chatting on discord, you notice that %s since Netflix did a crackdown on sharing passwords.",
 		"highlight" : "everyone has a short fuse",
-		"snippet":"Impatient customers",
+		"snippet":"impatient customers",
 		"property": null, #TODO
 		"amount": 1.5}, #TODO
 		
-	4:{ "title":"Too Many Dashers",
+	4:{ "title":"Too Many Newbs",
 		"description":"While logging into the DeliveryDash app, you notice there is double the amount of dashers working today and %s.",
 		"highlight" : "hardly any available orders",
 		"snippet":"reduced orders",
 		"property": null, #TODO
 		"amount": 1.5}, #TODO
 		
-	5:{ "title":"Oil Found in Texas",
+	5:{ "title":"Dead Racoons",
 		"description":"While chatting with your neighbor, you learn that recent %s caused a species of racoon to go extinct.",
 		"highlight" : "deregulations of fracking",
 		"snippet":"lower gas prices",
@@ -100,19 +101,25 @@ const bad_event_database :Dictionary= {
 		"snippet":"slow fuel pumps",
 		"property": null, #TODO
 		"amount": 1.5}, #TODO
-}
+		}
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	visible_ratio = 0
+	sub_text.visible_ratio = 0
 	var good_event = good_event_database[randi_range(0,len(good_event_database)-1)]
 	var bad_event = bad_event_database[randi_range(0,len(bad_event_database)-1)]
 	var good_descript :String = good_event["description"] % ("[b][color=steel_blue]%s[/color][/b]" % good_event["highlight"])
 	var bad_descript :String = bad_event["description"] % ("[b][color=steel_blue]%s[/color][/b]" % bad_event["highlight"])
 	var good_snippet = "[b][color=green]%s[/color][/b]" % good_event["snippet"]
 	var bad_snippet = "[b][color=red]%s[/color][/b]" % bad_event["snippet"]
-	var snippet = "Seems like you're in for %s and %s today." % [good_snippet,bad_snippet]
+	var title = "[font_size=18][center]%s / %s[/center][/font_size]" %[good_event["title"],bad_event["title"]]
+	var snippet = "[center]Seems like you're in for %s and %s today." % [good_snippet,bad_snippet]
 	var descript = "%s\n\nLater, %s"  % [good_descript,bad_descript.to_lower()]
+	text = "[center]%s\n\n%s" % [title,descript]
+	sub_text.text = snippet
 
-	text = "%s\n\n%s" % [descript, snippet]
-	create_tween().tween_property(self,"visible_ratio",1,.5)
+	print(text)
+	var tween = create_tween()
+	tween.tween_property(self,"visible_ratio",1,.5)
+	tween.tween_property(sub_text,"visible_ratio",1,.5)
