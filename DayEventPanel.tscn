@@ -1,0 +1,179 @@
+[gd_scene load_steps=18 format=3 uid="uid://n2e7qbjpxoqf"]
+
+[ext_resource type="Script" path="res://upgrade_panel.gd" id="1_xs0q0"]
+[ext_resource type="Texture2D" uid="uid://di38f2vis4t5v" path="res://Sprites/engine.png" id="2_uy0ni"]
+[ext_resource type="FontFile" uid="uid://v3swnsgchgpo" path="res://Font/BebasNeue-Regular.ttf" id="3_hfu6l"]
+[ext_resource type="FontFile" uid="uid://gs5irb036wet" path="res://Font/RobotoMono-VariableFont_wght.ttf" id="4_l36i0"]
+[ext_resource type="Texture2D" uid="uid://b5pcg5whmd1nc" path="res://Sprites/star_outline.png" id="5_pyhjw"]
+[ext_resource type="FontFile" uid="uid://ydwn4indox68" path="res://Font/Bangers-Regular.ttf" id="6_km8ed"]
+[ext_resource type="StyleBox" uid="uid://1x6sw54qrhb8" path="res://StyleBoxes/progress-accept~complete-hover.tres" id="7_7ew40"]
+[ext_resource type="StyleBox" uid="uid://bfk44tl2r47xv" path="res://StyleBoxes/progress-accept~complete-pressed.tres" id="8_e3jd5"]
+[ext_resource type="StyleBox" uid="uid://13y5j3phgal2" path="res://StyleBoxes/progress-accept~complete-normal.tres" id="9_ep5of"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jxprr"]
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 16.0
+bg_color = Color(0.104, 0.106167, 0.13, 0.470588)
+border_width_top = 2
+border_width_bottom = 2
+border_color = Color(0.94, 0.94, 0.94, 0.14902)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="FontVariation" id="FontVariation_yhdqn"]
+base_font = ExtResource("3_hfu6l")
+
+[sub_resource type="LabelSettings" id="LabelSettings_sn5w5"]
+font = SubResource("FontVariation_yhdqn")
+font_size = 24
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_7opsx"]
+color = Color(1, 1, 1, 0.227451)
+grow_begin = 5.0
+grow_end = 5.0
+thickness = 2
+
+[sub_resource type="LabelSettings" id="LabelSettings_qemup"]
+line_spacing = 0.0
+font = ExtResource("4_l36i0")
+font_size = 12
+font_color = Color(0.933594, 0.933594, 0.933594, 1)
+shadow_color = Color(0, 0, 0, 0.541176)
+
+[sub_resource type="LabelSettings" id="LabelSettings_6gjml"]
+line_spacing = 0.0
+font = ExtResource("4_l36i0")
+font_size = 12
+font_color = Color(0.37625, 0.86, 0.215, 0.909804)
+shadow_color = Color(0, 0, 0, 0.4)
+
+[sub_resource type="FontVariation" id="FontVariation_tyc2x"]
+base_font = ExtResource("6_km8ed")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_un7qq"]
+content_margin_left = 5.0
+content_margin_top = 3.0
+content_margin_right = 5.0
+content_margin_bottom = 3.0
+bg_color = Color(0.21, 0.21, 0.21, 0.776471)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+shadow_color = Color(0.13, 0.13, 0.13, 1)
+shadow_size = 2
+shadow_offset = Vector2(2, 2)
+
+[node name="UpgradePanel" type="PanelContainer"]
+custom_minimum_size = Vector2(200, 250)
+offset_right = 200.0
+offset_bottom = 332.0
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_jxprr")
+script = ExtResource("1_xs0q0")
+
+[node name="UpgradeContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 2
+alignment = 1
+
+[node name="Icon-Title" type="VBoxContainer" parent="UpgradeContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+size_flags_stretch_ratio = 1.1
+
+[node name="Icon" type="TextureRect" parent="UpgradeContainer/Icon-Title"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("2_uy0ni")
+stretch_mode = 5
+
+[node name="Title" type="Label" parent="UpgradeContainer/Icon-Title"]
+layout_mode = 2
+text = "Strong Bumpers"
+label_settings = SubResource("LabelSettings_sn5w5")
+horizontal_alignment = 1
+
+[node name="Description" type="RichTextLabel" parent="UpgradeContainer/Icon-Title"]
+layout_mode = 2
+size_flags_vertical = 5
+size_flags_stretch_ratio = 0.0
+theme_override_fonts/normal_font = ExtResource("4_l36i0")
+theme_override_font_sizes/normal_font_size = 11
+text = "Reduces the slowdown of collisions."
+fit_content = true
+shortcut_keys_enabled = false
+deselect_on_focus_loss_enabled = false
+drag_and_drop_selection_enabled = false
+
+[node name="HSeparator" type="HSeparator" parent="UpgradeContainer/Icon-Title"]
+layout_mode = 2
+theme_override_constants/separation = 20
+theme_override_styles/separator = SubResource("StyleBoxLine_7opsx")
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="UpgradeContainer"]
+layout_mode = 2
+size_flags_vertical = 2
+
+[node name="Stats" type="Label" parent="UpgradeContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(1, 0)
+layout_mode = 2
+size_flags_vertical = 5
+size_flags_stretch_ratio = 0.0
+text = "-25% slowdown"
+label_settings = SubResource("LabelSettings_qemup")
+autowrap_mode = 3
+
+[node name="Upgrade_stats" type="Label" parent="UpgradeContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(1, 0)
+layout_mode = 2
+size_flags_vertical = 5
+size_flags_stretch_ratio = 0.0
+text = "-50% slowdown"
+label_settings = SubResource("LabelSettings_6gjml")
+autowrap_mode = 3
+
+[node name="Sprite2D2" type="Sprite2D" parent="UpgradeContainer"]
+position = Vector2(-13.5, 1.5)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UpgradeContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+size_flags_stretch_ratio = 0.0
+theme_override_constants/separation = 8
+
+[node name="Starbox" type="HBoxContainer" parent="UpgradeContainer/VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+size_flags_vertical = 8
+size_flags_stretch_ratio = 0.0
+alignment = 1
+
+[node name="star1" type="TextureRect" parent="UpgradeContainer/VBoxContainer/Starbox"]
+visible = false
+layout_mode = 2
+texture = ExtResource("5_pyhjw")
+expand_mode = 2
+
+[node name="Price" type="Button" parent="UpgradeContainer/VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 10
+size_flags_stretch_ratio = 0.0
+focus_mode = 0
+theme_override_fonts/font = SubResource("FontVariation_tyc2x")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_un7qq")
+theme_override_styles/hover = ExtResource("7_7ew40")
+theme_override_styles/pressed = ExtResource("8_e3jd5")
+theme_override_styles/normal = ExtResource("9_ep5of")
+text = "Max Upgrade"
+
+[connection signal="pressed" from="UpgradeContainer/VBoxContainer/Price" to="." method="_on_price_pressed"]

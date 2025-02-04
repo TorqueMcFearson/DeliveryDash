@@ -12,13 +12,17 @@ const _4_AM = preload("res://4_am.tscn")
 @onready var phone: Panel = $Phone
 @onready var gas_level: TextureProgressBar = $"UI/Gas Can/Gas Box/Gas Level"
 @onready var gas_can: TextureRect = $"UI/Gas Can"
+@onready var fader: Panel = $FaderCanvas/Fader
+@onready var fader_message: Label = $FaderCanvas/Fader/Message
+
 
 
 signal new_active_order_set(order:Order)
 signal tween_complete
 signal tutorial_change
-var shift_start = [16,00]
-var shift_end = [20,00]
+#@export_category("Clock")
+
+
 class ClockTime:
 	var hour: int
 	var minute :int
@@ -49,7 +53,7 @@ class ClockTime:
 		return "%s:%02d %s" % [t_hour,t_minute,_get_ampm()]
 		
 	func is_time_up():
-		return hour == time_up[0] and minute == time_up[1]
+		return hour >= time_up[0] and minute >= time_up[1]
 		
 	func almost_time():
 		return hour == 19 and minute > 29
@@ -66,21 +70,36 @@ class Building:
 		self.type = type
 
 ## Play State ######################
-@export var rating : float = 20.0
+@export_group("Clock") 
+@export var shift_start = [16,00]
+@export var shift_end = [20,00]
+@export_group("Variables") 
+@export var rating : float = 20.0 :
+	set(value):
+		rating = clamp(value,0,100)
+		
 @export var cash :int = 10
+var clock := ClockTime.new(shift_start,shift_end)
 var cash_to_add :int = 0
 var tween_tracking:bool
 var tip_to_add :int = 0
-var clock = ClockTime.new(shift_start,shift_end)
 var player_map_position : Vector2 =  PLAYER_HOME_SPAWN 
 var stores : Array
 var houses : Array
 const PLAYER_HOME_SPAWN = Vector2(2785,2779)
 const MAX_RATING = 100
 const STAR_BAR_WIDTH = 170.0
-const MAX_ORDERS = 3
-const ORDER_MIN_TIME = 7
-const ORDER_MAX_TIME = 13
+const COMPLETE_ORDER_RATING_EARN = 8
+var MAX_ORDERS = 3:
+	get():
+		return round(MAX_ORDERS * max_orders_mod)
+	
+var ORDER_MIN_TIME = 7:
+	get():
+		return ORDER_MIN_TIME * order_timer_mod
+var ORDER_MAX_TIME = 13:
+	get():
+		return ORDER_MAX_TIME * order_timer_mod
 const FORGOT_MARK_PICKUP_PVALUE = 6
 var round_stats : Dictionary = {
 	"Orders Accepted" : 0,
@@ -127,6 +146,8 @@ var tutorial_enabled = true:
 var tween :Tween 
 var day_over:bool = false
 var time_passed := 0.0
+
+@export_group("Modifiers")
 @export var speed_modifier := 1.0
 @export var accel_modifier := 1.0
 @export var max_fuel_modifier := 1.0:
@@ -134,7 +155,18 @@ var time_passed := 0.0
 		max_fuel_modifier = value
 		set_gas_level()
 @export var fuel_consume_modifier := 1.0
+@export var max_cars_modifier = 1.0
+@export var AI_max_speed_mod = 1.0
 @export var bump_modifer := 1.0
+@export var max_orders_mod := 1.0
+@export var order_timer_mod := 1.0
+@export var order_duration_mod := 1.0
+@export var gas_price_mod := 1.0
+@export var gas_fill_speed_mod := 1.0
+@export var expense_mod := 1.0
+@export var rating_mod := 1.0
+@export var tip_mod := 1.0
+@export var base_pay_mod := 1.0
 @export var car_horn := false
 @export var upgrade_levels = {
 	"Strong Bumpers" : 0,
@@ -143,6 +175,7 @@ var time_passed := 0.0
 	"Fuel Tank Size" : 0,
 	"Car Horn" : 0,
 	}
+	
 ## Gas Variables ######################
 const GAS_COST = .5
 const FUEL_WARNING_LEVEL = 25
@@ -170,12 +203,12 @@ func _ready() -> void:
 	gas_level.value = gas
 	set_gas_level()
 	$Tutorial.hide()
-	$Fader.show()
+	fader.show()
 	pause_timers()
 	$UI/Panel/STAR_BAR.size.x = (rating/MAX_RATING) * STAR_BAR_WIDTH
 	$UI/Panel/Time.text = clock.get_time()
 	fade_in() # Replace with function body.
-	get_tree().create_timer(1).timeout.connect(test_UI_functions)
+
 	
 	
 func _unhandled_input(event: InputEvent) -> void:
@@ -254,22 +287,18 @@ func pause(run_tutorial_stage = null):
 func show_pause_menu():
 	$OptionsLayer/Options.get_child(0).pause()
 
-func test_UI_functions():
-	#add_cash(120,0)
-	#get_tree().create_timer(5).timeout.connect(end_day)
-	#get_tree().create_timer(.5).timeout.connect(add_cash.bind(2,20)) 
-	#did_a_good(30)
-	pass
 
-func fade_in(duration=1.0,callback=null,delay=.25):
+func fade_in(duration=1.0,callback=null,delay=.25) -> Signal:
 	tween = create_tween()
-	tween.tween_property($Fader,"modulate",Color(1,1,1,0),duration)
+	tween.tween_property(fader,"modulate",Color(1,1,1,0),duration)
 	if callback:tween.tween_callback(callback).set_delay(delay)
+	tween.tween_callback(func():set_fader_label.bind(""))
 	return tween.finished
 	
-func fade_out(duration=.5,callback=null,delay=.25):
+func fade_out(duration=.5,callback=null,delay=.25,message :="") -> Signal:
+	set_fader_label(message)
 	tween = create_tween()
-	tween.tween_property($Fader,"modulate",Color(1,1,1,1),duration)
+	tween.tween_property(fader,"modulate",Color(1,1,1,1),duration)
 	if callback:tween.tween_callback(callback).set_delay(delay)
 	return tween.finished
 	
@@ -284,15 +313,12 @@ func show_UI():
 func update_clock():
 	$UI/Panel/Time.text = clock.get_time()
 	if clock.is_time_up():
-		var player = get_tree().current_scene.find_child("Player")
-
-		$Respawning.text = "Day Over... Driving Home"
-		$Respawning.show()
 		end_day()
-		$Respawning.hide()
-		$New_Order_Timer.paused = true
 
-		
+func set_fader_label(string:String):
+	fader_message.text = string
+
+	
 func _on_clock_tick() -> void:
 	clock.tick()
 	update_clock()
@@ -307,25 +333,23 @@ func pause_timers():
 	for timer in [$ClockTick, $Order_Update, $New_Order_Timer]:
 		timer.paused = true
 		
-func end_day():
+func end_day(text :String= "Day Over... Driving Home"):
 	day_over = true
 	phone._phone_off()
 	pause_timers()
 	if tween: tween.kill()
-	var tween2 = create_tween()
-	tween2.tween_property($Music,"volume_db",-50,1.8)
-	tween2.tween_callback(func():$Music.stream = load("res://SFX/lofi-boy-night-waves-lofi-relax-instrumental-278248.mp3");$Music.play())
-	tween2.tween_property($Music,"volume_db",-14,.75)
-	
+	fade_out_in_music("res://SFX/lofi-boy-night-waves-lofi-relax-instrumental-278248.mp3",1.8)
 	for order in order_list.get_children():
 		order.queue_free()
-	await fade_out(2,get_tree().change_scene_to_packed.bind(_4_AM))
+	fade_out(1.5,get_tree().change_scene_to_packed.bind(_4_AM),1,text)
+	
 	
 func to_main_menu():
 	pause_timers()
 	if tween: tween.kill()
 	reset()
 	unpause()
+	UI.fade_out_in_music("res://SFX/echo-flux-258965.mp3",.25)
 	fade_out(.25,get_tree().change_scene_to_packed.bind(load("res://Title_Screen.tscn")))
 
 func unpause():
@@ -350,7 +374,7 @@ func generate_order() -> Order:
 func generate_random_receipt(): #[order.customer,order.resturant,order.address]
 	return [stores.pick_random(),randi_range(1,99),generate_customer(),generate_address(),]
 	
-func new_order() -> Order:
+func start_new_order() -> Order:
 	var new_order = generate_order()
 	$Phone.add_order(new_order)
 	if UI.tutorial_stage(1):
@@ -381,10 +405,10 @@ func get_houses(houses):
 		idx +=1
 		
 func order_timer_timeout():
-	if order_list.get_child_count() < MAX_ORDERS:
+	if order_list.get_child_count() < MAX_ORDERS * max_orders_mod:
 		$"Phone Ding".play()
 		$Phone.blink()
-		new_order()
+		start_new_order()
 		new_order_timer_update()
 		
 	
@@ -421,7 +445,7 @@ func made_a_mistake(value):
 	UI.round_stats["Rating Change"] -= value
 	UI.round_stats["Mistakes Made"] += 1
 	var spawn_point = $UI.get_global_mouse_position()
-	rating = clamp(rating - value,0,100) 
+	rating -= value * rating_mod
 	$FlyingStar/star_label.text = "-"
 	$FlyingStar.modulate = Color("red")
 	tween_star(spawn_point)
@@ -429,7 +453,7 @@ func made_a_mistake(value):
 func did_a_good(value): 
 	var spawn_point = $UI.get_global_mouse_position()
 	UI.round_stats["Rating Change"] += value
-	rating = clamp(rating + value,0,100)
+	rating += value * rating_mod
 	$StarGain.play()
 	$FlyingStar/star_label.text = "+"
 	$FlyingStar.modulate = Color("white")
@@ -519,9 +543,9 @@ func cash_decrease(to_sub):
 	$UI/Panel/Cash/L_Cash.text = "$"+str(cash)
 	
 func complete_order(order):
-	var reward = order.reward
-	var tip = order.reward * rating * .015
-	did_a_good(8)
+	var reward :int = order.reward
+	var tip :int = order.reward * rating * .015 * rating_mod
+	did_a_good(COMPLETE_ORDER_RATING_EARN)
 	await get_tree().create_timer(1.5).timeout
 	add_cash(reward,tip) 
 
@@ -558,6 +582,7 @@ func new_day():
 	phone._phone_off()
 	
 func reset():
+	#if $Music.stream != 
 	for order in order_list.get_children():
 		order.queue_free()
 	day = 1
@@ -599,16 +624,14 @@ func set_rating(value):
 	$UI/Panel/STAR_BAR.size.x =  STAR_BAR_WIDTH * ratio
 
 
-func consume_gas(delta,velocity,MAX_SPEED_DEFAULT):
-	gas -= fuel_rate*(velocity.length()/MAX_SPEED_DEFAULT)*delta
+func consume_gas(fuel_consumed):
+	gas -= fuel_rate*fuel_consumed
 
 func out_of_gas():
 	var player = get_tree().current_scene.find_child("Player")
 	if player: player.out_of_gas()
 	
-		
-	
-	
+
 func get_gas():
 	if gas_tween: gas_tween.kill()
 	get_tree().current_scene.find_child("Player").restore_speed_no_gas()
@@ -640,8 +663,7 @@ func money_for_gas(gas_added,gas_add_rate):
 	return get_cost(gas_added+gas_add_rate) <= cash
 
 func get_cost(gas_added):
-	print(gas_added * (GAS_COST + day*gas_inflation))
-	return gas_added * (GAS_COST + day*gas_inflation)
+	return min(gas_added * (GAS_COST + day*gas_inflation)*gas_price_mod,UI.cash)
 	
 func set_gas_level():
 	gas_level.custom_minimum_size = Vector2(gas_level.custom_minimum_size.x,max_fuel)
@@ -655,3 +677,9 @@ func play_sfx():
 func is_on_map():
 	var root = get_tree().current_scene
 	return root and root.name == "City"
+	
+func fade_out_in_music(filepath:String,duration):
+	var music_tween = create_tween()
+	music_tween.tween_property($Music,"volume_db",-50,duration)
+	music_tween.tween_callback(func(): $Music.stream = load(filepath);$Music.play())
+	music_tween.tween_property($Music,"volume_db",-14,duration)

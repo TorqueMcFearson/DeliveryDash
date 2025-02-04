@@ -36,11 +36,11 @@ var vehicles = {
 
 @export_enum("pickup","pickup2","pickup3","suv","suv2","van2","van3","mustang2","camaro","camaro2","challenger2","challenger3","lexus","lexus2","gwagon","bmw","gwagon2","patrol","patrol2","lexus3","taxi","taxi2","lambo","lambo2","lancer","bmw2","bmw3","lancer2","mustang3","wrangler") 
 var vehicle_name:String = "pickup"
-
+signal state_change
 const SPEED = 20
 const MAX_SPEED = 200
 const V_MAX_SPEED = Vector2(MAX_SPEED,MAX_SPEED)
-var max_speed_mod=1
+var max_speed_mod=UI.AI_max_speed_mod
 
 var stopped : bool = false
 var tilemap: TileMapLayer
@@ -53,7 +53,10 @@ const V_DIR = [Vector2.UP,Vector2.RIGHT,Vector2.DOWN,Vector2.LEFT]
 const ROAD_DIR = ["Horz","Vert","Both","OffRoad"]
 var direction :int
 var v_direction:Vector2
-var state:STATE
+var state:STATE :
+	set(value):
+		state = value
+		state_change.emit()
 var turning_progress : float = 0
 var running := false
 
@@ -207,8 +210,10 @@ func get_horned():
 	max_speed_mod = randf_range(1.5,2)
 	collision_mask = 1
 	stopped = false
-	running = true
+	if state == STATE.TURNING:
+		await state_change
 	run_from_player()
+	running = true
 	
 	await get_tree().create_timer(3).timeout
 	running = false

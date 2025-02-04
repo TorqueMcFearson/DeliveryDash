@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://chh4eg6sus1x"]
+[gd_scene load_steps=15 format=3 uid="uid://chh4eg6sus1x"]
 
 [ext_resource type="Script" path="res://Scripts/PlayerCar.gd" id="1_fxmo4"]
 [ext_resource type="Texture2D" uid="uid://bm1woxmr486ps" path="res://Sprites/cars.png" id="2_djg4b"]
@@ -6,6 +6,8 @@
 [ext_resource type="AudioStream" uid="uid://csffgre7kycou" path="res://SFX/truck_idle.wav" id="4_52k5n"]
 [ext_resource type="Script" path="res://Scripts/arrow.gd" id="4_jvi78"]
 [ext_resource type="AudioStream" uid="uid://4rwbxc23pww4" path="res://SFX/honk.wav" id="6_fb446"]
+[ext_resource type="Texture2D" uid="uid://pynw72b5fmqa" path="res://Sprites/carhorn_pop-up_disable.png" id="7_0mln1"]
+[ext_resource type="Texture2D" uid="uid://b1ntfbtqengw2" path="res://Sprites/carhorn_pop-up.png" id="7_ajeo5"]
 
 [sub_resource type="Curve" id="Curve_f6lch"]
 min_value = 0.5
@@ -124,28 +126,21 @@ region_enabled = true
 region_rect = Rect2(291, 99, 28, 49)
 region_filter_clip_enabled = true
 
-[node name="CanvasLayer2" type="CanvasLayer" parent="."]
-follow_viewport_enabled = true
-
-[node name="arrow" type="Sprite2D" parent="CanvasLayer2"]
-modulate = Color(0, 0.342308, 0.15305, 1)
-self_modulate = Color(0.860369, 0.860369, 0.860369, 1)
-material = SubResource("ShaderMaterial_o54cx")
-position = Vector2(705, 424)
-rotation = 0.71733
-texture = ExtResource("3_mddtf")
-offset = Vector2(-31, 0)
-script = ExtResource("4_jvi78")
-
-[node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(1.05, 1.05)
-
 [node name="Spawnlimit" type="ReferenceRect" parent="."]
 offset_left = -1005.0
 offset_top = -665.0
 offset_right = 1012.0
 offset_bottom = 670.0
 mouse_filter = 2
+border_width = 5.0
+
+[node name="BLOCKING" type="ReferenceRect" parent="."]
+offset_left = -608.0
+offset_top = -303.0
+offset_right = 602.0
+offset_bottom = 205.0
+mouse_filter = 2
+border_color = Color(0.00942993, 0.0964112, 0.804688, 1)
 border_width = 5.0
 
 [node name="Viewport" type="ReferenceRect" parent="."]
@@ -163,6 +158,23 @@ grow_vertical = 2
 mouse_filter = 2
 border_width = 1.7
 
+[node name="ArrowUI" type="CanvasLayer" parent="."]
+layer = 2
+follow_viewport_enabled = true
+
+[node name="arrow" type="Sprite2D" parent="ArrowUI"]
+modulate = Color(0, 0.342308, 0.15305, 1)
+self_modulate = Color(0.860369, 0.860369, 0.860369, 1)
+material = SubResource("ShaderMaterial_o54cx")
+position = Vector2(705, 424)
+rotation = 0.71733
+texture = ExtResource("3_mddtf")
+offset = Vector2(-31, 0)
+script = ExtResource("4_jvi78")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(1.05, 1.05)
+
 [node name="Traffic" type="Area2D" parent="."]
 collision_mask = 3
 monitorable = false
@@ -170,34 +182,45 @@ monitorable = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Traffic"]
 position = Vector2(2.5, 4)
 shape = SubResource("RectangleShape2D_f0cy2")
+debug_color = Color(0.34375, 0.34375, 0.34375, 0.42)
 
 [node name="Motor_Sound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_52k5n")
 autoplay = true
 bus = &"SFX"
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-layer = 100
+[node name="PlayerUI" type="CanvasLayer" parent="."]
+layer = 2
 
-[node name="Respawning" type="Label" parent="CanvasLayer"]
+[node name="CarhornPop-upaa" type="Sprite2D" parent="PlayerUI"]
 visible = false
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 587.0
-offset_top = 318.0
-offset_right = -590.0
-offset_bottom = -379.0
+position = Vector2(640, 67)
+scale = Vector2(0.35124, 0.35124)
+texture = ExtResource("7_ajeo5")
+
+[node name="CarhornPop-up" type="TextureProgressBar" parent="PlayerUI"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -60.5
+offset_top = 33.0
+offset_right = 60.5
+offset_bottom = 154.0
 grow_horizontal = 2
-grow_vertical = 2
+scale = Vector2(0.35124, 0.35124)
+pivot_offset = Vector2(60, 20)
 size_flags_horizontal = 4
-text = "Respawning.."
-horizontal_alignment = 1
-vertical_alignment = 1
+size_flags_vertical = 4
+value = 100.0
+fill_mode = 4
+texture_under = ExtResource("7_0mln1")
+texture_progress = ExtResource("7_ajeo5")
+tint_under = Color(1, 1, 1, 0.537255)
 
 [node name="OutOfGas" type="Timer" parent="."]
 
-[node name="Label" type="Label" parent="."]
+[node name="Speed" type="Label" parent="."]
+visible = false
 offset_left = -30.0
 offset_top = -54.0
 offset_right = 10.0

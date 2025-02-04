@@ -489,11 +489,12 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_65r0a")
 metadata/_edit_lock_ = true
 
 [node name="Options" parent="." instance=ExtResource("5_cfrfe")]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
+offset_left = 640.0
+offset_top = 360.0
+offset_right = 640.0
+offset_bottom = 360.0
+size_flags_horizontal = 6
+size_flags_vertical = 6
 
 [connection signal="pressed" from="Title_UI/Buttons/Start" to="Title_UI" method="_on_start_pressed"]
 [connection signal="toggled" from="Title_UI/Buttons/Start/Tutorial" to="Title_UI/Buttons/Start/Tutorial" method="_on_toggled"]

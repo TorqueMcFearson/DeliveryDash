@@ -200,6 +200,7 @@ bg_color = Color(0, 0, 0, 1)
 
 [node name="UI_Layer" type="CanvasLayer"]
 script = ExtResource("1_fpkyk")
+rating = 0.0
 car_horn = true
 
 [node name="Pause Dimmer" type="Panel" parent="."]
@@ -803,15 +804,6 @@ offset_bottom = 20.0
 scale = Vector2(1.75156, 1.75156)
 text = "+"
 
-[node name="Fader" type="Panel" parent="."]
-visible = false
-offset_left = -15.0
-offset_top = -12.0
-offset_right = 1291.0
-offset_bottom = 728.0
-mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_s7aor")
-
 [node name="ClockTick" type="Timer" parent="."]
 autostart = true
 
@@ -847,30 +839,43 @@ volume_db = -14.0
 autoplay = true
 bus = &"Music"
 
-[node name="Respawning" type="Label" parent="."]
-visible = false
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 587.0
-offset_top = 318.0
-offset_right = -590.0
-offset_bottom = -379.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 4
-text = "Respawning.."
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="OptionsLayer" type="CanvasLayer" parent="."]
-layer = 2
+layer = 3
 
 [node name="Options" parent="OptionsLayer" instance=ExtResource("15_k7ey6")]
 process_mode = 2
-visible = false
 pivot_offset = Vector2(1726, 714)
+size_flags_horizontal = 4
 mouse_filter = 2
+
+[node name="FaderCanvas" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="Fader" type="Panel" parent="FaderCanvas"]
+visible = false
+offset_left = -15.0
+offset_top = -12.0
+offset_right = 1291.0
+offset_bottom = 728.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_s7aor")
+
+[node name="Message" type="Label" parent="FaderCanvas/Fader"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -49.5
+offset_top = -9.5
+offset_right = 53.5
+offset_bottom = 13.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="pressed" from="Tutorial/Sneaky Layer/Sneaky Button" to="Tutorial" method="_on_sneaky_button_pressed"]
 [connection signal="toggled" from="UI/TextureButton" to="." method="_on_texture_button_toggled"]

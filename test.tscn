@@ -3,25 +3,18 @@
 [sub_resource type="GDScript" id="GDScript_xxjc3"]
 resource_name = "sad"
 script/source = "extends Node2D
-signal TESTING_SHIT
-var test_var = 12
-var func_point = test1
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass
+	var test :int = 5
+	test = test * 1.1
+	print(test)
 	
 	
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
-
-func test1():
-	print(\"test1 fired\")
-	
-func test2():
-	print(\"test2 fired\")
 "
 
 [node name="Node2D" type="Node2D"]

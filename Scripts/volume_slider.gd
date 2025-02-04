@@ -5,15 +5,16 @@ extends HSlider
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	value = db_to_linear(AudioServer.get_bus_volume_db(audio_bus)) * 100
+	update()
 	value_changed.connect(_on_value_changed)
 	drag_ended.connect(Save.save_preferences)
 	ready_label()
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
 
+func update():
+	set_value_no_signal(sqrt(db_to_linear(AudioServer.get_bus_volume_db(audio_bus)))*100)
+	ready_label()
+	
 func ready_label():
 	$Value.text = str(value)
 	if value <10:
@@ -27,6 +28,7 @@ func ready_label():
 		$Value.position.x = 0
 		$Value.add_theme_color_override("font_color",Color("black"))
 
+
 func _on_value_changed(value):
 	AudioServer.set_bus_volume_db(audio_bus, linear_to_db(pow(value*.01,2)))
 	ready_label()
@@ -34,3 +36,4 @@ func _on_value_changed(value):
 		print("SFX FIRING")
 		UI.play_sfx()
 		$"../SFX/Timer".start()
+	

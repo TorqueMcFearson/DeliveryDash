@@ -31,12 +31,13 @@ func _on_resume_pressed() -> void:
 func _on_options_pressed() -> void:
 	animate_out(self,options_menu) 
 	
-	
 
 func _on_main_menu_pressed() -> void:
 	UI.to_main_menu()
 
 func pause():
+	$"../Options Menu/Sliders/Music".update()
+	$"../Options Menu/Sliders/SFX".update()
 	set_stuck_visibility()
 	animate_in(self)
 
@@ -46,6 +47,7 @@ func unpause():
 	
 func show_options():
 	animate_in(options_menu)
+	
 func hide_options():
 	animate_out(options_menu)
 	

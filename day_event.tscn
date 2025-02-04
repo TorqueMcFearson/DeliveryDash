@@ -1,0 +1,210 @@
+[gd_scene load_steps=11 format=3 uid="uid://cx617anbttrcc"]
+
+[ext_resource type="FontFile" uid="uid://v3swnsgchgpo" path="res://Font/BebasNeue-Regular.ttf" id="1_dtajx"]
+[ext_resource type="FontFile" uid="uid://ydwn4indox68" path="res://Font/Bangers-Regular.ttf" id="2_8ym65"]
+[ext_resource type="PackedScene" uid="uid://n2e7qbjpxoqf" path="res://DayEventPanel.tscn" id="3_krcgt"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xh11w"]
+content_margin_left = 12.0
+content_margin_top = 8.0
+content_margin_right = 12.0
+content_margin_bottom = 8.0
+bg_color = Color(0.1763, 0.26978, 0.41, 0.952941)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.1484, 0.1428, 0.21, 1)
+border_blend = true
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_drn7p"]
+color = Color(0.239216, 0.345098, 0.513726, 0.356863)
+thickness = 5
+
+[sub_resource type="FontVariation" id="FontVariation_pomwj"]
+base_font = ExtResource("1_dtajx")
+spacing_top = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qvjhv"]
+content_margin_top = 7.0
+bg_color = Color(0.233925, 0.233925, 0.233925, 1)
+border_width_left = 2
+border_width_top = 3
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.162066, 0.162066, 0.162065, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0.101961, 0.101961, 0.101961, 0.682353)
+shadow_size = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dulno"]
+bg_color = Color(1, 0, 0, 1)
+border_width_left = 2
+border_width_top = 3
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.162066, 0.162066, 0.162065, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+expand_margin_left = 1.0
+expand_margin_top = 3.0
+expand_margin_right = 1.0
+shadow_color = Color(0.101961, 0.101961, 0.101961, 0.682353)
+shadow_size = 1
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_so23o"]
+content_margin_top = 7.0
+bg_color = Color(0.97, 0, 0.0161664, 1)
+border_width_left = 2
+border_width_top = 3
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.162066, 0.162066, 0.162065, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+expand_margin_left = 1.0
+expand_margin_right = 1.0
+shadow_color = Color(0.101961, 0.101961, 0.101961, 0.682353)
+shadow_size = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2l1tf"]
+bg_color = Color(1, 0.1, 0.1, 0.85098)
+border_width_left = 2
+border_width_top = 3
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.162066, 0.162066, 0.162065, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+expand_margin_top = 3.0
+shadow_color = Color(0.101961, 0.101961, 0.101961, 0.682353)
+shadow_size = 1
+shadow_offset = Vector2(2, 2)
+
+[node name="DayEvent" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Options Menu" type="Panel" parent="."]
+custom_minimum_size = Vector2(500, 575)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -287.5
+offset_right = 250.0
+offset_bottom = 287.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(0, 294)
+theme_override_styles/panel = SubResource("StyleBoxFlat_xh11w")
+
+[node name="Title" type="Control" parent="Options Menu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 18.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HorzLine" type="HSeparator" parent="Options Menu/Title"]
+custom_minimum_size = Vector2(160, 40)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 23.0
+offset_right = -19.0
+offset_bottom = 40.0
+grow_horizontal = 2
+size_flags_vertical = 0
+size_flags_stretch_ratio = 5.31
+theme_override_styles/separator = SubResource("StyleBoxLine_drn7p")
+
+[node name="CarUpgrades" type="Label" parent="Options Menu/Title/HorzLine"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -86.5
+offset_top = -26.0
+offset_right = 86.5
+offset_bottom = 26.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 2
+size_flags_vertical = 0
+size_flags_stretch_ratio = 0.85
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 4
+theme_override_fonts/font = SubResource("FontVariation_pomwj")
+theme_override_font_sizes/font_size = 40
+text = "Day Events"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="Back Button" type="Button" parent="Options Menu"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -64.0
+offset_top = -53.5
+offset_right = 66.0
+offset_bottom = -12.5
+grow_horizontal = 2
+grow_vertical = 0
+focus_mode = 0
+theme_override_colors/font_disabled_color = Color(0.288518, 0.288518, 0.288518, 1)
+theme_override_colors/font_hover_color = Color(0.977937, 0.977937, 0.977937, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(0.899258, 0.899258, 0.899258, 1)
+theme_override_colors/font_outline_color = Color(0.233925, 0.233925, 0.233925, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("2_8ym65")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/disabled = SubResource("StyleBoxFlat_qvjhv")
+theme_override_styles/hover = SubResource("StyleBoxFlat_dulno")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_so23o")
+theme_override_styles/normal = SubResource("StyleBoxFlat_2l1tf")
+text = "Done Shopping"
+
+[node name="UpgradePanel" parent="Options Menu" instance=ExtResource("3_krcgt")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -166.0
+offset_right = 100.0
+offset_bottom = 166.0
+grow_horizontal = 2
+grow_vertical = 2

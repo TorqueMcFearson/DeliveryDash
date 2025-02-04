@@ -730,7 +730,7 @@ texture = ExtResource("3_vqmln")
 region_rect = Rect2(0, 10, 155, 230)
 
 [node name="House26" type="Sprite2D" parent="Houses"]
-position = Vector2(2813, 4912)
+position = Vector2(2813, 4904)
 texture = ExtResource("3_vqmln")
 region_rect = Rect2(0, 10, 155, 230)
 

@@ -154,14 +154,14 @@ func update_state(): #Called whenever the state changes
 			$HBoxContainer/Arrowbox.hide()
 			update_button()
 			target.text = STATUS_TEXT[state]
-			var tip = reward * UI.rating * .015
+			var tip = reward * UI.rating * .015 * UI.tip_mod
 			$Status.text = "$%d + $%d TIP = $%d" % [reward, tip,reward+tip] 
 			progress_button.text = "Collect Pay"
 			
 
 	if state == NEW: 
 		if not reward:
-				reward = int(randi_range(2,12) + dist/2)
+				reward = int(randi_range(2,12) + dist/2) * UI.base_pay_mod
 		if not timeleft:
 			timeleft = (randi_range(15,40))
 			update_time()
@@ -169,7 +169,7 @@ func update_state(): #Called whenever the state changes
 		$Reward.modulate = Color("gold")
 		return	
 	elif state == TO_STORE:
-		timeleft = (int(dist/10)+randi_range(3,5))*22
+		timeleft = (int(dist/10)+randi_range(3,5))*22*UI.order_duration_mod
 		update_time()
 	if active:
 		new_active.emit(self)

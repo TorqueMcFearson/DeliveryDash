@@ -8,7 +8,10 @@ preload("res://Sprites/house5.png"),
 preload("res://Sprites/house6.png"),
 ]
 const AI_CAR = preload("res://ai_car.tscn")
-const MAX_CARS : int= 25
+var max_cars : int= 25:
+	get():
+		return int(max_cars * UI.max_cars_modifier)
+
 const GLOW = preload("res://Glow.tres")
 const BLINK_SPEED = 8
 var HOUSE = load("res://house.tscn")
@@ -26,6 +29,7 @@ var time_passed = 0.0
 
 func _ready() -> void:
 	#$CanvasModulate.color = Color(0,0,0,1)
+		
 	print(player.global_position)
 	UI.player = player
 	player.position = UI.player_map_position
@@ -122,7 +126,7 @@ func near_player(marker:Marker2D):
 	return spawnlimit.get_rect().has_point(marker_pos) and not (viewport.get_rect().has_point(marker_pos))
 	 
 
-func add_cars(n = MAX_CARS):
+func add_cars(n = max_cars):
 	var usable_markers = $Spawns.get_children().filter(near_player)
 	var count = clamp(n,0,len(usable_markers))
 	for i in range(count):
@@ -134,8 +138,8 @@ func add_cars(n = MAX_CARS):
 
 func _on_car_check_timeout() -> void:
 	var count = $Cars.get_child_count()
-	if count < MAX_CARS:
-		add_cars(MAX_CARS-count) # Replace with function body.
+	if count < max_cars:
+		add_cars(max_cars-count) # Replace with function body.
 
 func go_to_building():
 	if UI.day_over:return

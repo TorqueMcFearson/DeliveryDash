@@ -13,9 +13,9 @@ var page2 = false
 @onready var expenses :Dictionary = {
 	"Pocket_Cash" : UI.cash,
 	"Total Expenses" : 0,
-	"Rent" : randi_range(10,40)+9*UI.day,
-	"Food" :  randi_range(0,20)+8*UI.day,
-	"Electric" :  randi_range(-5,10)+7*UI.day,
+	"Rent" : randi_range(10,40)+9*UI.day*UI.expense_mod,
+	"Food" :  randi_range(0,20)+8*UI.day*UI.expense_mod,
+	"Electric" :  randi_range(-5,10)+7*UI.day*UI.expense_mod,
 	"Total Cash": 0}
 
 
@@ -171,10 +171,7 @@ func tween_nextday_label():
 func _on_car_upgrades_done_shopping_pressed() -> void:
 	var tween = create_tween()
 	UI.day_over = false
-	var music_player = UI.find_child("Music",false)
-	tween.tween_property($Music,"volume_db",-50,1)
-	tween.tween_callback(func(): music_player.stream = load("res://SFX/echo-flux-258965.mp3");music_player.play())
-	tween.tween_property($Music,"volume_db",-14,1)
+	UI.fade_out_in_music("res://SFX/echo-flux-258965.mp3",1)
 	UI.player_map_position = UI.PLAYER_HOME_SPAWN
 	UI.fade_out(1.5,get_tree().change_scene_to_packed.bind(CITY_SCENE))
 	get_tree().create_timer(1).timeout.connect(UI.unpause_timers)

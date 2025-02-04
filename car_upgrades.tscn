@@ -106,7 +106,7 @@ shadow_color = Color(0.101961, 0.101961, 0.101961, 0.682353)
 shadow_size = 1
 shadow_offset = Vector2(2, 2)
 
-[sub_resource type="Shader" id="Shader_icnsr"]
+[sub_resource type="Shader" id="Shader_vsp3i"]
 code = "shader_type canvas_item;
 
 uniform vec4 color : source_color = vec4(1.0);
@@ -171,7 +171,7 @@ void fragment() {
 }"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wxqkg"]
-shader = SubResource("Shader_icnsr")
+shader = SubResource("Shader_vsp3i")
 shader_parameter/color = Color(0.411765, 1, 0.431373, 0.772549)
 shader_parameter/width = 0.607
 shader_parameter/pattern = 1
@@ -212,7 +212,7 @@ grow_vertical = 2
 pivot_offset = Vector2(0, 294)
 theme_override_styles/panel = SubResource("StyleBoxFlat_gethg")
 
-[node name="Page 1" type="Control" parent="Options Menu"]
+[node name="Title" type="Control" parent="Options Menu"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -222,7 +222,7 @@ offset_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Orders" type="HSeparator" parent="Options Menu/Page 1"]
+[node name="HorzLine" type="HSeparator" parent="Options Menu/Title"]
 custom_minimum_size = Vector2(160, 40)
 layout_mode = 1
 anchors_preset = 10
@@ -235,7 +235,7 @@ size_flags_vertical = 0
 size_flags_stretch_ratio = 5.31
 theme_override_styles/separator = SubResource("StyleBoxLine_sby42")
 
-[node name="Order Total2" type="Label" parent="Options Menu/Page 1/Orders"]
+[node name="CarUpgrades" type="Label" parent="Options Menu/Title/HorzLine"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -256,40 +256,6 @@ theme_override_constants/shadow_outline_size = 4
 theme_override_fonts/font = SubResource("FontVariation_sc816")
 theme_override_font_sizes/font_size = 40
 text = "Car Upgrades"
-horizontal_alignment = 1
-vertical_alignment = 2
-
-[node name="Performance" type="HSeparator" parent="Options Menu/Page 1"]
-visible = false
-layout_mode = 2
-offset_left = 49.0
-offset_top = 247.0
-offset_right = 338.0
-offset_bottom = 251.0
-size_flags_vertical = 0
-size_flags_stretch_ratio = 2.67
-theme_override_styles/separator = SubResource("StyleBoxLine_sby42")
-
-[node name="Performance Header" type="Label" parent="Options Menu/Page 1/Performance"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -59.0
-offset_top = -24.0
-offset_right = 59.0
-offset_bottom = 24.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 4
-size_flags_vertical = 0
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/shadow_outline_size = 4
-theme_override_fonts/font = SubResource("FontVariation_sc816")
-theme_override_font_sizes/font_size = 40
-text = "Performance"
 horizontal_alignment = 1
 vertical_alignment = 2
 
