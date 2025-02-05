@@ -1,0 +1,7 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://csnjadv0vwyfy"]
+
+[ext_resource type="Script" path="res://Testable_resource.gd" id="1_40inb"]
+
+[resource]
+script = ExtResource("1_40inb")
+test_var = 2

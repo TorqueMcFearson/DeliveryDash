@@ -128,6 +128,7 @@ func near_player(marker:Marker2D):
 
 func add_cars(n = max_cars):
 	var usable_markers = $Spawns.get_children().filter(near_player)
+	usable_markers.shuffle()
 	var count = clamp(n,0,len(usable_markers))
 	for i in range(count):
 		var new_car = AI_CAR.instantiate()

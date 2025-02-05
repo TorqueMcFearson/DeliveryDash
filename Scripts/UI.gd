@@ -14,6 +14,7 @@ const _4_AM = preload("res://4_am.tscn")
 @onready var gas_can: TextureRect = $"UI/Gas Can"
 @onready var fader: Panel = $FaderCanvas/Fader
 @onready var fader_message: Label = $FaderCanvas/Fader/Message
+@onready var day_events: RichTextLabel = $"UI/Day Events"
 
 
 
@@ -74,11 +75,11 @@ class Building:
 @export var shift_start = [16,00]
 @export var shift_end = [20,00]
 @export_group("Variables") 
-@export var rating : float = 20.0 :
+@export_range(0,MAX_RATING) var rating : float = 20.0 :
 	set(value):
-		rating = clamp(value,0,100)
+		rating = clamp(value,0,MAX_RATING)
 		
-@export var cash :int = 10
+@export var cash :int = 20
 var clock := ClockTime.new(shift_start,shift_end)
 var cash_to_add :int = 0
 var tween_tracking:bool
@@ -149,7 +150,9 @@ var time_passed := 0.0
 
 @export_group("Modifiers")
 @export var speed_modifier := 1.0
-@export var accel_modifier := 1.0
+@export var accel_modifier := 1.0:
+	get():
+		return speed_modifier 				#TEST
 @export var max_fuel_modifier := 1.0:
 	set(value):
 		max_fuel_modifier = value
@@ -158,7 +161,9 @@ var time_passed := 0.0
 @export var max_cars_modifier = 1.0
 @export var AI_max_speed_mod = 1.0
 @export var bump_modifer := 1.0
-@export var max_orders_mod := 1.0
+@export var max_orders_mod := 1.0:
+	get():
+		return 2 - order_timer_mod 			#TEST
 @export var order_timer_mod := 1.0
 @export var order_duration_mod := 1.0
 @export var gas_price_mod := 1.0
@@ -200,6 +205,7 @@ var gas_label_pos = Vector2(-14,-151)
 
 
 func _ready() -> void:
+	day_events.text = ""
 	gas_level.value = gas
 	set_gas_level()
 	$Tutorial.hide()
@@ -683,3 +689,6 @@ func fade_out_in_music(filepath:String,duration):
 	music_tween.tween_property($Music,"volume_db",-50,duration)
 	music_tween.tween_callback(func(): $Music.stream = load(filepath);$Music.play())
 	music_tween.tween_property($Music,"volume_db",-14,duration)
+
+func set_UIbar_event_text(good_snippet:String,bad_snippet:String):
+	day_events.text = good_snippet + "\n" + bad_snippet

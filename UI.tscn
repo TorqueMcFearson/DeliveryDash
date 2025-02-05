@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://bin3hjdhs5ls8"]
+[gd_scene load_steps=39 format=3 uid="uid://bin3hjdhs5ls8"]
 
 [ext_resource type="Texture2D" uid="uid://bmlasb071pto3" path="res://Sprites/Cash.png" id="1_5daqs"]
 [ext_resource type="Script" path="res://Scripts/UI.gd" id="1_fpkyk"]
@@ -195,13 +195,14 @@ font_color = Color(0.824219, 0.12974, 0.016098, 1)
 shadow_size = 2
 shadow_color = Color(0, 0, 0, 0.505882)
 
+[sub_resource type="FontVariation" id="FontVariation_vu3qy"]
+base_font = ExtResource("3_mq77v")
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s7aor"]
 bg_color = Color(0, 0, 0, 1)
 
 [node name="UI_Layer" type="CanvasLayer"]
 script = ExtResource("1_fpkyk")
-rating = 0.0
-car_horn = true
 
 [node name="Pause Dimmer" type="Panel" parent="."]
 visible = false
@@ -783,7 +784,21 @@ horizontal_alignment = 1
 position = Vector2(538, 356)
 
 [node name="Gas Unfocus" type="Marker2D" parent="UI"]
-position = Vector2(14, 666)
+position = Vector2(14, 665)
+
+[node name="Day Events" type="RichTextLabel" parent="UI"]
+layout_mode = 0
+offset_left = 819.0
+offset_top = 1.0
+offset_right = 966.0
+offset_bottom = 41.0
+theme_override_constants/line_separation = -8
+theme_override_fonts/normal_font = SubResource("FontVariation_vu3qy")
+theme_override_fonts/bold_font = SubResource("FontVariation_vu3qy")
+theme_override_font_sizes/bold_font_size = 19
+bbcode_enabled = true
+text = "[b][color=green]less traffic[/color][/b]
+[b][color=red]crazy drivers[/color][/b]"
 
 [node name="Phone" parent="." instance=ExtResource("5_jiinu")]
 

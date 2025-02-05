@@ -1,7 +1,5 @@
-[gd_scene load_steps=9 format=3 uid="uid://n2e7qbjpxoqf"]
+[gd_scene load_steps=4 format=3 uid="uid://n2e7qbjpxoqf"]
 
-[ext_resource type="Script" path="res://DayEventDescription.gd" id="3_3v16e"]
-[ext_resource type="FontFile" uid="uid://v3swnsgchgpo" path="res://Font/BebasNeue-Regular.ttf" id="3_hfu6l"]
 [ext_resource type="FontFile" uid="uid://gs5irb036wet" path="res://Font/RobotoMono-VariableFont_wght.ttf" id="4_l36i0"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jxprr"]
@@ -18,80 +16,34 @@ corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 
-[sub_resource type="FontVariation" id="FontVariation_yhdqn"]
-base_font = ExtResource("3_hfu6l")
-
-[sub_resource type="LabelSettings" id="LabelSettings_sn5w5"]
-font = SubResource("FontVariation_yhdqn")
-font_size = 24
-
-[sub_resource type="StyleBoxLine" id="StyleBoxLine_7opsx"]
-color = Color(1, 1, 1, 0.227451)
-grow_begin = 5.0
-grow_end = 5.0
-thickness = 2
-
 [sub_resource type="FontVariation" id="FontVariation_n57xq"]
 base_font = ExtResource("4_l36i0")
 
 [node name="Day Event Panel" type="PanelContainer"]
-custom_minimum_size = Vector2(200, 250)
+custom_minimum_size = Vector2(200, 0)
 offset_right = 367.0
-offset_bottom = 415.0
+offset_bottom = 275.0
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_jxprr")
 
-[node name="UpgradeContainer" type="VBoxContainer" parent="."]
-visible = false
-layout_mode = 2
-theme_override_constants/separation = 2
-alignment = 1
-
-[node name="Icon-Title" type="VBoxContainer" parent="UpgradeContainer"]
-layout_mode = 2
-size_flags_vertical = 10
-size_flags_stretch_ratio = 1.1
-
-[node name="Title" type="Label" parent="UpgradeContainer/Icon-Title"]
-layout_mode = 2
-text = "Strong Bumpers"
-label_settings = SubResource("LabelSettings_sn5w5")
-horizontal_alignment = 1
-
-[node name="Description" type="RichTextLabel" parent="UpgradeContainer/Icon-Title"]
-layout_mode = 2
-size_flags_vertical = 5
-size_flags_stretch_ratio = 0.0
-theme_override_fonts/normal_font = ExtResource("4_l36i0")
-theme_override_font_sizes/normal_font_size = 11
-text = "Reduces the slowdown of collisions."
-fit_content = true
-shortcut_keys_enabled = false
-deselect_on_focus_loss_enabled = false
-drag_and_drop_selection_enabled = false
-
-[node name="HSeparator" type="HSeparator" parent="UpgradeContainer/Icon-Title"]
-layout_mode = 2
-theme_override_constants/separation = 20
-theme_override_styles/separator = SubResource("StyleBoxLine_7opsx")
-
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
+theme_override_constants/separation = 20
 
 [node name="DayEventText" type="RichTextLabel" parent="VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 3.67
+size_flags_vertical = 2
+size_flags_stretch_ratio = 2.0
 theme_override_fonts/normal_font = SubResource("FontVariation_n57xq")
 theme_override_fonts/mono_font = SubResource("FontVariation_n57xq")
 theme_override_fonts/italics_font = SubResource("FontVariation_n57xq")
 theme_override_fonts/bold_italics_font = SubResource("FontVariation_n57xq")
 theme_override_fonts/bold_font = SubResource("FontVariation_n57xq")
-theme_override_font_sizes/bold_italics_font_size = 16
-theme_override_font_sizes/italics_font_size = 16
-theme_override_font_sizes/mono_font_size = 16
-theme_override_font_sizes/normal_font_size = 16
-theme_override_font_sizes/bold_font_size = 16
+theme_override_font_sizes/bold_italics_font_size = 14
+theme_override_font_sizes/italics_font_size = 14
+theme_override_font_sizes/mono_font_size = 14
+theme_override_font_sizes/normal_font_size = 14
+theme_override_font_sizes/bold_font_size = 14
 bbcode_enabled = true
 text = "[font_size=18][center]New Fuel Pumps / Gas Surplus[/center][/font_size]
 
@@ -99,21 +51,20 @@ While picking up gas station snacks, you notice the [b][color=steel_blue]fuel pu
 
 Later, while chatting with your neighbor, you learn that recent [b][color=steel_blue]deregulations of fracking[/color][/b] caused a species of racoon to go extinct."
 fit_content = true
-script = ExtResource("3_3v16e")
 
 [node name="SubText" type="RichTextLabel" parent="VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 3
+size_flags_vertical = 10
 theme_override_fonts/normal_font = SubResource("FontVariation_n57xq")
 theme_override_fonts/mono_font = SubResource("FontVariation_n57xq")
 theme_override_fonts/italics_font = SubResource("FontVariation_n57xq")
 theme_override_fonts/bold_italics_font = SubResource("FontVariation_n57xq")
 theme_override_fonts/bold_font = SubResource("FontVariation_n57xq")
-theme_override_font_sizes/bold_italics_font_size = 16
-theme_override_font_sizes/italics_font_size = 16
-theme_override_font_sizes/mono_font_size = 16
-theme_override_font_sizes/normal_font_size = 16
-theme_override_font_sizes/bold_font_size = 16
+theme_override_font_sizes/bold_italics_font_size = 14
+theme_override_font_sizes/italics_font_size = 14
+theme_override_font_sizes/mono_font_size = 14
+theme_override_font_sizes/normal_font_size = 14
+theme_override_font_sizes/bold_font_size = 14
 bbcode_enabled = true
 text = "Seems like you're in for [b][color=green]fast gas pumps[/color][/b] and [b][color=red]lower gas prices[/color][/b] today."
 fit_content = true

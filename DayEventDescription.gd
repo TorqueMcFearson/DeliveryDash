@@ -1,5 +1,7 @@
-extends RichTextLabel
-@onready var sub_text: RichTextLabel = $"../SubText"
+extends Control
+@onready var day_event_text: RichTextLabel = $"Options Menu/MarginContainer/UpgradePanel/VBoxContainer/DayEventText"
+@onready var sub_text: RichTextLabel = $"Options Menu/MarginContainer/UpgradePanel/VBoxContainer/SubText"
+@onready var back_button: Button = $"Options Menu/Back Button"
 const good_event_database :Dictionary= {
 	0:{ "title":"Bad Weather",
 		"description":"While locking your front door, you notice %s as the sky darkens with clouds.",
@@ -34,7 +36,7 @@ const good_event_database :Dictionary= {
 		"highlight" : "SuperBowl Sunday",
 		"snippet":"lots of orders",
 		"property": "order_timer_mod",
-		"amount": 1.25},
+		"amount": 0.75},
 		
 	5:{ "title":"Dead Racoons",
 		"description":"While chatting with your neighbor, you learn that recent %s caused a species of racoon to go extinct.",
@@ -48,7 +50,7 @@ const good_event_database :Dictionary= {
 		"highlight" : "fuel pumps have been upgraded",
 		"snippet":"fast gas pumps",
 		"property": "gas_fill_speed_mod",
-		"amount": 1.25},
+		"amount": .07},
 		}
 		
 const bad_event_database :Dictionary= {
@@ -81,11 +83,11 @@ const bad_event_database :Dictionary= {
 		"amount": 0.75},
 		
 	4:{ "title":"Too Many Newbs",
-		"description":"While logging into the DeliveryDash app, you notice there is double the amount of dashers working today and %s.",
-		"highlight" : "hardly any available orders",
+		"description":"While logging into the DeliveryDash app, you notice double the amount of dashers working today and %s.",
+		"highlight" : "few available orders",
 		"snippet":"reduced orders",
 		"property": "order_timer_mod",
-		"amount": 0.75},
+		"amount": 1.25},
 		
 	5:{ "title":"Trade Wars",
 		"description":"While browsing social media, several memes describe a trade embargo %s to your country.",
@@ -99,13 +101,13 @@ const bad_event_database :Dictionary= {
 		"highlight" : "checking their watch",
 		"snippet":"slow fuel pumps",
 		"property": "gas_fill_speed_mod",
-		"amount": 0.75},
+		"amount": 8},
 		}
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	
-	visible_ratio = 0
+	day_event_text.visible_ratio = 0
 	sub_text.visible_ratio = 0
 	if get_tree().current_scene.name == "Day Event Panel":
 		update()
@@ -121,7 +123,9 @@ func update():
 	save_mods(good_event["property"],bad_event["property"])
 	apply_mod(good_event["property"],good_event["amount"])
 	apply_mod(bad_event["property"],bad_event["amount"])
-	tween_text()
+	await tween_text()
+	enable_button()
+	
 	
 func restore_mods():
 	for prop in UI.temp_mod_dict:
@@ -140,11 +144,12 @@ func apply_mod(prop,amount):
 	
 	
 func tween_text():
-	visible_ratio = 0
+	day_event_text.visible_ratio = 0
 	sub_text.visible_ratio = 0
 	var tween = create_tween()
-	tween.tween_property(self,"visible_ratio",1,1.10)
+	tween.tween_property(day_event_text,"visible_ratio",1,1.10)
 	tween.tween_property(sub_text,"visible_ratio",1,.5)
+	return tween
 	
 	
 func set_event_text(good_event,bad_event):
@@ -154,9 +159,14 @@ func set_event_text(good_event,bad_event):
 	var good_snippet = "[b][color=green]%s[/color][/b]" % good_event["snippet"]
 	var bad_snippet = "[b][color=red]%s[/color][/b]" % bad_event["snippet"]
 	var snippet = "[center]Seems like you're in for %s and %s today." % [good_snippet,bad_snippet]
+	UI.set_UIbar_event_text(good_snippet,bad_snippet)
 	
-	var good_text = "[font_size=18][center][b][color=green]%s[/color][/b]\n%s" % [good_event["title"],good_descript]
-	var bad_text = "[b][color=red]%s[/color][/b][/center][/font_size]\nLater, %s" % [bad_event["title"],bad_descript.to_lower()]
+	var good_text = "[font_size=18][center][b][color=green]%s[/color][/b][/center][/font_size]\n%s" % [good_event["title"],good_descript]
+	var bad_text = "[font_size=18][center][b][color=red]%s[/color][/b][/center][/font_size]\nLater, %s" % [bad_event["title"],bad_descript.to_lower()]
 	
-	text = "[center]%s\n\n%s" % [good_text,bad_text]
+	day_event_text.text = "[center]%s\n\n%s" % [good_text,bad_text]
 	sub_text.text = snippet
+
+
+func enable_button():
+	back_button.set_disabled(false)

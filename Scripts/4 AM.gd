@@ -7,7 +7,8 @@ const CITY_SCENE = preload("res://CityMain.tscn")
 @onready var perf_rows: Control = $"PanelContainer/Page 1/Performance Rows"
 @onready var offscreen = $Markers/Offscreen.position.x
 @onready var onscreen = $Markers/Onscreen.position.x
-@onready var day_event_text: RichTextLabel = $DayEvent/UpgradePanel/VBoxContainer/DayEventText
+@onready var day_event: Control = $DayEvent
+
 
 enum {LABEL,VALUE}
 var broke = false
@@ -15,15 +16,14 @@ var page2 = false
 @onready var expenses :Dictionary = {
 	"Pocket_Cash" : UI.cash,
 	"Total Expenses" : 0,
-	"Rent" : randi_range(10,40)+9*UI.day*UI.expense_mod,
-	"Food" :  randi_range(0,20)+8*UI.day*UI.expense_mod,
-	"Electric" :  randi_range(-5,10)+7*UI.day*UI.expense_mod,
+	"Rent" : randi_range(8,25)+7*UI.day*UI.expense_mod,
+	"Food" :  randi_range(0,12)+6*UI.day*UI.expense_mod,
+	"Electric" :  randi_range(-5,3)+5*UI.day*UI.expense_mod,
 	"Total Cash": 0}
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	
 	UI.hide_UI()
 	$Day.text = "Day %d" % UI.day
 	$PanelContainer.clip_contents = true
@@ -178,7 +178,7 @@ func switch_to_day_event_panel():
 	tween.tween_property($"Car Upgrades","modulate",Color(1,1,1,0),.35)
 	tween.tween_callback($"Car Upgrades".hide)
 	tween.tween_property($DayEvent,"modulate",Color(1,1,1,1),.75).set_delay(.12)
-	tween.tween_callback(func():$DayEvent.show();day_event_text.update())
+	tween.tween_callback(func():$DayEvent.show();day_event.update())
 	
 	
 	

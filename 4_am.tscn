@@ -927,10 +927,22 @@ layout_mode = 1
 [node name="DayEvent" parent="." instance=ExtResource("10_6dcw7")]
 visible = false
 layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+
+[node name="Options Menu" parent="DayEvent" index="0"]
+offset_top = -155.0
+offset_bottom = 155.0
+
+[node name="Back Button" parent="DayEvent/Options Menu" index="2"]
+disabled = true
 
 [connection signal="pressed" from="PanelContainer/Next Screen" to="." method="_pay_bills_button"]
 [connection signal="done_shopping_pressed" from="Car Upgrades" to="." method="_on_car_upgrades_done_shopping_pressed"]
 [connection signal="pressed" from="DayEvent/Options Menu/Back Button" to="." method="_on_back_button_pressed"]
 
 [editable path="DayEvent"]
-[editable path="DayEvent/UpgradePanel"]
+[editable path="DayEvent/Options Menu/MarginContainer/UpgradePanel"]

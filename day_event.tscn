@@ -1,14 +1,15 @@
-[gd_scene load_steps=11 format=3 uid="uid://cx617anbttrcc"]
+[gd_scene load_steps=12 format=3 uid="uid://cx617anbttrcc"]
 
 [ext_resource type="FontFile" uid="uid://v3swnsgchgpo" path="res://Font/BebasNeue-Regular.ttf" id="1_dtajx"]
+[ext_resource type="Script" path="res://DayEventDescription.gd" id="1_s0eqs"]
 [ext_resource type="FontFile" uid="uid://ydwn4indox68" path="res://Font/Bangers-Regular.ttf" id="2_8ym65"]
 [ext_resource type="PackedScene" uid="uid://n2e7qbjpxoqf" path="res://DayEventPanel.tscn" id="3_krcgt"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xh11w"]
-content_margin_left = 12.0
-content_margin_top = 8.0
-content_margin_right = 12.0
-content_margin_bottom = 8.0
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_00gy2"]
+content_margin_left = 25.0
+content_margin_top = 13.0
+content_margin_right = 25.0
+content_margin_bottom = 20.0
 bg_color = Color(0.1763, 0.26978, 0.41, 0.952941)
 border_width_left = 4
 border_width_top = 4
@@ -102,9 +103,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_s0eqs")
 
-[node name="Options Menu" type="Panel" parent="."]
-custom_minimum_size = Vector2(500, 575)
+[node name="Options Menu" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(500, 0)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -112,23 +114,16 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -250.0
-offset_top = -287.5
+offset_top = -87.5
 offset_right = 250.0
-offset_bottom = 287.5
+offset_bottom = 87.5
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(0, 294)
-theme_override_styles/panel = SubResource("StyleBoxFlat_xh11w")
+theme_override_styles/panel = SubResource("StyleBoxFlat_00gy2")
 
 [node name="Title" type="Control" parent="Options Menu"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 18.0
-offset_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 2
 
 [node name="HorzLine" type="HSeparator" parent="Options Menu/Title"]
 custom_minimum_size = Vector2(160, 40)
@@ -167,19 +162,25 @@ text = "Day Events"
 horizontal_alignment = 1
 vertical_alignment = 2
 
+[node name="MarginContainer" type="MarginContainer" parent="Options Menu"]
+layout_mode = 2
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_bottom = 40
+
+[node name="UpgradePanel" parent="Options Menu/MarginContainer" instance=ExtResource("3_krcgt")]
+layout_mode = 2
+
+[node name="DayEventText" parent="Options Menu/MarginContainer/UpgradePanel/VBoxContainer" index="0"]
+text = ""
+
+[node name="SubText" parent="Options Menu/MarginContainer/UpgradePanel/VBoxContainer" index="1"]
+text = ""
+
 [node name="Back Button" type="Button" parent="Options Menu"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -64.0
-offset_top = -53.5
-offset_right = 66.0
-offset_bottom = -12.5
-grow_horizontal = 2
-grow_vertical = 0
+custom_minimum_size = Vector2(350, 28)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
 focus_mode = 0
 theme_override_colors/font_disabled_color = Color(0.288518, 0.288518, 0.288518, 1)
 theme_override_colors/font_hover_color = Color(0.977937, 0.977937, 0.977937, 1)
@@ -193,18 +194,6 @@ theme_override_styles/disabled = SubResource("StyleBoxFlat_qvjhv")
 theme_override_styles/hover = SubResource("StyleBoxFlat_dulno")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_so23o")
 theme_override_styles/normal = SubResource("StyleBoxFlat_2l1tf")
-text = "Done Shopping"
+text = "Start Shift"
 
-[node name="UpgradePanel" parent="." instance=ExtResource("3_krcgt")]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -182.5
-offset_top = -205.5
-offset_right = 182.5
-offset_bottom = 205.5
-grow_horizontal = 2
-grow_vertical = 2
+[editable path="Options Menu/MarginContainer/UpgradePanel"]
