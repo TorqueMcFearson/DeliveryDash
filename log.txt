@@ -48,3 +48,39 @@ DAY 1 || Cash Earned: 0 , Pocket_Cash: 10 , Total Expenses: 62 , Total Cash: 0 ,
 
 2025-02-02T17:50:41
 DAY 1 || Cash Earned: 168 , Pocket_Cash: 57 , Total Expenses: 52 , Total Cash: 5 , Fuel Spend: 117.15
+
+
+2025-02-04T21:53:03
+DAY 1 || Cash Earned: 0 , Pocket_Cash: 10 , Total Expenses: 80 , Total Cash: 0 , Fuel Spend: 0
+
+
+2025-02-04T21:53:54
+DAY 1 || Cash Earned: 0 , Pocket_Cash: 10 , Total Expenses: 62 , Total Cash: 0 , Fuel Spend: 0
+
+
+2025-02-04T21:56:21
+DAY 1 || Cash Earned: 0 , Pocket_Cash: 10 , Total Expenses: 66 , Total Cash: 0 , Fuel Spend: 0
+
+
+2025-02-04T21:57:55
+DAY 1 || Cash Earned: 0 , Pocket_Cash: 10 , Total Expenses: 77 , Total Cash: 0 , Fuel Spend: 0
+
+
+2025-02-04T22:03:37
+DAY 1 || Cash Earned: 0 , Pocket_Cash: 10 , Total Expenses: 50 , Total Cash: 0 , Fuel Spend: 0
+
+
+2025-02-04T22:05:08
+DAY 1 || Cash Earned: 0 , Pocket_Cash: 10 , Total Expenses: 54 , Total Cash: 0 , Fuel Spend: 0
+
+
+2025-02-04T22:06:04
+DAY 1 || Cash Earned: 0 , Pocket_Cash: 10 , Total Expenses: 51 , Total Cash: 0 , Fuel Spend: 0
+
+
+2025-02-04T22:06:36
+DAY 1 || Cash Earned: 0 , Pocket_Cash: 10 , Total Expenses: 46 , Total Cash: 0 , Fuel Spend: 0
+
+
+2025-02-04T22:07:09
+DAY 1 || Cash Earned: 0 , Pocket_Cash: 10 , Total Expenses: 54 , Total Cash: 0 , Fuel Spend: 0

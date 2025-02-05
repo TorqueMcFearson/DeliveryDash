@@ -7,6 +7,8 @@ const CITY_SCENE = preload("res://CityMain.tscn")
 @onready var perf_rows: Control = $"PanelContainer/Page 1/Performance Rows"
 @onready var offscreen = $Markers/Offscreen.position.x
 @onready var onscreen = $Markers/Onscreen.position.x
+@onready var day_event_text: RichTextLabel = $DayEvent/UpgradePanel/VBoxContainer/DayEventText
+
 enum {LABEL,VALUE}
 var broke = false
 var page2 = false
@@ -169,9 +171,25 @@ func tween_nextday_label():
 	return tween.finished
 	
 func _on_car_upgrades_done_shopping_pressed() -> void:
+	switch_to_day_event_panel()
+	
+func switch_to_day_event_panel():
+	var tween = create_tween()
+	tween.tween_property($"Car Upgrades","modulate",Color(1,1,1,0),.35)
+	tween.tween_callback($"Car Upgrades".hide)
+	tween.tween_property($DayEvent,"modulate",Color(1,1,1,1),.75).set_delay(.12)
+	tween.tween_callback(func():$DayEvent.show();day_event_text.update())
+	
+	
+	
+func start_next_day():
 	var tween = create_tween()
 	UI.day_over = false
 	UI.fade_out_in_music("res://SFX/echo-flux-258965.mp3",1)
 	UI.player_map_position = UI.PLAYER_HOME_SPAWN
 	UI.fade_out(1.5,get_tree().change_scene_to_packed.bind(CITY_SCENE))
 	get_tree().create_timer(1).timeout.connect(UI.unpause_timers)
+
+
+func _on_back_button_pressed() -> void:
+	start_next_day() 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://41a5bcaoeq2e"]
+[gd_scene load_steps=20 format=3 uid="uid://41a5bcaoeq2e"]
 
 [ext_resource type="Script" path="res://Scripts/4 AM.gd" id="1_q7i08"]
 [ext_resource type="StyleBox" uid="uid://c6bnfdpsfgbph" path="res://StyleBoxes/order_entry_active.tres" id="2_b5tli"]
@@ -9,6 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://b8weo5h0mausl" path="res://SFX/slidy.mp3" id="5_ux1uj"]
 [ext_resource type="FontFile" uid="uid://ydwn4indox68" path="res://Font/Bangers-Regular.ttf" id="7_34r6m"]
 [ext_resource type="PackedScene" uid="uid://dgwn1k3hj64ky" path="res://car_upgrades.tscn" id="9_vewjq"]
+[ext_resource type="PackedScene" uid="uid://cx617anbttrcc" path="res://day_event.tscn" id="10_6dcw7"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0ceuw"]
 texture = ExtResource("2_w222g")
@@ -923,5 +924,13 @@ text = "Day 0"
 visible = false
 layout_mode = 1
 
+[node name="DayEvent" parent="." instance=ExtResource("10_6dcw7")]
+visible = false
+layout_mode = 1
+
 [connection signal="pressed" from="PanelContainer/Next Screen" to="." method="_pay_bills_button"]
 [connection signal="done_shopping_pressed" from="Car Upgrades" to="." method="_on_car_upgrades_done_shopping_pressed"]
+[connection signal="pressed" from="DayEvent/Options Menu/Back Button" to="." method="_on_back_button_pressed"]
+
+[editable path="DayEvent"]
+[editable path="DayEvent/UpgradePanel"]

@@ -175,7 +175,7 @@ var time_passed := 0.0
 	"Fuel Tank Size" : 0,
 	"Car Horn" : 0,
 	}
-	
+var temp_mod_dict :Dictionary
 ## Gas Variables ######################
 const GAS_COST = .5
 const FUEL_WARNING_LEVEL = 25
