@@ -8,8 +8,7 @@ var test_resource :Resource
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass
-	
-	
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -25,11 +24,7 @@ func _on_add_pressed() -> void:
 
 
 func _on_open_pressed() -> void:
-
 	test_resource = ResourceLoader.load(\"res://testable_resource.tres\",) # Replace with function body.
-	
-	
-	
 
 
 func _on_release_pressed() -> void:

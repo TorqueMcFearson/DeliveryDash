@@ -558,6 +558,7 @@ func complete_order(order):
 	add_cash(reward,tip) 
 
 func check_forgot(forgotten):
+	if get_tree().current_scene.name != "City": return
 	var is_forgot = func (order):return order.state != order.food_status and order.state != Order.NEW
 	#var forgotten :Array = order_list.get_children().filter(is_forgot)
 	if forgotten.filter(is_forgot):
