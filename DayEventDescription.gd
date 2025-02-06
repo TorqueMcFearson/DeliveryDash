@@ -10,12 +10,12 @@ const good_event_database :Dictionary= {
 		"property": "max_cars_modifier",
 		"amount": 0.75},	
 		
-	1:{ "title":"New Speed Limits",
-		"description":"While getting dressed, you hear the radio talk about police %s.",
-		"highlight" : "reducing speeding fines",
-		"snippet":"crazy drivers",
+	1:{ "title":"Seniors in New Whips",
+		"description":"While texting with your mother, she mentions a local dealership mistakenly gave a 75%% discount to %s.",
+		"highlight" : "senior citizens for new cars",
+		"snippet":"stable drivers",
 		"property": "AI_max_speed_mod",
-		"amount": 1.25},
+		"amount": 0.65},
 		
 	2:{ "title":"Spilt Coffee",
 		"description":"While fueling up before work, you accidentally %s.",
@@ -61,19 +61,19 @@ const bad_event_database :Dictionary= {
 		"property": "max_cars_modifier",
 		"amount": 1.25},
 		
-	1:{ "title":"Old Drivers",
-		"description":"While texting with your mother, she mentions a local dealership mistakenly gave a 75%% discount to %s.",
-		"highlight" : "senior citizens on new cars",
-		"snippet":"slow drivers",
-		"property": "speed_modifier",
-		"amount": 0.75},
+	1:{ "title":"New Speed Limits",
+		"description":"While getting dressed, you hear the radio talk about police %s.",
+		"highlight" : "reducing speeding fines",
+		"snippet":"crazy drivers",
+		"property": "AI_max_speed_mod",
+		"amount": 1.35},
 		
 	2:{ "title":"Flat Tire",
 		"description":"While pulling out your driveway, you hear the rubbery flop of a flat, forcing you to swap to your %s.",
 		"highlight" : "rickety spare tire",
 		"snippet":"slower driving speed",
 		"property": "speed_modifier",
-		"amount": 0.75},
+		"amount": 0.85},
 		
 	3:{ "title":"Mad World",
 		"description":"While chatting on discord, you notice that %s since Netflix did a crackdown on sharing passwords.",
@@ -106,21 +106,23 @@ const bad_event_database :Dictionary= {
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	
+	if UI.temp_mod_dict: restore_mods()
 	day_event_text.visible_ratio = 0
 	sub_text.visible_ratio = 0
 	if get_tree().current_scene.name == "Day Event Panel":
 		update()
 	
 func update():
-
-	var idx = range(len(good_event_database))
-	idx.shuffle()
-	var good_event = good_event_database[idx.pop_back()]
-	var bad_event = bad_event_database[idx.pop_back()]
+	var event_ids = range(len(good_event_database))
+	if UI.temp_mod_dict:
+		for prev_id in UI.temp_mod_dict["IDs"]:
+			event_ids.erase(prev_id)
+	event_ids.shuffle()
+	event_ids.resize(2)
+	var good_event = good_event_database[event_ids[0]]
+	var bad_event = bad_event_database[event_ids[1]]
 	set_event_text(good_event,bad_event)
-	if UI.temp_mod_dict: restore_mods()
-	save_mods(good_event["property"],bad_event["property"])
+	save_mods(good_event["property"],bad_event["property"],event_ids)
 	apply_mod(good_event["property"],good_event["amount"])
 	apply_mod(bad_event["property"],bad_event["amount"])
 	await tween_text()
@@ -133,8 +135,8 @@ func restore_mods():
 		assert(UI.get(prop) == UI.temp_mod_dict[prop])
 		
 		
-func save_mods(good_prop: String,bad_prop: String):
-	UI.temp_mod_dict = {good_prop:UI.get(good_prop),bad_prop:UI.get(bad_prop)}
+func save_mods(good_prop: String,bad_prop: String,event_ids:Array):
+	UI.temp_mod_dict = {good_prop:UI.get(good_prop),bad_prop:UI.get(bad_prop),"IDs":event_ids}
 	assert(UI.get(good_prop) == UI.temp_mod_dict[good_prop])
 	assert(UI.get(bad_prop) == UI.temp_mod_dict[bad_prop])
 	
@@ -159,13 +161,13 @@ func set_event_text(good_event,bad_event):
 	var good_snippet = "[b][color=green]%s[/color][/b]" % good_event["snippet"]
 	var bad_snippet = "[b][color=red]%s[/color][/b]" % bad_event["snippet"]
 	var snippet = "[center]Seems like you're in for %s and %s today." % [good_snippet,bad_snippet]
-	UI.set_UIbar_event_text(good_snippet,bad_snippet)
 	
 	var good_text = "[font_size=18][center][b][color=green]%s[/color][/b][/center][/font_size]\n%s" % [good_event["title"],good_descript]
 	var bad_text = "[font_size=18][center][b][color=red]%s[/color][/b][/center][/font_size]\nLater, %s" % [bad_event["title"],bad_descript.to_lower()]
 	
 	day_event_text.text = "[center]%s\n\n%s" % [good_text,bad_text]
 	sub_text.text = snippet
+	UI.set_UIbar_event_text(good_snippet,bad_snippet)
 
 
 func enable_button():

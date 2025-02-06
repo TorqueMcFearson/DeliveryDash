@@ -114,12 +114,13 @@ size_flags_vertical = 8
 theme_override_constants/separation = 25
 
 [node name="Notification" type="Label" parent="Screen"]
+top_level = true
 layout_mode = 0
-offset_left = -148.698
-offset_top = -10.9569
-offset_right = 277.302
-offset_bottom = 36.0431
-scale = Vector2(0.26, 0.25)
+offset_left = 927.0
+offset_top = 547.0
+offset_right = 1353.0
+offset_bottom = 594.0
+scale = Vector2(0.75, 0.9)
 pivot_offset = Vector2(215.557, 23.8314)
 theme_override_colors/font_color = Color(1, 0, 0, 1)
 theme_override_colors/font_shadow_color = Color(0.309804, 0.0745098, 0.0745098, 0.552941)
@@ -130,7 +131,7 @@ theme_override_constants/shadow_offset_y = 0
 theme_override_constants/outline_size = 2
 theme_override_constants/shadow_outline_size = 7
 theme_override_fonts/font = SubResource("FontVariation_f0o50")
-theme_override_font_sizes/font_size = 36
+theme_override_font_sizes/font_size = 30
 text = "You forgot to pickup the order!"
 horizontal_alignment = 1
 

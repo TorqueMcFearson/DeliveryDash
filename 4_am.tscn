@@ -893,7 +893,7 @@ position = Vector2(138, 705)
 position = Vector2(133, 167)
 
 [node name="NextDayEnd" type="Marker2D" parent="Markers"]
-position = Vector2(133, -126)
+position = Vector2(140, -126)
 
 [node name="Slide_SFX" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamRandomizer_hq16f")

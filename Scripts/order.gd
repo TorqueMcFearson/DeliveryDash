@@ -104,6 +104,7 @@ func progress_order():# NEW,TO_STORE,TO_HOUSE,DELIVERED
 					UI.made_a_mistake(FORGOT_UPDATE_PVALUE)
 					forgot_pickup = true
 				return
+			UI.did_a_good(UI.PICKUP_ORDER_RATING_EARN)
 		TO_HOUSE:
 			if food_status != FOOD.DELIVERED:
 				UI.phone.bad_notification("You haven't delivered the order yet!")

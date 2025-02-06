@@ -1,5 +1,4 @@
 extends Node2D
-signal tutorial_complete
 const HOUSE_TEXTURES = [
 preload("res://Sprites/house1.png"),
 preload("res://Sprites/house3.png"),

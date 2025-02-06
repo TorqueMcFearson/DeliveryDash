@@ -53,7 +53,7 @@ const V_DIR = [Vector2.UP,Vector2.RIGHT,Vector2.DOWN,Vector2.LEFT]
 const ROAD_DIR = ["Horz","Vert","Both","OffRoad"]
 var direction :int
 var v_direction:Vector2
-var state:STATE :
+@export var state:STATE :
 	set(value):
 		state = value
 		state_change.emit()
@@ -83,7 +83,7 @@ func _ready() -> void:
 	v_direction = V_DIR[direction]
 	$Move_collision.disabled = true
 	stopped = true
-	await get_tree().create_timer(randf_range(.25,1.25))
+	await get_tree().create_timer(randf_range(.25,1.25)).timeout
 	$Move_collision.disabled = false
 	stopped = false
 	pass # Replace with function body.
@@ -117,6 +117,7 @@ func _physics_process(delta: float) -> void:
 			if road_dir == 1 and direction not in [UP,DOWN]: 
 				direction = [UP,DOWN].pick_random()
 				rotation=deg_to_rad(direction*90)
+			v_direction = V_DIR[direction]
 			$Label.text = "%s - %s - %s" % [ROAD_DIR[road_dir],"Driving", ["UP","RIGHT","DOWN","LEFT"][direction]]
 			var mod:int
 			if direction in [LEFT,RIGHT]:
@@ -150,7 +151,7 @@ func _physics_process(delta: float) -> void:
 			position = temp_pos
 			velocity = Vector2.ZERO
 			stopped = true
-			var timer = get_tree().create_timer(randf_range(.75,1.5)).timeout.connect(end_collision)
+			get_tree().create_timer(randf_range(.75,1.5)).timeout.connect(end_collision)
 		
 	$Label.position = position + Vector2(-20,20)
 	
@@ -215,7 +216,7 @@ func get_horned():
 	run_from_player()
 	running = true
 	
-	await get_tree().create_timer(3).timeout
+	await get_tree().create_timer(3.6).timeout
 	running = false
 	max_speed_mod = d_mxm
 	collision_mask = d_cm

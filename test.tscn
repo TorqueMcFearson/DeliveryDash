@@ -41,6 +41,7 @@ func _on_save_pressed() -> void:
 
 
 func _on_cache_pressed() -> void:
+	pass
 "
 
 [node name="Node2D" type="Node2D"]

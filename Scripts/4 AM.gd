@@ -106,9 +106,9 @@ func _page2_button():
 	$"PanelContainer/Next Screen".disabled = true 
 	UI.set_cash(expenses["Total Cash"])
 	if broke:
-		after_page_2()
-		#UI.reset()
-		#UI.fade_out(1,get_tree().change_scene_to_packed.bind(TITLE_SCENE))
+		#after_page_2()
+		UI.reset()
+		UI.fade_out(1,get_tree().change_scene_to_packed.bind(TITLE_SCENE))
 	else:
 		after_page_2()
 		

@@ -1,13 +1,9 @@
 class_name UpgradeNodes
 extends PanelContainer
 
-@onready var icon_node: TextureRect = $"UpgradeContainer/Icon-Title/Icon"
-@onready var title_node: Label = $"UpgradeContainer/Icon-Title/Title"
-@onready var description_node: RichTextLabel = $UpgradeContainer/Description
 @onready var stats_node: Label = $UpgradeContainer/VBoxContainer2/Stats
 @onready var upgrade_stats_node: Label = $UpgradeContainer/VBoxContainer2/Upgrade_stats
 @onready var price_node: Button = $UpgradeContainer/VBoxContainer/Price
-@onready var level_node: Label = $UpgradeContainer/Sprite2D/Level
 @onready var starbox: HBoxContainer = $UpgradeContainer/VBoxContainer/Starbox
 
 var star_texture = load("res://Sprites/star_filled.png")
@@ -47,9 +43,7 @@ func update():
 	set_stats()
 	pass
 
-func set_level(_level:int):
-	level = _level
-	level_node.text = str(_level)
+
 
 func set_price():
 	price = prices[level]
@@ -94,7 +88,6 @@ func add_stars():
 		starbox.add_child(star.duplicate())
 		
 func fill_stars(level):
-	var idx = level
 	for star in starbox.get_children().slice(0,level):
 		star.texture = star_texture
 

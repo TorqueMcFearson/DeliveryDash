@@ -45,6 +45,7 @@ func _phone_on():
 	tween = create_tween()
 	tween.tween_property(self,"scale",PHONE_ON_SCALE,.4)
 	tween.parallel().tween_property(self,"position",PHONE_ON_POS,.25).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	tween.parallel().tween_property($Screen/Notification,"position",Vector2(813,90),.56).set_trans(Tween.TRANS_QUART).set_ease(Tween.EASE_OUT)
 	tween.parallel().tween_property($Blackout,"modulate",Color(1,1,1,0),.2)
 	return tween.finished
 	
@@ -58,6 +59,7 @@ func _phone_off():
 		order.shrink_order()
 	tween.tween_property(self,"scale",PHONE_OFF_SCALE,.5)
 	tween.parallel().tween_property(self,"position",PHONE_OFF_POS,.25).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
+	tween.parallel().tween_property($Screen/Notification,"position",Vector2(927,547),.5).set_ease(Tween.EASE_IN)
 	tween.parallel().tween_property($Blackout,"modulate",Color(1,1,1,1),.2)
 	tween.tween_callback(_phone_off_callback)
 	$ActiveOrderTimer.show()
@@ -72,8 +74,8 @@ func update_orders():
 	for order:Order in orders:
 		order.get_distance()
 
-func check_pickups():
-	order_list.get_children().filter(func(order):order)
+#func check_pickups():
+	#order_list.get_children().filter(func(order):order)
 		
 		
 func update_scroll(pos:Vector2):
@@ -93,10 +95,11 @@ func blink():
 		#tween.tween_property($Blackout,"modulate",Color(1,1,1,1),.1)
 		
 func bad_notification(message:String):
-	if state == OFF:
-		_phone_on() 
+	#if state == OFF:
+		#_phone_on() 
+	
 	$Screen/Notification.text = message
 	$"Phone Bad Ding".play()
 	var tween = create_tween()
-	tween.tween_property($Screen/Notification,"scale",Vector2(.25,.25),.25)
-	tween.tween_property($Screen/Notification,"scale",Vector2(0,.25),.25).set_delay(3)
+	tween.tween_property($Screen/Notification,"scale",Vector2(.75,.9),.25)
+	tween.tween_property($Screen/Notification,"scale",Vector2(0,.9),.25).set_delay(3)

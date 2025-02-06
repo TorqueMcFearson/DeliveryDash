@@ -64,11 +64,11 @@ class Building:
 	var idx: int
 	var type: String
 	
-	func _init(name,global_position,idx,type) -> void:
-		self.name = name
-		self.global_position = global_position
-		self.idx = idx
-		self.type = type
+	func _init(_name,_global_position,_idx,_type) -> void:
+		self.name = _name
+		self.global_position = _global_position
+		self.idx = _idx
+		self.type = _type
 
 ## Play State ######################
 @export_group("Clock") 
@@ -90,7 +90,8 @@ var houses : Array
 const PLAYER_HOME_SPAWN = Vector2(2785,2779)
 const MAX_RATING = 100
 const STAR_BAR_WIDTH = 170.0
-const COMPLETE_ORDER_RATING_EARN = 8
+const COMPLETE_ORDER_RATING_EARN = 4
+const PICKUP_ORDER_RATING_EARN = 4
 var MAX_ORDERS = 3:
 	get():
 		return round(MAX_ORDERS * max_orders_mod)
@@ -181,6 +182,7 @@ var time_passed := 0.0
 	"Car Horn" : 0,
 	}
 var temp_mod_dict :Dictionary
+
 ## Gas Variables ######################
 const GAS_COST = .5
 const FUEL_WARNING_LEVEL = 25
@@ -556,7 +558,7 @@ func complete_order(order):
 	add_cash(reward,tip) 
 
 func check_forgot(forgotten):
-	var is_forgot = func (order:Order):return order.state != order.food_status and order.state != Order.NEW
+	var is_forgot = func (order):return order.state != order.food_status and order.state != Order.NEW
 	#var forgotten :Array = order_list.get_children().filter(is_forgot)
 	if forgotten.filter(is_forgot):
 		for order in forgotten:
@@ -634,7 +636,6 @@ func consume_gas(fuel_consumed):
 	gas -= fuel_rate*fuel_consumed
 
 func out_of_gas():
-	var player = get_tree().current_scene.find_child("Player")
 	if player: player.out_of_gas()
 	
 

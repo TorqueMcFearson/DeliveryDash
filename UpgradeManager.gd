@@ -5,7 +5,7 @@ signal done_shopping_pressed
 @export var upgrade_data = {
 	"Strong Bumpers" : {
 		"max_level": 2,
-		"prices":[45,75],
+		"prices":[35,75],
 		"stats": [-50,-100],
 		"stats_des": "%d%% slowdown",
 		"level" : UI.upgrade_levels["Strong Bumpers"],
@@ -15,7 +15,7 @@ signal done_shopping_pressed
 	
 	"TuroCharge Engine" : {
 		"max_level": 5,
-		"prices":[30,50,75,100,125],
+		"prices":[25,50,75,100,125],
 		"stats": [[10,2.5],[20,5.0],[30,7.5],[40,10],[50,12.5]],
 		"stats_des": "+%d%% speed\n  +%d%% acceleration",
 		"level" : UI.upgrade_levels["TuroCharge Engine"],
@@ -24,7 +24,7 @@ signal done_shopping_pressed
 	},
 	"Fuel Efficiency" : {
 		"max_level": 3,
-		"prices":[30,60,125],
+		"prices":[20,60,125],
 		"stats": [-10,-25,-50],
 		"stats_des": "%d%% fuel consumption",
 		"level" : UI.upgrade_levels["Fuel Efficiency"],
@@ -33,7 +33,7 @@ signal done_shopping_pressed
 	},
 	"Fuel Tank Size" : {
 		"max_level": 4,
-		"prices":[25,75,100,150],
+		"prices":[15,75,100,150],
 		"stats": [20,50,100,135],
 		"stats_des": "+%d%% fuel tank size",
 		"level" : UI.upgrade_levels["Fuel Tank Size"],
@@ -70,7 +70,6 @@ func randomizer():
 			prices.append(randi_range(1,30))
 		for x in range(max_level):
 			stats.append(randi_range(1,30))
-		var stats_des = "-%d%% this is for testing purposes"
 		var level = randi_range(0,max_level)
 		upgrade_data[upgrade]["max_level"] = max_level
 		upgrade_data[upgrade]["prices"] = prices

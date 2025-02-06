@@ -52,7 +52,6 @@ func _process(delta: float) -> void:
 
 func driver_x(delta,direction,speed):
 	var velocity = direction * speed * delta
-	var driver_pos = driver.position.x
 	if sign(driver_x_direction) != sign(driver_x_dest):
 		driver_x_direction *= -1
 	if is_past_limit():

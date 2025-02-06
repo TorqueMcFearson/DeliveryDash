@@ -8,7 +8,7 @@ var gas_added := 0.00
 var gas_add_rate := 2.5
 
 
-func _on_body_entered(body: Node2D) -> void:
+func _on_body_entered(_body: Node2D) -> void:
 	if UI.gas < 90 and UI.cash:
 		UI.gas = snapped(UI.gas,5.0)
 		gas_click.pitch_scale = (UI.gas/100) +.5
