@@ -25,10 +25,11 @@ func test():
 func _process(delta: float) -> void:
 	pass
 
-func _unhandled_input(event: InputEvent) -> void:
+func _input(event: InputEvent) -> void:
 	if state == ON: 
 		if event.is_action_pressed("Close Phone"): 
 			_phone_off()
+			accept_event()
 			
 			
 func add_order(order:Order):
@@ -54,6 +55,7 @@ func _phone_on():
 	return tween.finished
 	
 func _phone_off():
+	state = OFF
 	give_focus_to_scene()
 	if tween.is_running():
 		await tween.finished

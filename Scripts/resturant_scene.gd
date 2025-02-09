@@ -17,17 +17,20 @@ var need_to_mark_order :Array[Order]
 @onready var request_order: Button = $Control/Request_Order
 @onready var receipt: Label = $Control/Receipt
 @onready var bag: Button = $Control/Bag
+@onready var default_focus = request_order
+@onready var ask_label: Label = $Control/ask_label
 
 
 func _ready() -> void:
 	location = UI.location
 	UI.phone.scene_has_focus_nodes(true)
-	focus_from_phone()
+	
 	if not location:
 		location = "Cajun Betty's"
 		print("ERROR: Location.UI was null when entering resturant.")
 	$Foreground.texture = load(foregrounds[location])
 	speech.text = ""
+	ask_label.text = ""
 	if UI.tutorial_stage(TUTORIAL_STAGE):
 		UI.fade_in(.75) # Replace with function body.
 		UI.pause(TUTORIAL_STAGE)
@@ -36,11 +39,14 @@ func _ready() -> void:
 	else:
 		if UI.tutorial < TUTORIAL_STAGE*10: UI.tutorial = TUTORIAL_STAGE*10
 		UI.fade_in(1)
+	focus_from_phone()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+func _physics_process(delta: float) -> void:
+	if not get_viewport().gui_get_focus_owner():
+		default_focus.grab_focus()
+		
 
 
 func _on_exit_arrow_pressed() -> void: # button is EXIT
@@ -160,21 +166,21 @@ func _on_bag_mouse_exited() -> void:
 
 func _on_request_order_mouse_entered() -> void:
 	if not request_order.disabled:
-		speech.add_theme_color_override("font_color","white")
-		speech.text = "Ask for Order"
+		ask_label.add_theme_color_override("font_color","white")
+		ask_label.text = "Ask for Order"
 	pass # Replace with function body.
 
 func _on_request_order_mouse_exited() -> void:
 	if not request_order.disabled:
-		speech.add_theme_color_override("font_color","white")
-		speech.text = ""
+		ask_label.add_theme_color_override("font_color","white")
+		ask_label.text = ""
 	pass # Replace with function body.
 
 
 func _on_to_phone_node_focus_entered() -> void:
 	if not UI.phone.is_phone_on():
-		await UI._phone_on()
+		await UI.phone._phone_on()
 	UI.phone.give_order_focus()
 
 func focus_from_phone():
-	request_order.grab_focus()
+	default_focus.grab_focus()

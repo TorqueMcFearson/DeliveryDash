@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://cl6gav0mt5043"]
+[gd_scene load_steps=7 format=3 uid="uid://cl6gav0mt5043"]
 
 [ext_resource type="Shortcut" uid="uid://2l14yubx5l8t" path="res://Shortcut/Menu Cancel.tres" id="1_0xvcj"]
 [ext_resource type="AudioStream" uid="uid://c2p05p0v3iem7" path="res://SFX/Complete_02.wav" id="2_64thh"]
@@ -53,6 +53,13 @@ func _on_focus_entered() -> void:
 	pass # Replace with function body.
 "
 
+[sub_resource type="InputEventAction" id="InputEventAction_txvgt"]
+action = &"test_action"
+pressed = true
+
+[sub_resource type="Shortcut" id="Shortcut_41j4u"]
+events = [SubResource("InputEventAction_txvgt")]
+
 [sub_resource type="GDScript" id="GDScript_pkijj"]
 script/source = "extends Control
 
@@ -83,12 +90,14 @@ focus_mode = 2
 script = SubResource("GDScript_xxjc3")
 
 [node name="Release" type="Button" parent="."]
+layout_mode = 0
 offset_right = 148.0
 offset_bottom = 61.0
 text = "Release Res"
 metadata/_edit_use_anchors_ = true
 
 [node name="Open" type="Button" parent="."]
+layout_mode = 0
 offset_left = 195.0
 offset_top = 0.000870944
 offset_right = 343.0
@@ -97,6 +106,7 @@ text = "Open res"
 metadata/_edit_use_anchors_ = true
 
 [node name="Cache" type="Button" parent="."]
+layout_mode = 0
 offset_left = 10.9996
 offset_top = 90.0
 offset_right = 159.0
@@ -105,6 +115,7 @@ text = "Has cahce?"
 metadata/_edit_use_anchors_ = true
 
 [node name="Save" type="Button" parent="."]
+layout_mode = 0
 offset_left = 190.0
 offset_top = 87.0008
 offset_right = 338.0
@@ -113,6 +124,7 @@ text = "Save"
 metadata/_edit_use_anchors_ = true
 
 [node name="Add" type="Button" parent="."]
+layout_mode = 0
 offset_left = 401.0
 offset_top = -2.99821
 offset_right = 549.0
@@ -122,6 +134,7 @@ text = "Add 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="."]
+layout_mode = 0
 offset_left = 176.0
 offset_top = -35.9992
 offset_right = 376.0
@@ -129,6 +142,7 @@ offset_bottom = 8.00079
 metadata/_edit_use_anchors_ = true
 
 [node name="Label2" type="Label" parent="."]
+layout_mode = 0
 offset_left = -5.00066
 offset_top = 145.0
 offset_right = 194.999
@@ -146,16 +160,18 @@ offset_bottom = 40.0
 metadata/_edit_use_anchors_ = true
 
 [node name="Button" type="Button" parent="Control"]
+layout_mode = 0
 offset_left = 815.0
 offset_top = 59.0036
 offset_right = 972.0
 offset_bottom = 160.004
-shortcut = ExtResource("1_0xvcj")
+shortcut = SubResource("Shortcut_41j4u")
 text = "PLAY SOUND"
 metadata/_edit_use_anchors_ = true
 
 [node name="Button2" type="Button" parent="Control/Button"]
 visible = false
+layout_mode = 0
 offset_left = 2.99939
 offset_top = 154.0
 offset_right = 159.999
