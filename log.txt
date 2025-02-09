@@ -189,3 +189,7 @@ DAY 6 || Cash Earned: 310 , Pocket_Cash: 789 , Total Expenses: 128 , Total Cash:
 
 2025-02-05T20:22:26
 DAY 1 || Cash Earned: 0 , Pocket_Cash: 0 , Total Expenses: 49 , Total Cash: 0 , Fuel Spend: 20
+
+
+2025-02-08T16:33:02
+DAY 1 || Cash Earned: 0 , Pocket_Cash: 20 , Total Expenses: 48 , Total Cash: 0 , Fuel Spend: 0

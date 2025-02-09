@@ -43,18 +43,16 @@ func _ready():
 	hide_all()
 	$"../Controls".hide()
 
-func _input(event: InputEvent) -> void:
+func _unhandled_input(event: InputEvent) -> void:
 	if not visible: return
-	if playing_tutorial and event.is_pressed() and event is InputEventMouseButton \
-	or event.is_action_pressed("pause"):
-		if playing_tutorial:
-			if click_to_continue:
-				progress_tutorial()
-		else:
-			unpause()
+	if event.is_action_pressed("ui_cancel"):
+		skip_tutorial()
+	if playing_tutorial and event.is_pressed() and event is not InputEventJoypadMotion and click_to_continue:
+		progress_tutorial()
+			
+			
 
 func unpause():
-	print("UNPAUSE")
 	$"../Pause Dimmer".hide()
 	$"../Controls".hide()
 	get_viewport().set_input_as_handled()
@@ -93,6 +91,7 @@ func progress_tutorial():
 					click_to_continue = false
 					click_label.hide()
 					$"Sneaky Layer".show()
+					$"Sneaky Layer/Sneaky Button".grab_focus()
 				else:
 					click_label.show()
 					set_continue_text($Phone2)
@@ -247,3 +246,7 @@ func t_house_complete():
 	print("complete fired!")
 	if UI.tutorial == 33:
 		progress_tutorial()
+
+func skip_tutorial():
+	stage_done()
+	

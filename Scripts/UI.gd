@@ -221,12 +221,13 @@ func _ready() -> void:
 	
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause") and not get_tree().current_scene.name == "Title":
+		print("PAUSE PRESSED")
 		$"Pause Dimmer".show()
 		$"Controls".show()
 		get_tree().paused=true
-		if not UI.tutorial_stage(0):
-			show_pause_menu()
-		show_tutorial()
+		#if not UI.tutorial_stage(0):
+		show_pause_menu()
+		#show_tutorial()
 
 func _process(delta: float) -> void:
 	gas_can_effects(delta)
@@ -278,6 +279,7 @@ func give_tutorial_signals(signals):
 	$"Tutorial".setup_tutorial_signals(signals)
 		
 func tutorial_phone(_stage:int):
+	phone.tween.kill()
 	await phone._phone_on()
 	pause(_stage)
 	
@@ -559,7 +561,9 @@ func complete_order(order):
 
 func check_forgot(forgotten):
 	if get_tree().current_scene.name != "City": return
-	var is_forgot = func (order):return order.state != order.food_status and order.state != Order.NEW
+	var is_forgot = func (order):
+		if order:
+			return order.state != order.food_status and order.state != Order.NEW
 	#var forgotten :Array = order_list.get_children().filter(is_forgot)
 	if forgotten.filter(is_forgot):
 		for order in forgotten:

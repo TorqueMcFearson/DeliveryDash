@@ -1,12 +1,14 @@
 [gd_resource type="Theme" load_steps=25 format=4 uid="uid://r1ihjlkhy6rj"]
 
+[ext_resource type="StyleBox" uid="uid://cl7ru0vvuvo82" path="res://StyleBoxes/Focus_glow.tres" id="1_dlwk2"]
+
 [sub_resource type="ImageTexture" id="ImageTexture_ow8an"]
 
 [sub_resource type="ImageTexture" id="ImageTexture_qhjrg"]
 
 [sub_resource type="ImageTexture" id="ImageTexture_l0dk7"]
 
-[sub_resource type="Image" id="Image_r2504"]
+[sub_resource type="Image" id="Image_7ncko"]
 data = {
 "data": PackedByteArray("////AP///0D///9A////AP///wD///9A////QP///wD///8A////QP///0D///8A////AP///0D///9A////AP///wD///9A////QP///wD///8A////QP///0D///8A////AP///0D///9A////AP///wD///9A////QP///wD///8A////QP///0D///8A////AP///0D///9A////AP///wD///9A////QP///wD///8A////QP///0D///8A////AP///0D///9A////AP///wD///9A////QP///wD///8A////QP///0D///8A////AP///0D///9A////AA=="),
 "format": "RGBA8",
@@ -16,7 +18,7 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_cs4h4"]
-image = SubResource("Image_r2504")
+image = SubResource("Image_7ncko")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tugc3"]
 content_margin_left = 4.0
@@ -37,7 +39,7 @@ content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
 content_margin_bottom = 4.0
-bg_color = Color(0.0333333, 1, 0, 0.662745)
+bg_color = Color(0.0299479, 0.898438, 0, 0.584314)
 corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
@@ -45,6 +47,8 @@ corner_radius_bottom_left = 4
 corner_detail = 6
 expand_margin_top = 5.0
 expand_margin_bottom = 5.0
+shadow_color = Color(0.395203, 0.683594, 0.460541, 0.427451)
+shadow_size = 2
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hbws7"]
 content_margin_left = 4.0
@@ -1857,7 +1861,7 @@ cache/0/25/0/glyphs/3/size = Vector2(0, 0)
 cache/0/25/0/glyphs/3/uv_rect = Rect2(0, 0, 0, 0)
 cache/0/25/0/glyphs/3/texture_idx = -1
 
-[sub_resource type="Image" id="Image_d4wks"]
+[sub_resource type="Image" id="Image_ugl1o"]
 data = {
 "data": PackedByteArray("////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////ALOzs5mysrKmuLi4Ev///wD///8A////AP///wC4uLgSsrKyprKyspf///8A////ALKysqaysrLZsbGxs7i4uBL///8A////ALi4uBKysrKzsrKy2bKysqX///8A////ALi4uBKxsbGzsrKy2bGxsbO4uLgSuLi4ErKysrOysrLZsbGxs7S0tBH///8A////AP///wC4uLgSsbGxs7KystmysrLFsrKyxbKystmxsbGztLS0Ef///wD///8A////AP///wD///8AuLi4ErGxsbOysrLZsrKy2bGxsbO0tLQR////AP///wD///8A////AP///wD///8A////ALi4uBKysrKlsrKypbS0tBH///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A"),
 "format": "RGBA8",
@@ -1867,7 +1871,7 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_4dyyb"]
-image = SubResource("Image_d4wks")
+image = SubResource("Image_ugl1o")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mu1dd"]
 content_margin_left = 8.0
@@ -1892,27 +1896,6 @@ corner_radius_top_right = 3
 corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 corner_detail = 5
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sobxo"]
-content_margin_left = 4.0
-content_margin_top = 4.0
-content_margin_right = 4.0
-content_margin_bottom = 4.0
-bg_color = Color(1, 1, 1, 0.75)
-draw_center = false
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-corner_detail = 5
-expand_margin_left = 2.0
-expand_margin_top = 2.0
-expand_margin_right = 2.0
-expand_margin_bottom = 2.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nn8gl"]
 content_margin_left = 8.0
@@ -2000,7 +1983,7 @@ OptionButton/fonts/font = SubResource("FontFile_jrt2u")
 OptionButton/icons/arrow = SubResource("ImageTexture_4dyyb")
 OptionButton/styles/disabled = SubResource("StyleBoxFlat_mu1dd")
 OptionButton/styles/disabled_mirrored = SubResource("StyleBoxFlat_u26hv")
-OptionButton/styles/focus = SubResource("StyleBoxFlat_sobxo")
+OptionButton/styles/focus = ExtResource("1_dlwk2")
 OptionButton/styles/hover = SubResource("StyleBoxFlat_nn8gl")
 OptionButton/styles/hover_mirrored = SubResource("StyleBoxFlat_3kryb")
 OptionButton/styles/normal = null

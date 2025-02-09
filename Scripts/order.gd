@@ -41,6 +41,7 @@ signal new_active(order:Order)
 signal t_res_update
 signal t_house_update
 signal t_house_complete
+signal statusupdate(parent)
 enum {NEW,TO_STORE,TO_HOUSE,DELIVERED}
 enum FOOD {WAITING=1,PICKED_UP=2,DELIVERED=3,WRONG_LOCATION=4}
 enum {NONE,HOVER,CLICKED}
@@ -72,10 +73,7 @@ var forgot_delivery = false
 func _ready() -> void:
 	state = NEW
 	pass # Replace with function body.
-
-func _process(_delta: float) -> void:
-	pass
-
+	
 func init(_customer:String,_resturant,_house,_address):
 	self.order_num = order_next
 	order_next +=1
@@ -89,9 +87,6 @@ func init(_customer:String,_resturant,_house,_address):
 	self.address = _address
 	self.store_to_house_dist = int(resturant_pos.distance_to(resturant_pos)/100)
 
-#func _unhandled_key_input(event: InputEvent) -> void:
-	#if event.is_action_pressed("ui_accept"):
-		#progress_order()
 		
 func progress_order():# NEW,TO_STORE,TO_HOUSE,DELIVERED
 	match state: #Check current state
@@ -120,6 +115,7 @@ func progress_order():# NEW,TO_STORE,TO_HOUSE,DELIVERED
 				return
 	state = (state + 1)
 	t_res_update.emit()
+	$HBoxContainer2/order_select.grab_focus()
 	
 func complete_order():
 	UI.round_stats["Orders Completed"] += 1
@@ -331,3 +327,12 @@ func update_button():
 	for boxtype in ["normal","hover","pressed"]:
 		progress_button.add_theme_stylebox_override(boxtype,load(STYLE_BOXES[state][boxtype]))
 	
+func set_focus():
+	$HBoxContainer2/order_select.grab_focus()
+
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventJoypadMotion:
+		if event.axis in [JOY_AXIS_LEFT_X, JOY_AXIS_LEFT_Y] and event.device == 0:
+			get_viewport().set_input_as_handled()
+			return

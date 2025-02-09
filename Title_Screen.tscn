@@ -1,9 +1,10 @@
-[gd_scene load_steps=26 format=3 uid="uid://caduwy08lr4s1"]
+[gd_scene load_steps=27 format=3 uid="uid://caduwy08lr4s1"]
 
 [ext_resource type="Texture2D" uid="uid://cdxwxktq5bge0" path="res://Backgrounds/Title.jpg" id="1_7m5r0"]
 [ext_resource type="Texture2D" uid="uid://da6d5psli7wv2" path="res://Sprites/Title_Driver.png" id="2_086dc"]
 [ext_resource type="Script" path="res://Scripts/Title_UI.gd" id="3_4trdc"]
 [ext_resource type="FontFile" uid="uid://ydwn4indox68" path="res://Font/Bangers-Regular.ttf" id="4_g3ib7"]
+[ext_resource type="StyleBox" uid="uid://cmxs0ogdn1c6h" path="res://StyleBoxes/FocusInnerGlow.tres" id="5_81f4k"]
 [ext_resource type="PackedScene" uid="uid://d15wce0skylvj" path="res://Options Menu.tscn" id="5_cfrfe"]
 [ext_resource type="FontFile" uid="uid://v3swnsgchgpo" path="res://Font/BebasNeue-Regular.ttf" id="5_j043k"]
 [ext_resource type="Script" path="res://Scripts/tutorial_checkbox.gd" id="6_kx1w2"]
@@ -34,6 +35,8 @@ func _ready() -> void:
 	tween = create_tween()
 	tween.tween_property(driver,\"position\",Vector2(-111,driver.position.y),2).set_trans(Tween.TRANS_BACK).set_delay(.3)
 	tween.tween_callback(func():tween = null)
+	get_viewport().gui_release_focus()
+	
 	pass # Replace with function body.
 
 
@@ -71,6 +74,10 @@ func _on_options_pressed() -> void:
 	#$\"../Title_UI/Buttons/Options\".disabled = true # Replace with function body.
 	#$\"../Title_UI/Buttons/Options\".text = \"No options, I forgot...\"
 	#create_tween().tween_property($\"../Title_UI/Buttons/Options\",\"position\",Vector2(0,250),25).as_relative().set_delay(1.5)
+	
+func on_focus_change():
+	print(\"CURRENT FOCUS\", get_viewport().gui_get_focus_owner())
+	
 	
 "
 
@@ -400,10 +407,10 @@ offset_right = 428.0
 offset_bottom = 621.0
 size_flags_horizontal = 3
 size_flags_vertical = 0
-focus_mode = 0
 theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("4_g3ib7")
 theme_override_font_sizes/font_size = 37
+theme_override_styles/focus = ExtResource("5_81f4k")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_7qo83")
 theme_override_styles/hover = SubResource("StyleBoxFlat_2how3")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_oky6r")
@@ -446,10 +453,10 @@ offset_right = 755.0
 offset_bottom = 621.0
 size_flags_horizontal = 3
 size_flags_vertical = 0
-focus_mode = 0
 theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("4_g3ib7")
 theme_override_font_sizes/font_size = 37
+theme_override_styles/focus = ExtResource("5_81f4k")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_gytne")
 theme_override_styles/hover = SubResource("StyleBoxFlat_vmjq8")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_qhb3h")
@@ -466,10 +473,10 @@ offset_right = 1082.0
 offset_bottom = 621.0
 size_flags_horizontal = 3
 size_flags_vertical = 0
-focus_mode = 0
 theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("4_g3ib7")
 theme_override_font_sizes/font_size = 37
+theme_override_styles/focus = ExtResource("5_81f4k")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_thd7p")
 theme_override_styles/hover = SubResource("StyleBoxFlat_prdul")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_w5elh")
@@ -499,3 +506,6 @@ size_flags_vertical = 6
 [connection signal="toggled" from="Title_UI/Buttons/Start/Tutorial" to="Title_UI/Buttons/Start/Tutorial" method="_on_toggled"]
 [connection signal="pressed" from="Title_UI/Buttons/Options" to="Background Scroll" method="_on_options_pressed"]
 [connection signal="pressed" from="Title_UI/Buttons/Exit" to="Title_UI" method="_on_exit_pressed"]
+[connection signal="resumed" from="Options/Pause Menu" to="Title_UI" method="reset_focus"]
+
+[editable path="Options"]

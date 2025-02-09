@@ -13,16 +13,21 @@ var foregrounds = {"Taco Hut":"res://Sprites/foreground_taco_hutt.png",
 				  "Timmy Tom's":"res://Sprites/foreground_timmy_toms.png"}
 var bagged_order:Order
 var need_to_mark_order :Array[Order]
-
+@onready var speech: Label = $Control/speech
+@onready var request_order: Button = $Control/Request_Order
+@onready var receipt: Label = $Control/Receipt
+@onready var bag: Button = $Control/Bag
 
 
 func _ready() -> void:
 	location = UI.location
+	UI.phone.scene_has_focus_nodes(true)
+	focus_from_phone()
 	if not location:
 		location = "Cajun Betty's"
 		print("ERROR: Location.UI was null when entering resturant.")
 	$Foreground.texture = load(foregrounds[location])
-	$speech.text = ""
+	speech.text = ""
 	if UI.tutorial_stage(TUTORIAL_STAGE):
 		UI.fade_in(.75) # Replace with function body.
 		UI.pause(TUTORIAL_STAGE)
@@ -66,18 +71,18 @@ func put_order_in_bag(order:Order):
 func place_bag(order):
 	order.bag_cleared.connect(remove_bag)
 	bagged_order = order
-	$Receipt.text = "%s\nOrder# %s\n\n%s\n\n%s" % order.bag.receipt
-	$Bag.show()
-	$Receipt.show()
+	receipt.text = "%s\nOrder# %s\n\n%s\n\n%s" % order.bag.receipt
+	bag.show()
+	receipt.show()
 	
 func remove_bag():
-	$Receipt.text = ""
+	receipt.text = ""
 	bagged_order = null
-	$Bag.hide()
-	$Receipt.hide()
+	bag.hide()
+	receipt.hide()
 	
 func _get_order() -> void: # Button
-	$Request_Order.disabled = true
+	request_order.disabled = true
 	var res
 	if UI.active_order:
 		res = UI.active_order.pickup_food(location)
@@ -97,9 +102,9 @@ func _get_order() -> void: # Button
 	t_res_request.emit()
 	
 func dialog(message):
-	$speech.add_theme_color_override("font_color","black")
-	$speech.text = message
-	get_tree().create_timer(2).timeout.connect(func():$speech.text = "";$Request_Order.disabled = false)
+	speech.add_theme_color_override("font_color","black")
+	speech.text = message
+	get_tree().create_timer(2).timeout.connect(func():speech.text = "";request_order.disabled = false)
 	
 func correct_bag(order):
 	UI.did_a_good(CORRECT_BAG_PVALUE)
@@ -110,7 +115,7 @@ func correct_bag(order):
 	get_tree().create_timer(1.25).timeout.connect(func():place_bag(order);dialog("Here.. this should be it.. probably..."))
 	
 func _on_wrong_order_pressed() -> void:
-	$Receipt/Wrong_Order.disabled = true
+	$Control/Receipt/Wrong_Order.disabled = true
 	if bagged_order.bag.correct:
 		UI.made_a_mistake(CORRECT_BAG_PVALUE)
 		dialog("Uhhh.. no.. it's correct. Look again...")
@@ -119,17 +124,17 @@ func _on_wrong_order_pressed() -> void:
 		correct_bag(bagged_order)
 
 func _on_check_receipt() -> void:
-	$Receipt/Check_Bag.disabled = true
-	get_tree().create_timer(.5).timeout.connect(func():$Receipt/Check_Bag.disabled = false)
-	if $Receipt.rotation == 0: # GO SMALL
+	$Control/Receipt/Check_Bag.disabled = true
+	get_tree().create_timer(.5).timeout.connect(func():$Control/Receipt/Check_Bag.disabled = false)
+	if receipt.rotation == 0: # GO SMALL
 		var tween = create_tween()
-		tween.tween_property($Receipt,"scale",Vector2(0.14,0.21),.18)
-		tween.parallel().tween_property($Receipt,"rotation_degrees",-10.4,.18)
-		tween.tween_callback($Receipt/Wrong_Order.hide)
+		tween.tween_property(receipt,"scale",Vector2(0.14,0.21),.18)
+		tween.parallel().tween_property(receipt,"rotation_degrees",-10.4,.18)
+		tween.tween_callback($Control/Receipt/Wrong_Order.hide)
 	else: # GO Big
 		var tween = create_tween()
-		tween.tween_property($Receipt,"scale",Vector2(1,1),.18)
-		tween.parallel().tween_property($Receipt,"rotation_degrees",0,.18)
+		tween.tween_property(receipt,"scale",Vector2(1,1),.18)
+		tween.parallel().tween_property(receipt,"rotation_degrees",0,.18)
 
 func _on_take_bag() -> void:
 	bagged_order.take_bag()
@@ -138,29 +143,38 @@ func _on_take_bag() -> void:
 	t_res_grab.emit()
 
 func _on_bag_mouse_entered() -> void:
-	$Check.text = "Take Bag" # Replace with function body.
+	$Control/Check.text = "Take Bag" # Replace with function body.
 
 func _on_receipt_mouse_entered() -> void:
-	if $Receipt.rotation != 0:
-		$Receipt.scale = Vector2(0.16,0.23)
-		$Check.text = "Check Recipet" # Replace with function body.
+	if receipt.rotation != 0:
+		receipt.scale = Vector2(0.16,0.23)
+		$Control/Check.text = "Check Recipet" # Replace with function body.
 
 func _on_receipt_mouse_exited() -> void:
-	if $Receipt.rotation != 0:
-		$Receipt.scale = Vector2(0.14,0.21)
-		$Check.text = "Take Bag" # Replace with function body.
+	if receipt.rotation != 0:
+		receipt.scale = Vector2(0.14,0.21)
+		$Control/Check.text = "Take Bag" # Replace with function body.
 
 func _on_bag_mouse_exited() -> void:
-	$Check.text = "" # Replace with function body.
+	$Control/Check.text = "" # Replace with function body.
 
 func _on_request_order_mouse_entered() -> void:
-	if not $Request_Order.disabled:
-		$speech.add_theme_color_override("font_color","white")
-		$speech.text = "Ask for Order"
+	if not request_order.disabled:
+		speech.add_theme_color_override("font_color","white")
+		speech.text = "Ask for Order"
 	pass # Replace with function body.
 
 func _on_request_order_mouse_exited() -> void:
-	if not $Request_Order.disabled:
-		$speech.add_theme_color_override("font_color","white")
-		$speech.text = ""
+	if not request_order.disabled:
+		speech.add_theme_color_override("font_color","white")
+		speech.text = ""
 	pass # Replace with function body.
+
+
+func _on_to_phone_node_focus_entered() -> void:
+	if not UI.phone.is_phone_on():
+		await UI._phone_on()
+	UI.phone.give_order_focus()
+
+func focus_from_phone():
+	request_order.grab_focus()

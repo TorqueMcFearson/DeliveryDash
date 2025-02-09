@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://b13o5dmyfe7mr"]
+[gd_scene load_steps=23 format=3 uid="uid://b13o5dmyfe7mr"]
 
 [ext_resource type="Script" path="res://Scripts/phone.gd" id="1_8vxnv"]
 [ext_resource type="FontFile" uid="uid://v3swnsgchgpo" path="res://Font/BebasNeue-Regular.ttf" id="2_e7bua"]
@@ -79,6 +79,12 @@ modulate_color = Color(0.886275, 0.886275, 0.886275, 1)
 texture = ExtResource("7_tv1ot")
 axis_stretch_horizontal = 2
 axis_stretch_vertical = 2
+
+[sub_resource type="InputEventAction" id="InputEventAction_txvgt"]
+action = &"Open Phone"
+
+[sub_resource type="Shortcut" id="Shortcut_1u05c"]
+events = [SubResource("InputEventAction_txvgt")]
 
 [node name="Phone" type="Panel"]
 offset_left = 1075.0
@@ -164,6 +170,8 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_13gf4")
 theme_override_styles/pressed = ExtResource("8_5ewob")
 theme_override_styles/normal = ExtResource("6_g2qqh")
 toggle_mode = true
+action_mode = 0
+shortcut = SubResource("Shortcut_1u05c")
 
 [node name="Marker2D" type="Marker2D" parent="."]
 position = Vector2(-25, -236)
@@ -194,5 +202,16 @@ theme_override_font_sizes/font_size = 22
 horizontal_alignment = 1
 autowrap_mode = 3
 
+[node name="ToGameFocus" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 7.0
+offset_top = 92.0
+offset_right = 7.0
+offset_bottom = 92.0
+focus_mode = 2
+
+[connection signal="child_entered_tree" from="Screen/Scrollbox/Order_List" to="." method="_on_order_enter_or_exit"]
+[connection signal="child_exiting_tree" from="Screen/Scrollbox/Order_List" to="." method="_on_order_enter_or_exit"]
 [connection signal="pressed" from="DD Logo" to="." method="_phone_off"]
-[connection signal="button_up" from="Blackout" to="." method="_phone_on"]
+[connection signal="pressed" from="Blackout" to="." method="_phone_on"]
+[connection signal="focus_entered" from="ToGameFocus" to="." method="_on_to_game_focus_entered"]

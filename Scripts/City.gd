@@ -28,7 +28,7 @@ var time_passed = 0.0
 
 func _ready() -> void:
 	#$CanvasModulate.color = Color(0,0,0,1)
-		
+	UI.phone.scene_has_focus_nodes(false)
 	print(player.global_position)
 	UI.player = player
 	player.position = UI.player_map_position

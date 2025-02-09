@@ -1,14 +1,16 @@
-[gd_scene load_steps=2 format=3 uid="uid://cl6gav0mt5043"]
+[gd_scene load_steps=5 format=3 uid="uid://cl6gav0mt5043"]
+
+[ext_resource type="Shortcut" uid="uid://2l14yubx5l8t" path="res://Shortcut/Menu Cancel.tres" id="1_0xvcj"]
+[ext_resource type="AudioStream" uid="uid://c2p05p0v3iem7" path="res://SFX/Complete_02.wav" id="2_64thh"]
 
 [sub_resource type="GDScript" id="GDScript_xxjc3"]
 resource_name = "sad"
-script/source = "extends Node2D
+script/source = "extends Control
 
 var test_resource :Resource
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -37,17 +39,54 @@ func _on_save_pressed() -> void:
 
 func _on_cache_pressed() -> void:
 	pass
+
+
+func _on_sfx_pressed() -> void:
+	$AudioStreamPlayer.play() # Replace with function body.
+	$Control/Button/Button2.grab_focus()
+
+func _on_button_2_focus_entered() -> void:
+	print(\"TRIED TO GET FOCUS?\")
+
+
+func _on_focus_entered() -> void:
+	pass # Replace with function body.
 "
 
-[node name="Node2D" type="Node2D"]
-position = Vector2(151, 89)
+[sub_resource type="GDScript" id="GDScript_pkijj"]
+script/source = "extends Control
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventKey and event.keycode == KEY_U:
+		print(\"U BPRESSSEDDD\")
+"
+
+[node name="Node2D" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 151.0
+offset_top = 89.0
+offset_right = 151.0
+offset_bottom = 89.0
 rotation = -6.28319
+focus_mode = 2
 script = SubResource("GDScript_xxjc3")
 
 [node name="Release" type="Button" parent="."]
 offset_right = 148.0
 offset_bottom = 61.0
 text = "Release Res"
+metadata/_edit_use_anchors_ = true
 
 [node name="Open" type="Button" parent="."]
 offset_left = 195.0
@@ -55,6 +94,7 @@ offset_top = 0.000870944
 offset_right = 343.0
 offset_bottom = 61.0009
 text = "Open res"
+metadata/_edit_use_anchors_ = true
 
 [node name="Cache" type="Button" parent="."]
 offset_left = 10.9996
@@ -62,6 +102,7 @@ offset_top = 90.0
 offset_right = 159.0
 offset_bottom = 151.0
 text = "Has cahce?"
+metadata/_edit_use_anchors_ = true
 
 [node name="Save" type="Button" parent="."]
 offset_left = 190.0
@@ -69,6 +110,7 @@ offset_top = 87.0008
 offset_right = 338.0
 offset_bottom = 148.001
 text = "Save"
+metadata/_edit_use_anchors_ = true
 
 [node name="Add" type="Button" parent="."]
 offset_left = 401.0
@@ -77,21 +119,63 @@ offset_right = 549.0
 offset_bottom = 58.0018
 text = "Add 1
 "
+metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="."]
 offset_left = 176.0
 offset_top = -35.9992
 offset_right = 376.0
 offset_bottom = 8.00079
+metadata/_edit_use_anchors_ = true
 
 [node name="Label2" type="Label" parent="."]
 offset_left = -5.00066
 offset_top = 145.0
 offset_right = 194.999
 offset_bottom = 189.0
+metadata/_edit_use_anchors_ = true
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_64thh")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+metadata/_edit_use_anchors_ = true
+
+[node name="Button" type="Button" parent="Control"]
+offset_left = 815.0
+offset_top = 59.0036
+offset_right = 972.0
+offset_bottom = 160.004
+shortcut = ExtResource("1_0xvcj")
+text = "PLAY SOUND"
+metadata/_edit_use_anchors_ = true
+
+[node name="Button2" type="Button" parent="Control/Button"]
+visible = false
+offset_left = 2.99939
+offset_top = 154.0
+offset_right = 159.999
+offset_bottom = 255.0
+shortcut = ExtResource("1_0xvcj")
+text = "PLAY SOUND"
+metadata/_edit_use_anchors_ = true
+
+[node name="test_node" type="Control" parent="."]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = SubResource("GDScript_pkijj")
+
+[connection signal="focus_entered" from="." to="." method="_on_focus_entered"]
 [connection signal="pressed" from="Release" to="." method="_on_release_pressed"]
 [connection signal="pressed" from="Open" to="." method="_on_open_pressed"]
 [connection signal="pressed" from="Cache" to="." method="_on_cache_pressed"]
 [connection signal="pressed" from="Save" to="." method="_on_save_pressed"]
 [connection signal="pressed" from="Add" to="." method="_on_add_pressed"]
+[connection signal="pressed" from="Control/Button" to="." method="_on_sfx_pressed"]
+[connection signal="pressed" from="Control/Button/Button2" to="." method="_on_sfx_pressed"]

@@ -4,11 +4,17 @@ const CITY = preload("res://CityMain.tscn")
 var bag_drop = false
 const TUTORIAL_STAGE = 3 
 var need_to_mark_order :Array[Order]
+@onready var exit: Button = $Control/Exit
+@onready var bag_button: Button = $Control/Button
+@onready var bag_sprite: Sprite2D = $Bag
+@onready var receipt: Label = $Control/Receipt
+@onready var check_bag: Button = $Control/check_bag
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	
-	$Bag.modulate = Color(1,1,1,0)
+	UI.phone.scene_has_focus_nodes(true)
+	bag_sprite.modulate = Color(1,1,1,0)
 	if UI.tutorial_stage(TUTORIAL_STAGE):
 		UI.fade_in(1)
 		UI.pause(TUTORIAL_STAGE)
@@ -26,8 +32,8 @@ func _process(delta: float) -> void:
 
 func drop_bag():
 	need_to_mark_order.append(UI.active_order)
-	$Bag/Receipt.text = "%s\nOrder# %s\n\n%s\n\n%s" % UI.active_order.bag.receipt
-	$Bag.modulate = Color(1,1,1,1)
+	receipt.text = "%s\nOrder# %s\n\n%s\n\n%s" % UI.active_order.bag.receipt
+	bag_sprite.modulate = Color(1,1,1,1)
 	bag_drop = true
 	UI.active_order.drop_bag()
 	t_house_drop.emit()
@@ -41,29 +47,37 @@ func _on_exit_pressed() -> void:
 	UI.fade_out(.35,get_tree().change_scene_to_packed.bind(CITY),.25) # Replace with function body.
 
 func _on_check_receipt() -> void:
-	$Bag/Receipt/Check_Bag.disabled = true
-	get_tree().create_timer(.5).timeout.connect(func():$Bag/Receipt/Check_Bag.disabled = false)
-	if $Bag/Receipt.rotation == 0: # GO SMALL
+	check_bag.disabled = true
+	get_tree().create_timer(.5).timeout.connect(func():check_bag.disabled = false)
+	if receipt.rotation == 0: # GO SMALL
 		var tween = create_tween()
-		tween.tween_property($Bag/Receipt,"scale",Vector2(0.14,0.21),.18)
-		tween.parallel().tween_property($Bag/Receipt,"rotation_degrees",-10.4,.18)
+		tween.tween_property(receipt,"scale",Vector2(0.14,0.21),.18)
+		tween.parallel().tween_property(receipt,"rotation_degrees",-10.4,.18)
 	else: # GO Big
 		var tween = create_tween()
-		tween.tween_property($Bag/Receipt,"scale",Vector2(2,2),.18)
-		tween.parallel().tween_property($Bag/Receipt,"rotation_degrees",0,.18)
+		tween.tween_property(receipt,"scale",Vector2(2,2),.18)
+		tween.parallel().tween_property(receipt,"rotation_degrees",0,.18)
 
 
 func _on_button_pressed() -> void:
 	if UI.active_order.house == UI.location:
-		$Button.disabled = true
+		bag_button.disabled = true
 		drop_bag()
 
 
 func _on_button_mouse_entered() -> void:
 	if not bag_drop:
-		$Bag.modulate = Color(1,1,1,.40)
+		bag_sprite.modulate = Color(1,1,1,.40)
 
 
 func _on_button_mouse_exited() -> void:
 	if not bag_drop:
-		$Bag.modulate = Color(1,1,1,0) # Replace with function body.
+		bag_sprite.modulate = Color(1,1,1,0) # Replace with function body.
+
+func _on_to_phone_node_focus_entered() -> void:
+	if not UI.phone.is_phone_on():
+		await UI._phone_on()
+	UI.phone.give_order_focus()
+
+func focus_from_phone():
+	bag_button.grab_focus()

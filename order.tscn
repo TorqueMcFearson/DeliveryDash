@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://du70emj3lvq2l"]
+[gd_scene load_steps=33 format=3 uid="uid://du70emj3lvq2l"]
 
 [ext_resource type="StyleBox" uid="uid://tfxor3sldgtf" path="res://StyleBoxes/order_entry.tres" id="1_jbhjt"]
 [ext_resource type="FontFile" uid="uid://v3swnsgchgpo" path="res://Font/BebasNeue-Regular.ttf" id="1_r6uv7"]
@@ -11,6 +11,7 @@
 [ext_resource type="StyleBox" uid="uid://dcdbmbgc4sw1f" path="res://StyleBoxes/downarrow.tres" id="5_khxwy"]
 [ext_resource type="StyleBox" uid="uid://bfk44tl2r47xv" path="res://StyleBoxes/progress-accept~complete-pressed.tres" id="5_ultlv"]
 [ext_resource type="StyleBox" uid="uid://13y5j3phgal2" path="res://StyleBoxes/progress-accept~complete-normal.tres" id="6_t82dr"]
+[ext_resource type="StyleBox" uid="uid://cl7ru0vvuvo82" path="res://StyleBoxes/Focus_glow.tres" id="7_u1ajt"]
 [ext_resource type="AudioStream" uid="uid://dby1rof5s3mqv" path="res://SFX/Phone click.wav" id="9_262f1"]
 [ext_resource type="Texture2D" uid="uid://bkc1f67x1dho5" path="res://Sprites/arrow - Copy.png" id="12_dxy2q"]
 
@@ -262,7 +263,6 @@ layout_mode = 2
 [node name="order_select" type="Button" parent="HBoxContainer2"]
 custom_minimum_size = Vector2(0, 84)
 layout_mode = 2
-focus_mode = 0
 theme_override_styles/focus = SubResource("StyleBoxFlat_b4cqa")
 theme_override_styles/hover = SubResource("StyleBoxFlat_b4cqa")
 theme_override_styles/normal = SubResource("StyleBoxFlat_3ft6k")
@@ -277,9 +277,9 @@ theme_override_constants/separation = 10
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 10
-focus_mode = 0
 theme_override_fonts/font = SubResource("FontVariation_dgcob")
 theme_override_font_sizes/font_size = 28
+theme_override_styles/focus = ExtResource("7_u1ajt")
 theme_override_styles/hover = ExtResource("4_8sq50")
 theme_override_styles/pressed = ExtResource("5_ultlv")
 theme_override_styles/normal = ExtResource("6_t82dr")
@@ -289,10 +289,9 @@ text = "ACCEPT"
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 10
-focus_mode = 0
 theme_override_fonts/font = SubResource("FontVariation_dgcob")
 theme_override_font_sizes/font_size = 28
-theme_override_styles/focus = SubResource("StyleBoxFlat_g74o0")
+theme_override_styles/focus = ExtResource("7_u1ajt")
 theme_override_styles/hover = SubResource("StyleBoxFlat_g74o0")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_3n5fx")
 theme_override_styles/normal = SubResource("StyleBoxFlat_rdf86")
@@ -304,9 +303,9 @@ custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 10
-focus_mode = 0
 theme_override_fonts/font = SubResource("FontVariation_dgcob")
 theme_override_font_sizes/font_size = 30
+theme_override_styles/focus = ExtResource("7_u1ajt")
 theme_override_styles/hover = SubResource("StyleBoxFlat_8o1mh")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_blddb")
 theme_override_styles/normal = SubResource("StyleBoxFlat_7fqse")
@@ -525,5 +524,5 @@ bus = &"SFX"
 [connection signal="pressed" from="HBoxContainer2/VBoxContainer/Reject" to="." method="_on_reject_pressed"]
 [connection signal="pressed" from="HBoxContainer2/VBoxContainer/Progress" to="." method="_button_pressed"]
 [connection signal="pressed" from="HBoxContainer2/VBoxContainer/Progress" to="." method="_on_progress_order_pressed"]
-[connection signal="pressed" from="HBoxContainer2/Expand_Details" to="." method="_on_order_select_pressed"]
 [connection signal="pressed" from="HBoxContainer2/Expand_Details" to="." method="_button_pressed"]
+[connection signal="pressed" from="HBoxContainer2/Expand_Details" to="." method="_on_order_select_pressed"]

@@ -24,7 +24,7 @@ modulate_color = Color(1, 1, 0.992157, 0.513726)
 [sub_resource type="FontVariation" id="FontVariation_2abjl"]
 base_font = ExtResource("4_ijstd")
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qfcrg"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7ck68"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qd7uu"]
 
@@ -34,16 +34,7 @@ base_font = ExtResource("4_ijstd")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_q06sy"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jdnm3"]
-content_margin_left = 12.0
-content_margin_top = 8.0
-content_margin_right = 12.0
-content_margin_bottom = 8.0
-bg_color = Color(0.223529, 0.219608, 0.258824, 0.717647)
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_a6xsj"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_50xai"]
 texture = ExtResource("5_ey4wu")
@@ -134,42 +125,47 @@ scale = Vector2(1.02188, 1.01111)
 texture = ExtResource("3_3y3ti")
 centered = false
 
-[node name="Exit" type="Button" parent="."]
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Exit" type="Button" parent="Control"]
 offset_left = 467.0
 offset_top = 584.0
 offset_right = 813.0
 offset_bottom = 711.0
-focus_mode = 0
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_qu4y1")
 theme_override_styles/hover = SubResource("StyleBoxTexture_smy1w")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_0oljy")
 theme_override_styles/normal = SubResource("StyleBoxTexture_mp11k")
 
-[node name="Request_Order" type="Button" parent="."]
+[node name="Request_Order" type="Button" parent="Control"]
 offset_left = 612.0
 offset_top = 282.0
 offset_right = 812.0
 offset_bottom = 449.0
 size_flags_horizontal = 3
 size_flags_vertical = 10
-focus_mode = 0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = SubResource("FontVariation_2abjl")
 theme_override_font_sizes/font_size = 30
-theme_override_styles/focus = SubResource("StyleBoxEmpty_qfcrg")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_7ck68")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_qd7uu")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_8uwhg")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_byjcd")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_q06sy")
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
-offset_left = 1310.0
-offset_top = 266.0
-offset_right = 1529.0
-offset_bottom = 344.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_jdnm3")
+[node name="ToPhoneNode" type="Control" parent="Control/Request_Order"]
+anchors_preset = 0
+offset_left = 738.0
+offset_top = 73.0
+offset_right = 738.0
+offset_bottom = 73.0
+focus_mode = 2
 
-[node name="speech" type="Label" parent="."]
+[node name="speech" type="Label" parent="Control"]
 offset_left = 260.0
 offset_top = 254.0
 offset_right = 780.0
@@ -180,18 +176,17 @@ text = "Uhhh.. no.. it's correct. Look again..."
 horizontal_alignment = 2
 autowrap_mode = 1
 
-[node name="Bag" type="Button" parent="."]
-visible = false
+[node name="Bag" type="Button" parent="Control"]
 offset_left = 480.0
 offset_top = 315.0
 offset_right = 560.0
 offset_bottom = 425.0
-focus_mode = 0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_a6xsj")
 theme_override_styles/hover = SubResource("StyleBoxTexture_50xai")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_fs73b")
 theme_override_styles/normal = SubResource("StyleBoxTexture_mw68g")
 
-[node name="Receipt" type="Label" parent="."]
+[node name="Receipt" type="Label" parent="Control"]
 visible = false
 offset_left = 341.0
 offset_top = 363.0
@@ -218,7 +213,7 @@ John Preston
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="Check_Bag" type="Button" parent="Receipt"]
+[node name="Check_Bag" type="Button" parent="Control/Receipt"]
 visible = false
 layout_mode = 0
 offset_left = -1.0
@@ -232,7 +227,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_ec1d4")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_ec1d4")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_43r0x")
 
-[node name="Wrong_Order" type="Button" parent="Receipt"]
+[node name="Wrong_Order" type="Button" parent="Control/Receipt"]
 visible = false
 layout_mode = 0
 offset_left = 28.0
@@ -247,7 +242,7 @@ theme_override_styles/normal = ExtResource("4_78oem")
 toggle_mode = true
 text = " Wrong Order?"
 
-[node name="Check" type="Label" parent="."]
+[node name="Check" type="Label" parent="Control"]
 offset_left = 468.0
 offset_top = 283.0
 offset_right = 577.0
@@ -255,10 +250,15 @@ offset_bottom = 311.0
 theme_override_font_sizes/font_size = 20
 horizontal_alignment = 1
 
-[connection signal="pressed" from="Exit" to="." method="_on_exit_arrow_pressed"]
-[connection signal="mouse_entered" from="Request_Order" to="." method="_on_request_order_mouse_entered"]
-[connection signal="mouse_exited" from="Request_Order" to="." method="_on_request_order_mouse_exited"]
-[connection signal="pressed" from="Request_Order" to="." method="_get_order"]
-[connection signal="mouse_entered" from="Bag" to="." method="_on_bag_mouse_entered"]
-[connection signal="mouse_exited" from="Bag" to="." method="_on_bag_mouse_exited"]
-[connection signal="pressed" from="Bag" to="." method="_on_take_bag"]
+[connection signal="pressed" from="Control/Exit" to="." method="_on_exit_arrow_pressed"]
+[connection signal="focus_entered" from="Control/Request_Order" to="." method="_on_request_order_mouse_entered"]
+[connection signal="focus_exited" from="Control/Request_Order" to="." method="_on_request_order_mouse_exited"]
+[connection signal="mouse_entered" from="Control/Request_Order" to="." method="_on_request_order_mouse_entered"]
+[connection signal="mouse_exited" from="Control/Request_Order" to="." method="_on_request_order_mouse_exited"]
+[connection signal="pressed" from="Control/Request_Order" to="." method="_get_order"]
+[connection signal="focus_entered" from="Control/Request_Order/ToPhoneNode" to="." method="_on_to_phone_node_focus_entered"]
+[connection signal="focus_entered" from="Control/Bag" to="." method="_on_bag_mouse_entered"]
+[connection signal="focus_exited" from="Control/Bag" to="." method="_on_bag_mouse_exited"]
+[connection signal="mouse_entered" from="Control/Bag" to="." method="_on_bag_mouse_entered"]
+[connection signal="mouse_exited" from="Control/Bag" to="." method="_on_bag_mouse_exited"]
+[connection signal="pressed" from="Control/Bag" to="." method="_on_take_bag"]

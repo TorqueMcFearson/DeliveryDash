@@ -17,19 +17,19 @@ func _ready() -> void:
 	scale = Vector2(1,1) # Replace with function body.
 
 
+func test():
+	print(get_tree().current_scene)
+
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
 
 func _unhandled_input(event: InputEvent) -> void:
-	if state == ON:
-		if (event is InputEventMouseButton and event.button_index in [1]): 
+	if state == ON: 
+		if event.is_action_pressed("Close Phone"): 
 			_phone_off()
 			
-func _input(event: InputEvent) -> void:
-	if state == ON:
-		if (event is InputEventMouseButton and event.button_index == 2): 
-			_phone_off()
 			
 func add_order(order:Order):
 	order.scrollposition.connect(update_scroll)
@@ -38,6 +38,7 @@ func add_order(order:Order):
 func _phone_on():
 	if tween.is_running():
 		await tween.finished
+	order_list.show()
 	$ActiveOrderTimer.hide()
 	$Blackout.set_disabled(true)
 	$Blackout.mouse_filter = 2
@@ -47,11 +48,16 @@ func _phone_on():
 	tween.parallel().tween_property(self,"position",PHONE_ON_POS,.25).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 	tween.parallel().tween_property($Screen/Notification,"position",Vector2(813,90),.56).set_trans(Tween.TRANS_QUART).set_ease(Tween.EASE_OUT)
 	tween.parallel().tween_property($Blackout,"modulate",Color(1,1,1,0),.2)
+	
+	give_order_focus()
+	
 	return tween.finished
 	
 func _phone_off():
+	give_focus_to_scene()
 	if tween.is_running():
 		await tween.finished
+	order_list.hide()
 	$Blackout.set_disabled(false)
 	$Blackout.button_pressed = false
 	tween = create_tween()
@@ -103,3 +109,41 @@ func bad_notification(message:String):
 	var tween = create_tween()
 	tween.tween_property($Screen/Notification,"scale",Vector2(.75,.9),.25)
 	tween.tween_property($Screen/Notification,"scale",Vector2(0,.9),.25).set_delay(3)
+
+func give_order_focus():
+	var first_order :Control = order_list.get_child(0)
+	if first_order: first_order.set_focus()
+	
+func is_phone_on():
+	return state
+
+
+func _on_to_game_focus_entered() -> void:
+	if not give_focus_to_scene():
+		$ToGameFocus.find_valid_focus_neighbor(SIDE_RIGHT).grab_focus()
+
+func give_focus_to_scene() -> bool:
+	var scene = get_tree().current_scene
+	if scene.has_method("focus_from_phone"):
+		scene.call("focus_from_phone")
+		return true
+	return false
+	
+func scene_has_focus_nodes(focusable_nodes:bool):
+	if focusable_nodes:
+		$ToGameFocus.show()
+	else:
+		$ToGameFocus.hide()
+		
+
+
+func _on_order_enter_or_exit(node: Node) -> void:
+	print("CHILD ENTERED")
+	if not get_viewport().gui_get_focus_owner():
+		var focus_owner = get_viewport().gui_get_focus_owner()
+		var child = $Screen/Scrollbox/Order_List.get_child(0)
+		if not child.is_node_ready(): await child.ready
+		child.set_focus() # Replace with function body.
+	else:
+		var focus_owner = get_viewport().gui_get_focus_owner()
+		print("BUT FOCUS ALREADY HAD")

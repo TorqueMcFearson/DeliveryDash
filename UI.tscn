@@ -203,7 +203,6 @@ bg_color = Color(0, 0, 0, 1)
 
 [node name="UI_Layer" type="CanvasLayer"]
 script = ExtResource("1_fpkyk")
-car_horn = true
 
 [node name="Pause Dimmer" type="Panel" parent="."]
 visible = false
@@ -481,13 +480,14 @@ offset_bottom = 287.0
 scale = Vector2(0.6, 0.65)
 size_flags_horizontal = 3
 size_flags_vertical = 10
-focus_mode = 0
 theme_override_fonts/font = SubResource("FontVariation_dcihk")
 theme_override_font_sizes/font_size = 28
 theme_override_styles/hover = ExtResource("7_t3oj7")
 theme_override_styles/pressed = ExtResource("8_hfx0f")
 theme_override_styles/normal = ExtResource("9_k28qe")
 text = "ACCEPT"
+
+[node name="Phone" parent="." instance=ExtResource("5_jiinu")]
 
 [node name="Controls" type="Label" parent="."]
 offset_left = 43.0
@@ -801,8 +801,6 @@ bbcode_enabled = true
 text = "[b][color=green]less traffic[/color][/b]
 [b][color=red]crazy drivers[/color][/b]"
 
-[node name="Phone" parent="." instance=ExtResource("5_jiinu")]
-
 [node name="FlyingStar" type="TextureRect" parent="."]
 offset_left = 1223.0
 offset_top = -170.0
@@ -898,3 +896,6 @@ vertical_alignment = 1
 [connection signal="timeout" from="ClockTick" to="." method="_on_clock_tick"]
 [connection signal="timeout" from="Order_Update" to="." method="_on_order_update_timeout"]
 [connection signal="timeout" from="New_Order_Timer" to="." method="order_timer_timeout"]
+[connection signal="resumed" from="OptionsLayer/Options/Pause Menu" to="Tutorial" method="unpause"]
+
+[editable path="OptionsLayer/Options"]
