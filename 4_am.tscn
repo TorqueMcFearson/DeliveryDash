@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://41a5bcaoeq2e"]
+[gd_scene load_steps=22 format=3 uid="uid://41a5bcaoeq2e"]
 
 [ext_resource type="Script" path="res://Scripts/4 AM.gd" id="1_q7i08"]
 [ext_resource type="StyleBox" uid="uid://c6bnfdpsfgbph" path="res://StyleBoxes/order_entry_active.tres" id="2_b5tli"]
@@ -86,6 +86,12 @@ expand_margin_top = 3.0
 shadow_color = Color(0.101961, 0.101961, 0.101961, 0.682353)
 shadow_size = 1
 shadow_offset = Vector2(2, 2)
+
+[sub_resource type="InputEventAction" id="InputEventAction_k23mv"]
+action = &"ui_accept"
+
+[sub_resource type="Shortcut" id="Shortcut_efcqf"]
+events = [SubResource("InputEventAction_k23mv")]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_hq16f"]
 random_pitch = 1.2
@@ -869,6 +875,7 @@ theme_override_styles/disabled = SubResource("StyleBoxFlat_s6nd8")
 theme_override_styles/hover = SubResource("StyleBoxFlat_pk7xi")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_rafq5")
 theme_override_styles/normal = SubResource("StyleBoxFlat_deshe")
+shortcut = SubResource("Shortcut_efcqf")
 text = "Pay Bills"
 
 [node name="Markers" type="Control" parent="."]

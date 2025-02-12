@@ -2343,6 +2343,10 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_ab3md")
 shortcut = ExtResource("6_y8135")
 text = "Back"
 
+[node name="SaveTimer" type="Timer" parent="Options Menu"]
+wait_time = 0.5
+one_shot = true
+
 [connection signal="visibility_changed" from="Pause Menu" to="Pause Menu" method="_on_pause_menu_show"]
 [connection signal="pressed" from="Pause Menu/ButtonMargin/ButtonBox/Resume" to="Pause Menu" method="_on_resume_pressed"]
 [connection signal="pressed" from="Pause Menu/ButtonMargin/ButtonBox/Options" to="Pause Menu" method="_on_options_pressed"]
@@ -2352,3 +2356,4 @@ text = "Back"
 [connection signal="item_selected" from="Options Menu/Sliders/Difficulty" to="Options Menu/Sliders/Difficulty" method="_on_item_selected"]
 [connection signal="toggled" from="Options Menu/Sliders/Tutorial" to="Options Menu/Sliders/Tutorial" method="_on_toggled"]
 [connection signal="pressed" from="Options Menu/Back Button" to="Pause Menu" method="_on_back_button_pressed"]
+[connection signal="timeout" from="Options Menu/SaveTimer" to="Pause Menu" method="_on_timer_timeout"]

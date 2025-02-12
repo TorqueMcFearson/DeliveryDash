@@ -133,6 +133,8 @@ const street_names = [
 const street_types = ["St", "Ave", "Rd", "Blvd", "Dr", "Ln", "Way", "Ct", "Pl", "Terr"]
 
 ## Game Dynamics ######################
+var input_type := 0
+	
 var active_order :Order
 var location :String
 var player : CharacterBody2D
@@ -220,6 +222,13 @@ func _ready() -> void:
 	
 	
 func _unhandled_input(event: InputEvent) -> void:
+	if event.is_pressed():
+		if event is InputEventJoypadButton:
+			print("JOYPAD")
+			input_type = 0
+		if event is InputEventKey:
+			print("KEYBOARD")
+			input_type = 1
 	if event.is_action_pressed("pause") and not get_tree().current_scene.name == "Title":
 		print("PAUSE PRESSED")
 		$"Pause Dimmer".show()
@@ -562,8 +571,9 @@ func complete_order(order):
 func check_forgot(forgotten):
 	if get_tree().current_scene.name != "City": return
 	var is_forgot = func (order):
-		if order:
-			return order.state != order.food_status and order.state != Order.NEW
+		if order == null: return false
+		return order.state != order.food_status and order.state != Order.NEW
+		
 	#var forgotten :Array = order_list.get_children().filter(is_forgot)
 	if forgotten.filter(is_forgot):
 		for order in forgotten:

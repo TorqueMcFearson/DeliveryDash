@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://caduwy08lr4s1"]
+[gd_scene load_steps=28 format=3 uid="uid://caduwy08lr4s1"]
 
 [ext_resource type="Texture2D" uid="uid://cdxwxktq5bge0" path="res://Backgrounds/Title.jpg" id="1_7m5r0"]
 [ext_resource type="Texture2D" uid="uid://da6d5psli7wv2" path="res://Sprites/Title_Driver.png" id="2_086dc"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://d15wce0skylvj" path="res://Options Menu.tscn" id="5_cfrfe"]
 [ext_resource type="FontFile" uid="uid://v3swnsgchgpo" path="res://Font/BebasNeue-Regular.ttf" id="5_j043k"]
 [ext_resource type="Script" path="res://Scripts/tutorial_checkbox.gd" id="6_kx1w2"]
+[ext_resource type="StyleBox" uid="uid://cl7ru0vvuvo82" path="res://StyleBoxes/Focus_glow.tres" id="7_e2i0w"]
 
 [sub_resource type="GDScript" id="GDScript_gxr70"]
 resource_name = "TitleParallax"
@@ -441,7 +442,7 @@ offset_top = 67.0
 offset_right = 206.0
 offset_bottom = 91.0
 size_flags_horizontal = 4
-focus_mode = 0
+theme_override_styles/focus = ExtResource("7_e2i0w")
 script = ExtResource("6_kx1w2")
 
 [node name="Options" type="Button" parent="Title_UI/Buttons"]

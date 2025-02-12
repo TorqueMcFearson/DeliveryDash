@@ -146,6 +146,7 @@ func respawn():
 	elif UI.cash:
 		spawn = get_parent().get_nearest_gas_station()
 		text = "Out of Fuel...\nTowing to Gas Station"
+		UI.made_a_mistake(8)
 	else:
 		return UI.end_day("Out of Fuel and Money...\nWalking home :(")
 		

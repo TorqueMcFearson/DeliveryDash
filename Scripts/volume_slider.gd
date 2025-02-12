@@ -1,13 +1,12 @@
 extends HSlider
 
 @onready var audio_bus = AudioServer.get_bus_index(name)
-@onready var options_menu: Panel = $"../.."
+@onready var save_timer: Timer = $"../../SaveTimer"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	update()
 	value_changed.connect(_on_value_changed)
-	drag_ended.connect(Save.save_preferences)
 	ready_label()
 
 
@@ -30,6 +29,7 @@ func ready_label():
 
 
 func _on_value_changed(value):
+	save_timer.start()
 	AudioServer.set_bus_volume_db(audio_bus, linear_to_db(pow(value*.01,2)))
 	ready_label()
 	if name == "SFX" and $"../SFX/Timer".is_stopped():

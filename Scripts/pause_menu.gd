@@ -95,3 +95,7 @@ func _on_pause_menu_show() -> void:
 	if is_node_ready() and visible:
 		previous_focus = get_viewport().gui_get_focus_owner()
 		pause_focus_button.call_deferred("grab_focus") # Replace with function body.
+
+
+func _on_timer_timeout() -> void:
+	Save.save_preferences() # Replace with function body.

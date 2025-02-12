@@ -83,7 +83,7 @@ func _ready() -> void:
 	v_direction = V_DIR[direction]
 	$Move_collision.disabled = true
 	stopped = true
-	await get_tree().create_timer(randf_range(.25,.55)).timeout
+	await get_tree().create_timer(randf_range(.15,.35)).timeout
 	$Move_collision.disabled = false
 	stopped = false
 	pass # Replace with function body.

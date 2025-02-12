@@ -43,15 +43,32 @@ func _ready():
 	hide_all()
 	$"../Controls".hide()
 
+func _input(event: InputEvent) -> void:
+	if event.is_pressed():
+		if event is InputEventJoypadButton or event is InputEventJoypadMotion:
+			print("JOYPAD")
+			UI.input_type = 0
+		if event is InputEventMouse or event is InputEventKey:
+			print("KEYBOARD")
+			UI.input_type = 1
+		change_controls_type(UI.input_type)
+		
 func _unhandled_input(event: InputEvent) -> void:
 	if not visible: return
 	if event.is_action_pressed("ui_cancel"):
 		skip_tutorial()
 	if playing_tutorial and event.is_pressed() and event is not InputEventJoypadMotion and click_to_continue:
 		progress_tutorial()
+		
 			
-			
-
+func change_controls_type(value):
+	if value:
+		$"../Controls/Keyboard".show()
+		$"../Controls/Controller".hide()
+	else:
+		$"../Controls/Keyboard".hide()
+		$"../Controls/Controller".show()
+		
 func unpause():
 	$"../Pause Dimmer".hide()
 	$"../Controls".hide()
@@ -116,6 +133,7 @@ func progress_tutorial():
 					text_label.position += UI.active_order.position*.6
 			else:
 				remove_tutorial_signals()
+				UI.pause_timers()
 				stage_done()
 
 		
@@ -143,6 +161,7 @@ func progress_tutorial():
 			else:
 				$"Resturant/Arrow-Copy".show()
 				remove_tutorial_signals()
+				UI.pause_timers()
 				stage_done()
 		
 		4:pass

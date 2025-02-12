@@ -1,0 +1,7 @@
+[gd_resource type="StyleBoxTexture" load_steps=2 format=3 uid="uid://c8a5n654jb426"]
+
+[ext_resource type="Texture2D" uid="uid://chk0i7afmu8ua" path="res://Sprites/arrow_out.png" id="1_1xj2y"]
+
+[resource]
+texture = ExtResource("1_1xj2y")
+modulate_color = Color(1, 1, 0.97, 0.905882)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://bin3hjdhs5ls8"]
+[gd_scene load_steps=46 format=3 uid="uid://bin3hjdhs5ls8"]
 
 [ext_resource type="Texture2D" uid="uid://bmlasb071pto3" path="res://Sprites/Cash.png" id="1_5daqs"]
 [ext_resource type="Script" path="res://Scripts/UI.gd" id="1_fpkyk"]
@@ -15,9 +15,16 @@
 [ext_resource type="StyleBox" uid="uid://13y5j3phgal2" path="res://StyleBoxes/progress-accept~complete-normal.tres" id="9_k28qe"]
 [ext_resource type="AudioStream" uid="uid://c2p05p0v3iem7" path="res://SFX/Complete_02.wav" id="9_me23b"]
 [ext_resource type="AudioStream" uid="uid://bv5mjdf70yxtp" path="res://SFX/echo-flux-258965.mp3" id="10_ntywh"]
+[ext_resource type="Texture2D" uid="uid://j4rbdia1sso7" path="res://Sprites/L_stick.png" id="11_jo4am"]
+[ext_resource type="Texture2D" uid="uid://iprclsx3fvh7" path="res://Sprites/A.png" id="12_low8m"]
 [ext_resource type="Texture2D" uid="uid://bkc1f67x1dho5" path="res://Sprites/arrow - Copy.png" id="12_mslnn"]
+[ext_resource type="Texture2D" uid="uid://dspktvoctj8aj" path="res://Sprites/b.png" id="13_p2gmu"]
+[ext_resource type="Texture2D" uid="uid://dnahc4s2snys6" path="res://Sprites/y.png" id="14_rfn01"]
 [ext_resource type="Texture2D" uid="uid://blkm81wkqu1lq" path="res://Sprites/gas can.png" id="14_yytrt"]
+[ext_resource type="Texture2D" uid="uid://dyi33eqw6vc" path="res://Sprites/L_stick_IN.png" id="15_jq1f3"]
 [ext_resource type="PackedScene" uid="uid://d15wce0skylvj" path="res://Options Menu.tscn" id="15_k7ey6"]
+[ext_resource type="Texture2D" uid="uid://bkspmk6ck637e" path="res://Sprites/x.png" id="16_75y0p"]
+[ext_resource type="Texture2D" uid="uid://dux4tmy1vi6p6" path="res://Sprites/Menu.png" id="17_8yknd"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qg3eo"]
 bg_color = Color(0.1479, 0.17, 0.164843, 0.847059)
@@ -203,6 +210,8 @@ bg_color = Color(0, 0, 0, 1)
 
 [node name="UI_Layer" type="CanvasLayer"]
 script = ExtResource("1_fpkyk")
+cash = 500
+car_horn = true
 
 [node name="Pause Dimmer" type="Panel" parent="."]
 visible = false
@@ -497,6 +506,16 @@ offset_bottom = 446.0
 theme_override_constants/line_spacing = -2
 theme_override_fonts/font = SubResource("FontVariation_swb0f")
 theme_override_font_sizes/font_size = 22
+autowrap_mode = 3
+
+[node name="Keyboard" type="Label" parent="Controls"]
+visible = false
+layout_mode = 0
+offset_right = 271.0
+offset_bottom = 197.0
+theme_override_constants/line_spacing = -2
+theme_override_fonts/font = SubResource("FontVariation_swb0f")
+theme_override_font_sizes/font_size = 22
 theme_override_styles/normal = SubResource("StyleBoxFlat_nw17m")
 text = "                 Controls:
 Drive                            W/A/S/D
@@ -506,6 +525,77 @@ put phone away           Right click
 enter building         E / left click
 pause game                          esc"
 autowrap_mode = 3
+
+[node name="Controller" type="Label" parent="Controls"]
+layout_mode = 0
+offset_right = 252.0
+offset_bottom = 222.0
+theme_override_constants/line_spacing = -2
+theme_override_fonts/font = SubResource("FontVariation_swb0f")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxFlat_nw17m")
+text = "                 Controls:
+Drive                   
+Select UI                        
+Cancel/Exit                    
+Open/Close Phone           
+Honk          
+enter building               
+pause game               "
+autowrap_mode = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Controls/Controller"]
+layout_mode = 0
+offset_left = 199.0
+offset_top = 31.0
+offset_right = 295.0
+offset_bottom = 406.0
+scale = Vector2(0.5, 0.5)
+
+[node name="A5" type="TextureRect" parent="Controls/Controller/VBoxContainer"]
+texture_filter = 2
+custom_minimum_size = Vector2(0, 52)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("11_jo4am")
+expand_mode = 2
+
+[node name="A" type="TextureRect" parent="Controls/Controller/VBoxContainer"]
+texture_filter = 2
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("12_low8m")
+
+[node name="A2" type="TextureRect" parent="Controls/Controller/VBoxContainer"]
+texture_filter = 2
+layout_mode = 2
+texture = ExtResource("13_p2gmu")
+
+[node name="A3" type="TextureRect" parent="Controls/Controller/VBoxContainer"]
+texture_filter = 2
+layout_mode = 2
+texture = ExtResource("14_rfn01")
+
+[node name="A6" type="TextureRect" parent="Controls/Controller/VBoxContainer"]
+texture_filter = 2
+custom_minimum_size = Vector2(0, 52)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("15_jq1f3")
+expand_mode = 2
+
+[node name="A4" type="TextureRect" parent="Controls/Controller/VBoxContainer"]
+texture_filter = 2
+layout_mode = 2
+texture = ExtResource("16_75y0p")
+
+[node name="A7" type="TextureRect" parent="Controls/Controller/VBoxContainer"]
+texture_filter = 2
+custom_minimum_size = Vector2(0, 55)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("17_8yknd")
+expand_mode = 2
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
